@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}" media="all">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='methodsStyle.css')}}" media="all">
+<link href="https://fonts.googleapis.com/css?family=Questrial&display=swap" rel="stylesheet"> 
+<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+{% endblock %}
+
+{% block header %}
+  {{super()}}
+{% endblock %}
+
+{% block content %}
+<section>
+    <center>
+        <h1>Methods</h1>
+        <div id="fadeOut"></div>
+        <div id="calc" class="contentBody">
+            <h2>C A L C U L A T I O N</h2>
+            <p> Voronoia4RNA calculates atomic volumes by applying the Voronoi Cell algorithm
+                described in [2]. The volume calculated for each atom is split into two 
+                portions, both of which are represented in the .vol files produced by the 
+                server. The first is the vdW volume (the volume inside an atoms' van der Waals
+                sphere), the second is the solvent excluded volume (within a 1.4 Angstrom layer
+                around the vdW sphere). The space is allocated among atoms using hyperboloid 
+                surfaces. The calculation is performed by applying a cubic lattice of 0.1 
+                Angstrom grid width.
+            </p>
+            <p> Cavities are found by applying a Delaunay triangulation and looking for edges above a
+                cutoff length in the resulting graph corresponding to a 1.4 Angstrom probe radius.
+                Their locations are approximated by the center of mass of all neighboring atoms.
+            </p>
+            <p> The core algorithm of Voronoia4RNA has been implemented in Delphi and an intermediate
+                layer in Python. The core algorithm calculates atomic volumes and cavities from PDB
+                structures, prefiltered for modifications. It produces modified PDB files from which
+                packing densities, cavity positions, and tabular reports containing average volumes and
+                densities are calculated.
+            </p>
+        </div>
+        <div id="visuals" class="contentBody">
+            <h2>V I S U A L S</h2>
+            <p> For the visualization of packing densities and cavities, the Jmol based viewer Provi can be
+                used directly on the website (Oracle Java is needed)<span style="color:red">AENDERN</span>. The atomic packing density is represented
+                by a colour scale which is given by the range of the minimal and maximal packing density
+                values or a user defined range.
+            </p>
+            <p> Cavities can be visualized schematically as balls, which is the appropriate way for large
+                structures as ribosomes containing hundreds of cavities, or by their exact shape.
+            </p>
+        </div>
+    </center>
+</section>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+
+
+<script>
+    console.log("js is active");
+    
+    $("#down_btn_methods").click(function(event){
+        console.log("click");
+        event.preventDefault();
+        var hash = this.hash;
+        $("html, body").animate({
+            scrollTop: $(hash).offset().top
+        }, 1200);
+        $("header").addClass("active");
+        
+        
+        $("#calc").animate({
+            "opacity":0            
+        }, 600);
+        
+        $("#visuals").animate({
+            "opacity":1            
+        }, 1200);
+    });
+    
+</script>
+{% endblock %}

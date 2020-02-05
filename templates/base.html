@@ -1,0 +1,36 @@
+{% extends "bootstrap/base.html" %}
+
+{% block head %}
+{{super()}}
+{% endblock %}
+
+{% block title %} Voronoia4RNA {% endblock %}
+
+
+{% block body %}
+  
+ {% block header %}
+<header>
+   <img src="{{ url_for( 'static', filename ='tree.jpg' )}}">
+   <a id="titleLink" href="../"><h3>Voronoia4RNA</h3></a>
+   <ul>
+     <li><a href="/references">references</a></li>
+     <li><a href="/methods">methods</a></li>
+     <li><a href="/databank">databank</a></li>
+     <li><a href="/submit">submit</a></li>
+     <li><a href="/">home</a></li>
+   </ul>
+ </header>
+ {% endblock %}
+
+ {% block content %}
+ {% endblock %}
+
+ {% block footer %}
+ {% endblock %}
+
+ {% block scripts %}
+ {{ super() }}
+ {% endblock %}
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}" media="all">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='statusStyle.css')}}" media="all">
+<link href="https://fonts.googleapis.com/css?family=Questrial&display=swap" rel="stylesheet"> 
+<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block header %}
+  {{super()}}
+{% endblock %}
+
+{% block content %}
+<section>
+    <center>
+        <h1>Progress</h1>
+        <div id="status" class="contentBody">
+            <h2>S T A T U S</h2>
+            <p>Your Job<span id="jobName"></span> has been submitted</p>
+            <div id="loadingBar"></div>
+        </div>
+  </center>
+</section>
+{% endblock %}
+
+{% block scripts %}
+{{super()}}
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+<script type="text/javascript">
+    
+    var tag;
+    
+    $(document).ready(function() {
+        tag = window.location.href.split("=")[1];
+        if(tag != undefined) {
+            $('#jobName').html(" #" + tag);
+        }
+        $('#status').addClass('load');
+    });
+</script>
+{% endblock %}

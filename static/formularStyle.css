@@ -1,0 +1,199 @@
+#submit h2 {
+    margin-bottom: 1.5vh;
+}
+
+.hide {
+    display: none !important;
+}
+
+i {
+    font-family: 'Material Icons';
+    font-style: normal;
+    cursor: default;
+}
+
+#uploadPdb div {
+    margin-top: calc(2vw + 1vh);
+    padding: 1.25vh 2.5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8vh;
+    color: white;
+    background: #09AC50;
+    cursor: pointer;
+}
+
+#dragDropField {
+    height: 34vh;
+    margin-top: 2vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 3px dashed grey;
+    font-size: 2.5vh;
+    color: grey;
+}
+
+#dragDropField i {
+    margin-top: -4vh;
+    font-size: 10vh;
+}
+
+.dragOver span {
+    font-weight: bold;
+}
+
+#inputPdb {
+    display: none;
+}
+
+#fileUploadInterface label.input {
+    display: none;
+}
+
+/* Interface 2 */
+
+.inputField {
+    /*text-align: center;
+    width: 100%;
+    margin: 4vh 0;
+    display: flex;
+    justify-content: space-between;*/
+    /*width: 7.5vw;*/
+    margin: 4vh 0;
+    margin-right: 2vw;
+}
+
+.inputField p {
+    margin: 0;
+    padding: 0;
+    /*text-align: left;*/
+    /*padding-left: 1vw;*/
+    font-weight: bold;
+    font-family: 'Questrial', sans-serif;
+    margin-bottom: 1.5vh;
+    white-space: nowrap;
+}
+
+#fileField {
+    display: inline-block;
+    /*display: flex;
+    flex-direction: row;
+    align-items: center;*/
+    width: min-content;
+    font-size: 1em;
+}
+
+#fileField p {
+    padding: 0;
+    font-weight: normal;
+    font-family: 'Roboto', sans-serif;
+    margin-bottom: 0;
+}
+
+#submitInterface {
+    /*display: flex;
+    flex-wrap: wrap;*/
+}
+
+#submitInterface input {
+    width: 7.5vw;
+    padding: 1px;
+    padding-bottom: 5px;
+    border: 0;
+    border-bottom: 1px solid grey;
+}
+
+#submitInterface select {
+    width: 7.5vw;
+    padding: 1px;
+    padding-bottom: 5px;
+    border: 0;
+    border-bottom: 1px solid grey;
+    font-family: 'Roboto', sans-serif;
+    background: transparent;
+    color: black;
+    font-size: 1em;
+    /*margin: 2vh 0;*/
+    -webkit-appearance: none;
+}
+
+#submitInterface #submitbtn {
+    width: min-content;
+    padding: 1.25vh 1.25vw;
+    background: #09AC50;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.2em;
+    
+    border: none;
+    border-radius: 3px;
+    /*padding: 15px 35px;*/
+    position: relative;
+    top: 5vh;
+    left: 17.5vw; /* (100vw - 2* section padding)/2 */
+    transform: translate(-50%, 0%);
+    /*font-family: 'Questrial', sans-serif;*/
+    /*font-size: 2.5vh;*/
+}
+
+#submitInterface #submitbtn:hover {
+    background: #03A64A;
+    cursor: pointer;
+}
+
+/*
+#info {
+    width: calc(15.5vw + 4px);
+    float: right;
+}
+
+#info p {
+    color: #404040;
+    font-size: calc(6px + 0.5vh);
+}
+
+#inputOptions {
+    width: calc(15.5vw + 6px);
+}
+
+#inputPdb {
+    width: calc(15.5vw + 6px);
+}
+
+#submitbtn {
+    background: #09AC50;
+    border: none;
+    border-radius: 6px;
+    padding: 15px 35px;
+    position: relative;
+    bottom: -7.5vh;
+    left: 17.5vw; /* (100vw - 2* section padding)/2 *//*
+    transform: translate(-50%, 0%);
+    font-family: 'Questrial', sans-serif;
+    font-size: 2.5vh;
+    color: white;
+}
+
+#submitbtn:hover {
+    background: #03A64A;
+    cursor: pointer;
+}
+
+.inputField {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 1.5vh;
+}
+
+.input {
+    width: 15vw;
+    margin-top: 2vh;
+}
+
+#info p {
+    margin-top: 0.25vh;
+}*/

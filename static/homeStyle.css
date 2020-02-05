@@ -1,0 +1,145 @@
+body {
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+}
+
+h1 {
+    line-height: 1.25;
+}
+
+/* PART 1 */
+
+#part1 {
+    padding: 0;
+    height: 100vh;
+}
+
+header {
+    background: transparent;
+    position: fixed;
+    top: 0;
+    left: 0;
+    -webkit-transition: background 0.9s;
+    transition: background 0.9s;
+}
+
+#homebg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: -1;
+    /*display: flex;
+    justify-content: center;
+    align-items: center;*/
+    background: radial-gradient(#03A64A 0%, #03A64A 20%, #026F2A 100%);
+}
+
+img {
+    width: 12.5vh; /* h1 font-size */
+    height: 12.5vh; /* h1 font-site */
+    margin-right: 2.5vh;
+}
+
+#lowerTitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    -webkit-transition: transform 0.6s;
+    transition: transform 0.6s;
+}
+
+#title {
+    /*margin-top: -3vh; /* header height / 2 */
+    position: fixed;
+    
+    -webkit-transition: transform 0.6s;
+    transition: transform 0.6s;
+}
+
+.middle {    
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+}
+
+.corner {
+    transform: translate(0, 0);
+}
+
+.corner #lowerTitle {
+    transform: translate(0, -4.25vh);  /* Eingenommene Höhe von 'Voronoia' (1*0.5vh margin-bottom, 1.25vh padding-top, 2.5vh line-height    */
+}
+
+#title h1 {
+    font-size: 12.5vh;
+    margin: 0.5vh;
+    margin-top: 0vh;
+    padding: 0;
+}
+
+#title #h1_voro {
+    -webkit-transition: margin-left 0.8s;
+    transition: margin-left 0.8s;
+}
+
+.corner #h1_voro {
+    margin-left: calc(2vw + 5vh);
+}
+
+#title #h1_4 {
+    margin-right: 1vw;
+}
+
+#down_btn {
+    position: absolute;
+    bottom: 10vh;
+    left: 50vw;
+    transform: translate(-50%, 0);
+    background: transparent;
+    border-radius: 100%;
+    text-decoration: none;
+    width: 5vh;
+    height: 5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-transition: all 0.8s;
+    transition: all 0.8s;
+}
+
+#down_btn i {
+    font-size: 3.75vh;
+    color: #404040;
+}
+
+#down_btn:hover {
+    cursor: pointer;
+    background: #13B65A;
+    /*transform: translate(-50%, 20%);*/
+    bottom: 9.25vh;
+}
+
+#down_btn:hover i {
+    color: #404040;
+}
+
+/* PART 2 */
+
+#part2 {
+    height: 100vh;
+    padding-top: 6vh; /* Höhe der navbar, da diese jetzt fixed ist */
+}
+
+.active {
+    background: #03A64A;
+}
+
+#scale {
+    font-size: 2.5vh !important;
+    line-height: 2.5vh !important;
+    font-family: 'Roboto', sans-serif;
+    display: none;
+}

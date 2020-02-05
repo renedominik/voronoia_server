@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}" media="all">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='homeStyle.css')}}" media="all">
+<link href="https://fonts.googleapis.com/css?family=Questrial&display=swap" rel="stylesheet"> 
+<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+{% endblock %}
+
+{% block header %}
+ <header>
+    <ul>
+     <li><a href="/references">references</a></li>
+     <li><a href="/methods">methods</a></li>
+     <li><a href="/databank">databank</a></li>
+     <li><a href="/submit">submit</a></li>
+     <li><a href="/">home</a></li>
+   </ul>
+</header>
+{% endblock %}
+
+{% block content %}
+<!-- TITLE -->
+<div id="title" class="middle">
+    <h1 id="h1_voro">Voronoia</h1>
+    <div id="lowerTitle">
+        <img src="{{ url_for( 'static', filename ='tree.jpg' )}}">
+        <h1 id="h1_rna"><span id="h1_4">4</span>RNA</h1>
+    </div>
+</div>
+<!-- SECTIONS -->
+<section id="part1">
+    <center>
+        <div id="homebg"></div>  
+        <a id="down_btn" href="#part2"><i class="material-icons">arrow_downward</i></a>
+    </center>
+</section>
+<section id="part2">
+    <center>
+        <h1>Introduction</h1>
+        <div id="intro" class="contentBody">
+            <h2>P U R P O S E</h2>
+            <p>Voronoia4RNA is a database storing data on atomic packing densities of RNA structures and complexes. Compared to other methods, that solely estimate van der Waals interactions i.e. by gain of solvent excluded surfaces, Voronoia4RNA allocates the free space between neighbouring atoms. <br><br>
+            It explicitly takes packing defects into consideration and is therefore an appropriate method to calculate van der Waals interactions and to estimate the underlying forces. </p>
+            <p><br>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. </p>
+        </div>
+    </center>
+</section>
+<h1 id="scaleDiv"><span id="scale">Voronoia4RNA</span></h1>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
+
+<script>
+    console.log("js is active");
+    
+    var animationSpeed = 0.8;
+    
+    $("#down_btn").click(function(event){
+        // custom scroll
+        console.log("click");
+        event.preventDefault();
+        var hash = this.hash;
+        $("html, body").animate({
+            scrollTop: $(hash).offset().top
+        }, 1000);
+        $("header").addClass("active");
+        
+        TweenMax.to("#title", 1, {
+            left: '4vw',
+            top: '0.5vh',
+            ease: Power2.easeOut
+        });
+        
+        TweenMax.to("#title h1", animationSpeed, {
+            fontSize: '2.5vh',
+            lineHeight: '2.5vh',
+            ease: Power2.easeOut
+        });
+                                    // 0.4
+        TweenMax.to("#title #h1_voro", animationSpeed, {
+            paddingTop: '1.25vh',
+            ease: Power2.easeOut
+        });
+        
+        TweenMax.to("#title #h1_rna", animationSpeed, {
+            margin:0.8,
+            ease: Power2.easeOut
+        });
+        
+        TweenMax.to("#title img", animationSpeed, {
+            width: '5vh',
+            height: '5vh',
+            ease: Power2.easeOut
+        });
+                                    //0.4
+        TweenMax.to("#title #h1_4", animationSpeed, {
+            marginRight:0,
+            ease: Power2.easeOut
+        });
+        
+        var w = getLowerTitleWidth();
+        TweenMax.to("#lowerTitle", 1, {
+            width:1*w,
+            ease: Power2.easeOut
+        });
+        
+        $("#title").addClass("corner");
+    });
+    
+    function getLowerTitleWidth() {
+        var imgWidht = $(window).height()/100*5; //5vh
+        console.log(imgWidht);
+        var imgMargin = $(window).width()/100*2; //2vw
+        console.log(imgMargin);
+        var textWidth = $("#scale").width();
+        var tw = imgWidht + imgMargin + textWidth;
+        return tw - 1;
+    }
+    
+</script>
+{% endblock %}

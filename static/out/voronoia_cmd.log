@@ -1,0 +1,7 @@
+002d:err:winediag:nodrv_CreateWindow Application tried to create a window, but no driver could be loaded.
+002d:err:winediag:nodrv_CreateWindow Make sure that your X server is running and that $DISPLAY is set correctly.
+002d:err:ole:apartment_createwindowifneeded CreateWindow failed with error 0
+002d:err:ole:apartment_createwindowifneeded CreateWindow failed with error 0
+002d:err:ole:apartment_createwindowifneeded CreateWindow failed with error 0
+0009:err:winediag:nodrv_CreateWindow Application tried to create a window, but no driver could be loaded.
+0009:err:winediag:nodrv_CreateWindow Make sure that your X server is running and that $DISPLAY is set correctly.

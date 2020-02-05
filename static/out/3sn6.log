@@ -1,0 +1,60 @@
+not enough sidechain atoms in residue  LYS   24 A
+not enough sidechain atoms in residue  GLN   35 A
+not enough sidechain atoms in residue  LYS   58 A
+not enough sidechain atoms in residue  GLN   59 A
+not enough sidechain atoms in residue  ASP   94 A
+not enough sidechain atoms in residue  GLU  118 A
+not enough sidechain atoms in residue  ASN  136 A
+not enough sidechain atoms in residue  ASP  139 A
+not enough sidechain atoms in residue  ASP  188 A
+not enough sidechain atoms in residue  ASP  189 A
+not enough sidechain atoms in residue  VAL  191 A
+not enough sidechain atoms in residue  ASP  194 A
+not enough sidechain atoms in residue  GLN  195 A
+not enough sidechain atoms in residue  ARG  201 A
+not enough sidechain atoms in residue  LYS  216 A
+not enough sidechain atoms in residue  ASP  240 A
+not enough sidechain atoms in residue  LYS  300 A
+not enough sidechain atoms in residue  GLU  322 A
+not enough sidechain atoms in residue  THR  369 A
+too many sidechain atoms in residue  LEU  394 A
+not enough sidechain atoms in residue  GLN    1 B
+not enough sidechain atoms in residue  ARG   42 B
+not enough sidechain atoms in residue  ARG  129 B
+not enough sidechain atoms in residue  GLU  130 B
+not enough sidechain atoms in residue  GLU  172 B
+too many sidechain atoms in residue  ASN  340 B
+not enough sidechain atoms in residue  ARG   62 G
+not enough sidechain atoms in residue  GLU 1022 R
+not enough sidechain atoms in residue  GLU 1045 R
+not enough sidechain atoms in residue  ASP 1072 R
+not enough sidechain atoms in residue  LYS 1147 R
+not enough sidechain atoms in residue  ASP 1159 R
+not enough sidechain atoms in residue  ARG   63 R
+not enough sidechain atoms in residue  LYS   97 R
+not enough sidechain atoms in residue  THR   98 R
+not enough sidechain atoms in residue  TRP   99 R
+not enough sidechain atoms in residue  PHE  101 R
+not enough sidechain atoms in residue  LYS  149 R
+not enough sidechain atoms in residue  ARG  175 R
+not enough sidechain atoms in residue  ASP  192 R
+not enough sidechain atoms in residue  PHE  193 R
+not enough sidechain atoms in residue  PHE  194 R
+not enough sidechain atoms in residue  THR  195 R
+not enough sidechain atoms in residue  LYS  267 R
+not enough sidechain atoms in residue  HIS  269 R
+not enough sidechain atoms in residue  LYS  270 R
+not enough sidechain atoms in residue  LEU  272 R
+not enough sidechain atoms in residue  GLN  299 R
+not enough sidechain atoms in residue  ASN  301 R
+not enough sidechain atoms in residue  LEU  302 R
+not enough sidechain atoms in residue  ARG  304 R
+not enough sidechain atoms in residue  GLU  306 R
+not enough sidechain atoms in residue  ARG  333 R
+not enough sidechain atoms in residue  SER  112 N
+not enough sidechain atoms in residue  THR  113 N
+Initialisierung :                  411
+FindInnerWater  :                    0
+Connolly 1      :                 7394
+Entfernen       :               389731
+insgesamt       :               397536

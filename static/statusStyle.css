@@ -1,0 +1,17 @@
+#loadingBar {
+    height: 1em;
+    margin: 0 10vw;
+    margin-top: 5vh;
+    border-radius: 2px;
+    background: #09AC50;
+}
+
+#status div {
+    width: 0;
+    -webkit-transition: all 8s;
+    transition: all 8s;
+}
+
+.load #loadingBar {
+    width: 15vw;
+}

@@ -1,0 +1,8 @@
+Voronoi maker:
+http://alexbeutel.com/webgl/voronoi.html
+
+Emacs cheat sheet:
+https://www.gnu.org/software/emacs/refcards/pdf/refcard.pdf
+
+HTML cheat sheet:
+https://htmlcheatsheet.com/

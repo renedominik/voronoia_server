@@ -1,0 +1,191 @@
+body {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    left: 0;
+    top: 0;
+    overflow-x: hidden;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    width: 100vw;
+    height: 6vh;
+    /* hh = 6vh */
+    background: #03A64A;
+    font-family: 'Roboto', sans-serif;
+}
+
+header img {
+    float: left;
+    margin: 0.5vh;
+    margin-left: 4vw;
+    margin-right: 2vw;
+    width: 5vh; /* hh - margin */
+    height: 5vh; /* hh - margin */
+}
+
+header ul {
+    position: absolute;
+    right: 4vw;
+}
+
+header li {
+    float: right;
+    list-style-type: none;
+    width: 8vw;
+    height: 6vh; /* hh */
+}
+
+header li a {
+    display: block;
+    text-decoration: none;
+    color: #404040;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 6vh; /* hh */
+}
+
+header li a:hover {
+    background: #13B65A;
+}
+
+#titleLink {
+    text-decoration: none;
+    color: black;
+}
+
+section {
+    height: 80vh;
+    padding: 0 32.5vw;
+}
+
+h1 {
+    font-family: 'Questrial', sans-serif;
+    font-size: 5vh;
+    line-height: 5vh;
+    font-weight: 500;
+    margin: 4vh 0;
+    padding: 3vh;
+}
+
+h2 {
+    display: inline-block;
+    position: relative;
+    margin: 3vh 0;
+}
+    
+h2::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    transform: translate(0, -50%);
+    z-index: -1;
+    display: inline-block;
+    height: 0.25em;
+    width: 100%;
+    background: #09AC50;
+}
+
+h3 {
+    font-family: 'Questrial', sans-serif;
+    font-weight: 300;
+    margin: 0;
+    font-size: 2.5vh;
+}
+
+h3:hover {
+    cursor: pointer;
+}
+
+.InputFields {
+    margin: 5vh;
+}
+
+.contentBody {
+    font-family: 'Roboto', sans-serif;
+    text-align: justify;
+}
+/*
+#dragDropField {
+    margin-top: calc(2vw + 1vh);
+    height: 40.5vh;
+    border: 1px solid green;
+}
+
+i {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-size: 5vh;
+    color: #09AC50;
+    cursor: pointer;
+}
+
+#inputPdb {
+    display: none;
+}
+
+label.input {
+    display: none;
+}
+
+#info {
+    width: calc(15.5vw + 4px);
+    float: right;
+}
+
+#info p {
+    color: #404040;
+    font-size: calc(6px + 0.5vh);
+}
+
+#inputOptions {
+    width: calc(15.5vw + 6px);
+}
+
+#inputPdb {
+    width: calc(15.5vw + 6px);
+}
+
+#submitbtn {
+    background: #09AC50;
+    border: none;
+    border-radius: 6px;
+    padding: 15px 35px;
+    position: relative;
+    bottom: -7.5vh;
+    left: 17.5vw; /* (100vw - 2* section padding)/2 */
+  /*  transform: translate(-50%, 0%);
+    font-family: 'Questrial', sans-serif;
+    font-size: 2.5vh;
+    color: white;
+}
+
+#submitbtn:hover {
+    background: #03A64A;
+    cursor: pointer;
+}
+
+.inputField {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 1.5vh;
+}
+
+.input {
+    width: 15vw;
+    margin-top: 2vh;
+}
+
+#info p {
+    margin-top: 0.25vh;
+}
+*/
+#viewport {
+    height: 40vh;
+    width: 100%;
+}
