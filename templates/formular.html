@@ -64,7 +64,7 @@
                     <!-- email *: x@x.com -->
                     <div class="inputField">
                         <p>email *</p>
-                        <input class="input" id="email" name="email" type="text">
+                        <input class="input" id="email" name="email" type="text" value="anonymous">
                     </div>
                     <!-- Analyse -->
                     <input id="submitbtn" name="submit" type="submit" value="Analyse">
@@ -126,20 +126,29 @@
                 var fd = new FormData($('form')[0]);
                 fd.append("dnd", file);
 
+    console.log(fd);
+    console.log($('form'));
 
                 $.ajax({
                     type: "POST",
-                    url: "/submit",
+                    url: "/v4rna/submit",
                     processData: false,
                     contentType: false,
-                    cache: false,
-                    data: fd,
-                    dataType: "json",
+    data: fd,
+    success: window.setTimeout("window.location.href = 'results/' + document.getElementById('email').value.trim() + '/' + document.getElementById('tag').value.trim()", 3000)
+/*
+    function() {
+    console.log('hallo');
+    console.log('result/' + document.getElementById('tag').value.trim());
+    window.location.href = 'results/' + tag;
+    }
+/* window.setTimeout( "window.location.href='status'",3000) */
+/*    dataType: "json",
                     success: function(redirect) {
                         console.log('S O M E T H I N G');  
-                        console.log(redirect);
-                        window.location = window.location.href.substring(0, window.location.href.length - 7) + redirect.Location + "?tag=" + redirect.tag; /*redirect.getResponseHeader('Location');*/
-                    }
+    console.log(redirect);
+                            window.location = window.location.href.substring(0, window.location.href.length - 7) + redirect.Location + "?tag=" + redirect.tag; redirect.getResponseHeader('Location');
+                    }*/
                 });
             }
         });
