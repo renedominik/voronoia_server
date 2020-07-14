@@ -10,10 +10,7 @@ from werkzeug import secure_filename
 from datetime import datetime
 import random, string, os
 import getpass
-# from threading import Thread
-# import thread
 import time
-#from subprocess import Popen, PIPE
 import subprocess
 
 import sqlite3 as sql
@@ -26,7 +23,7 @@ app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
 app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
 app.config['FLASKY_MAIL_SENDER'] = 'PROFESSIONAL TESTER <monodualist121212@gmail.com>'
 app.config['USER_DATA_DIR'] = "/disk/user_data/v4rna/sessions/"
-
+app.config['APP_PATH'] = "/home/hildilab/app/v4rna/"
 
 bootstrap = Bootstrap(app)
 
@@ -82,12 +79,9 @@ def submit():
     tag = request.form['tag']
     email = request.form['email']
         
-    print(tag)
-        
     #Festlegen vom Pfad
     output_dir = '/disk/user_data/v4rna/sessions/'
-    # output_dir = '/disk/user_data/v4rna/sessions/'
-    #output_dir = '/home/hstudent/Desktop/voronoia/webapp/data/'
+
     if email != '' :
         output_dir += email + '/'
         if not os.path.exists( output_dir):
@@ -98,57 +92,48 @@ def submit():
             os.mkdir(output_dir)
                 
     #Zusammenfuegen des Directorynamens
-    now = datetime.now()
-    date = now.strftime("%Y%m%d%H%M")
+
+    #now = datetime.now()
+    #date = now.strftime("%Y%m%d%H%M")
     # random_id = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(6))
-    #id_str = date + '_' + random_id +'/'
-    id_str = date + '_' + tag + '/'
-    output_dir += id_str
+
+    output_dir += tag + '/'
     print( output_dir)
     os.mkdir( output_dir)
         
     #Speichern der Datei 
-    #filename = output_dir + secure_filename(f.filename)
     filename = output_dir + "protein.pdb" 
     f.save(filename) 
         
-    #call main executable
-    #process = Popen(["wine", "exec/get_volume.exe", "ex:0.1", "rad:protor" ,"i:" + filename + " o:" + filename[:-4] + ".vol"], stdout=PIPE, stderr=PIPE)
-    #process = Popen(["python", "exec/test.py"], stdout=PIPE,stderr=PIPE)
-    #cmd = "wine /home/hildilab/app/v4rna/exec/get_volume.exe ex:0.1 rad:protor i:%(data_pdb)s o:%(outputdir)s/%(BASE)s.vol >& %(BASE)s.log" % {"data_pdb": filename, "outputdir": "", "BASE": filename[:-4]}
-     
     #call voronoia.py
-    cmd = ["voronoia.py",filename , "-o", filename[:-4] + "_out","-vd"]
+    cmd = ["voronoia.py",filename , "-o", output_dir,"-vd"]
     print(cmd)
-    # os.system(cmd)
-    p = subprocess.check_output(cmd) #,stdout=subprocess.PIPE)
+    p = subprocess.check_output(cmd) 
     print( p)
-    # thread.start_new_thread( os.system , ( 'gedit ', ))
+    cmd = [ app.config['APP_PATH'] + "get_holes.py", output_dir,"protein.vol.extended.vol"]
+    print(cmd)
+    p = subprocess.check_output(cmd) 
+    print( p)
     print( "command terminated")
-    
+    return "" 
 
 
 @app.route('/status/<user>/<job>')
 def status( user, job):
-    files_all_exist = True
     status = 'running'
-    # check whether output files exist:
-    # rather use walk, dirname is not job but date_job
-    for name in ["protein.vol","protein.vol.extended.vol"]:
-        fname = os.path.join( app.config['USER_DATA_DIR'] , user, job, name)
-        if not os.path.isfile(fname):
-            files_all_exist = False
-            break
-    if files_all_exist:
+    fname = os.path.join( app.config['USER_DATA_DIR'] , user, job, "onlyHoles.pdb")
+    print("exists?: ",fname,job)
+    if os.path.isfile(fname):
         status = 'finished'
-    
-    return jsonify( {'status':status} )  # returns dict 
+        print('yes')
+     
+    return jsonify( {'status':status,'error':'0'} )  # returns dict 
 
 
 
 @app.route('/downloads/<user>/<job>/<filename>')
 def download( user, job, filename):
-    path = app.config['USER_DATA_DIR'] + '/' + user + '/' + job
+    path = app.config['USER_DATA_DIR'] + '/' + user + '/' + job 
     print( "download:", path)
     return send_from_directory( path,filename)
 
@@ -167,20 +152,9 @@ def result(user, tag):
     #con.close()
     # if not, check the user data:
 
-    pdb_dir = ""
-    for main, dirs, files in os.walk( os.path.join( app.config['USER_DATA_DIR'] , user )):
-        for mdir in dirs:
-            if tag in mdir:
-                pdb_dir = mdir
-                break
-        if pdb_dir != "":
-            break
     status_url = "/status/" + user + '/' + tag
-    #dir = os.system("find ./ -name '*" + tag + "'") + "/"
-    #pdb = dir + os.system("ls " + dir + " | grep .pdb")
-    print("pdb name incoming")
-    print(pdb_dir)
-    return render_template('results.html', user=user, job=pdb_dir, status_url=status_url)
+    
+    return render_template('results.html', user=user, job=tag, status_url=status_url)
 
 
 
@@ -208,3 +182,15 @@ def methods():
 @app.route('/references')
 def references():
     return render_template('references.html')
+
+
+def find_job(user, tag):
+    pdb_dir = ""
+    for mdir in os.listdir( os.path.join( app.config['USER_DATA_DIR'] , user )):
+        if os.path.isdir(mdir):
+            if tag in mdir:
+                pdb_dir = mdir
+                break
+        if pdb_dir != "":
+            break
+    return pdb_dir
