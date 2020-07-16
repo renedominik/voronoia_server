@@ -1,0 +1,53 @@
+/home/hildilab/app/basekit/basekit/voronoia.py
+
+~/app/v4rna_dead/app/templates/v4rna/faq.mako
+
+/home/hildilab/app/v4rna_dead/app/lib/biobench/tools/Voronoia4RNA.py
+
+wine /home/hildilab/app/v4rna/contrib/get_volume.exe ex:0.1 rad:protor i:%(data_pdb)s o:%(outputdir)s/%(BASE)s.vol
+
+
+become www-data:
+voronoia.py ./app/static/pdb/4E4Y/4E4Y.pdb -o /disk/user_data/v4rna/test.tmp -vd
+
+
+
+
+https://github.com/arose/ngl/blob/master/examples/scripts/parser/ply.js
+
+
+
+~/app/basekit/data/linker/index.html
+
+
+EXAMPLE:
+
+~/app/basekit/basekit/linker.py
+
+class SSFELinkIt( PyTool, ProviMixin ):
+...
+with open (index_html_file, 'r') as fp :
+     templateHtml = fp.read()
+
+templateDict["namepdbfiles"] = templateHtmlString
+
+templateHtml = templateHtml.format(**templateDict)
+
+with open (os.path.join(self.output_dir, "index.html" ), 'w') as fp :
+            fp.write(templateHtml)
+
+
+### TEMPLATE for visualization:
+
+voro-test/embedded_example.html
+/disk/user_data/v4rna/voro-test/embedded_example.html
+
+python3 -m http.server 8989
+http://0.0.0.0:8989/embedded_example.html
+
+
+#### START JUPYTER
+
+jupyter notebook get-mids.ipynb
+
+

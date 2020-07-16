@@ -91,12 +91,6 @@ def submit():
         if not os.path.isdir( output_dir):
             os.mkdir(output_dir)
                 
-    #Zusammenfuegen des Directorynamens
-
-    #now = datetime.now()
-    #date = now.strftime("%Y%m%d%H%M")
-    # random_id = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(6))
-
     output_dir += tag + '/'
     print( output_dir)
     os.mkdir( output_dir)

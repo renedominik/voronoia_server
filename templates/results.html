@@ -45,38 +45,21 @@
                 var command = href.substr( 0, href.lastIndexOf( "/" ) + 1 ) + "../../" + model;
                 console.log("URL: " + command);
                 return command;
-              }
+   }
 
-// document.addEventListener( "DOMContentLoaded", function(){
-// stage = new NGL.Stage("viewport");
-// console.log(window.location.href);
-// file = getModelURL( "/downloads/{{user}}/{{job}}/protein.pdb");
-// console.log("file:");
-// console.log(file);
-// stage.loadFile(file, {defaultRepresentation: true}).then(function(comp) {
-//         comp.setName("structure");
-//         comp.setSelection( "" );
-//         /*comp.addRepresentation( "ball+stick", {radius: "bfactor", colorScheme: "bfactor"} );*/
-//         comp.addRepresentation( "cartoon" );
-//         comp.centerView();                                                             
-// });
-
-  
-//  stage.setParameters( { backgroundColor: "black" } );
-//  } );
     
 
   
-    $().ready( function() {
+   $().ready( function() {
        console.log( "ready");
        div = $('<div class="btn"><div></div><div></div><div></div><div></div></div>');
        $('#progress').append(div);
-    status_url = getModelURL( '{{status_url}}' );
-    console.log(status_url);
+       status_url = getModelURL( '{{status_url}}' );
+       console.log(status_url);
        update_progress( status_url, div[0] );
-    });
+   });
 
-    function update_progress(status_url, status_div) {
+   function update_progress(status_url, status_div) {
         console.log("update progress");
         $(status_div.childNodes[2]).text('update every 10s ...');
         
@@ -97,38 +80,53 @@
               else{
                    console.log("completed");
 
-		   stage = new NGL.Stage("viewport");
-		  console.log(window.location.href);
-		  file = getModelURL( "/downloads/{{user}}/{{job}}/protein.pdb");
-		  console.log("file:");
-		  console.log(file);
-		  stage.loadFile(file, {defaultRepresentation: true}).then(function(comp) {
-		          comp.setName("structure");
-		          comp.setSelection( "" );
-		          /*comp.addRepresentation( "ball+stick", {radius: "bfactor", colorScheme: "bfactor"} );*/
-		          comp.addRepresentation( "cartoon" );
-		          comp.centerView();                                                             
-		  });
+	 	  stage = new NGL.Stage("viewport");
+                  console.log(window.location.href);
 
+                  var lic_selection;
+                  var reader = new FileReader();
+                  reader.addEventListener('load', function(e) {
+                          var lic_selection = e.target.result;
+                  });
+
+                  file = getModelURL("/downloads/{{user}}/{{job}}/selection");
+                  reader.readAsText(file);
   
-		  stage.setParameters( { backgroundColor: "black" } );
-		                   file = getModelURL( "/downloads/{{user}}/{{job}}/onlyHoles.pdb");
-		                   console.log(file);
+
+                  // Laden der PDB-Datei
+	 	  file = getModelURL( "/downloads/{{user}}/{{job}}/protein.pdb");
+	 	  console.log("file:");
+                  console.log(file);
+  
+	 	  stage.loadFile(file, {defaultRepresentation: true}).then(function(comp) {
+	 	          comp.setName("structure");
+	 	          comp.setSelection( "" );
+	 	          /*comp.addRepresentation( "ball+stick", {radius: "bfactor", colorScheme: "bfactor"} );*/
+	 	          comp.addRepresentation( "cartoon", {colorScheme: "bfactor"} );
+                          comp.addRepresentation("licorice", {sele: lic_selection});
+                          comp.centerView();                                                             
+	 	  });
+	 
+  	 
+	 	  stage.setParameters( { backgroundColor: "black" } );
+
+                  // Laden der Hohlräume
+                  file = getModelURL( "/downloads/{{user}}/{{job}}/onlyHoles.pdb");
+		  console.log(file);
 		
-		 stage.loadFile(file, { defaultRepresentation: true } ).then( function( comp ){
+	          stage.loadFile(file, { defaultRepresentation: true } ).then( function( comp ){
 		                comp.setName( "Holes" );
 		                comp.setSelection( "" );
 		                comp.addRepresentation( "ball+stick", {radius: "bfactor", colorScheme: "bfactor"} );
-//		                comp.centerView();
-		            } );
-      // ADD NGL SPHERES AND STUFF HERE !! 
-                  $(status_div.childNodes[2]).text('JOB IS COMPLETED' );
+		  } );
+
+                  $(status_div.childNodes[2]).text('Click on image to enlarge' );
                }
            } 
            else {
                // rerun in 10 seconds
                setTimeout(function() {
-                  update_progress(status_url, status_div);
+                    update_progress(status_url, status_div);
                }, 10000);
            }
         });

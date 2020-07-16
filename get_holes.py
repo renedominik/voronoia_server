@@ -47,8 +47,10 @@ with open( os.path.join(out,'onlyHoles.pdb'), 'w') as fp:
         atomRes=str(key).rjust(3)
         fp.write('ATOM    '+atomRes+'  H   HOL H '+atomRes+'    '+X+Y+Z+'  1.00'+B+'                 H  \n')
 
-ngl_inv_residues = ""
-for key in involved_residues:
-    ids=list(dict.fromkeys(involved_residues[key]))
-    ngl_inv_residues +="(:{} and ({})) ".format(key, ' '.join(ids))
-print(ngl_inv_residues)
+with open(os.path.join(out, 'selection'), 'w') as fp:
+    ngl_inv_residues = ""
+    for key in involved_residues:
+        ids=list(dict.fromkeys(involved_residues[key]))
+        ngl_inv_residues +="(:{} and ({})) ".format(key, ' '.join(ids))
+    fp.write(ngl_inv_residues)
+    print(ngl_inv_residues)

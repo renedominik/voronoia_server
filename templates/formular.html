@@ -129,30 +129,16 @@
     console.log(fd);
     console.log($('form'));
 
-                $.ajax({
-                    type: "POST",
-                    url: "/v4rna/submit",
-                    processData: false,
-                    contentType: false,
-    data: fd,
-    success: window.setTimeout("window.location.href = 'results/' + document.getElementById('email').value.trim() + '/' + document.getElementById('tag').value.trim()", 3000)
-/*
-    function() {
-    console.log('hallo');
-    console.log('result/' + document.getElementById('tag').value.trim());
-    window.location.href = 'results/' + tag;
-    }
-/* window.setTimeout( "window.location.href='status'",3000) */
-/*    dataType: "json",
-                    success: function(redirect) {
-                        console.log('S O M E T H I N G');  
-    console.log(redirect);
-                            window.location = window.location.href.substring(0, window.location.href.length - 7) + redirect.Location + "?tag=" + redirect.tag; redirect.getResponseHeader('Location');
-                    }*/
-                });
-            }
-        });
-        
+         $.ajax({
+             type: "POST",
+             url: "/v4rna/submit",
+             processData: false,
+             contentType: false,
+             data: fd,
+             success: window.setTimeout("window.location.href = 'results/' + document.getElementById('email').value.trim() + '/' + document.getElementById('tag').value.trim()", 3000)
+          });
+        }
+      });       
     });
 </script>
 {% endblock %}
