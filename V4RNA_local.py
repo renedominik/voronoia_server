@@ -83,13 +83,10 @@ def submit():
     output_dir = '/disk/user_data/v4rna/sessions/'
 
     if email != '' :
-        output_dir += email + '/'
-        if not os.path.exists( output_dir):
-            os.mkdir(output_dir)
-    else:
-        output_dir += 'anonymous/'
-        if not os.path.isdir( output_dir):
-            os.mkdir(output_dir)
+        email = 'anonymous'
+    output_dir += email + '/'
+    if not os.path.exists( output_dir):
+        os.mkdir(output_dir)
                 
     output_dir += tag + '/'
     print( output_dir)
@@ -108,8 +105,15 @@ def submit():
     print(cmd)
     p = subprocess.check_output(cmd) 
     print( p)
+#    cmd = [ app.config['APP_PATH'] + "get_holes.py", output_dir,"protein.vol.extended.vol"]
+#    print(cmd)
+#    p = subprocess.check_output(cmd) 
+#    print( p)
     print( "command terminated")
-    return "" 
+    #return "" 
+    status_url = "/status/" + email + "/" + tag
+    print("status_url: " + status_url)
+    return render_template("results.html", user=email, job=tag, status_url=status_url)
 
 
 @app.route('/status/<user>/<job>')
@@ -133,6 +137,12 @@ def download( user, job, filename):
 
 
 
+#@app.route('/textdownloads/<user>/<job>/<filename>')
+#def text_download(user, job, filename):
+    #path = app.config['USER_DATA_DIR'] + '/' + user + '/' + job
+    #return jsonify({'selection':
+
+
 @app.route('/results/<user>/<tag>')
 def result(user, tag):
     # check first if the tag is in the db:
@@ -146,10 +156,9 @@ def result(user, tag):
     #con.close()
     # if not, check the user data:
 
-    status_url = "/status/" + user + '/' + tag
+    status_url = "/status/" + user + "/" + tag
     
     return render_template('results.html', user=user, job=tag, status_url=status_url)
-
 
 
 @app.route('/databank')

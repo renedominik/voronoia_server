@@ -40,9 +40,9 @@
 <script> 
   NGL.mainScriptPathFile = "{{url_for('static', filename='ngl.js')}}";
     
-  function getModelURL( model ){
+  function getModelURL(model){
                 var href = window.location.href;
-                var command = href.substr( 0, href.lastIndexOf( "/" ) + 1 ) + "../../" + model;
+	  	var command = href.substr(0, href.lastIndexOf("/")) + model;
                 console.log("URL: " + command);
                 return command;
    }
@@ -54,7 +54,7 @@
        console.log( "ready");
        div = $('<div class="btn"><div></div><div></div><div></div><div></div></div>');
        $('#progress').append(div);
-       status_url = getModelURL( '{{status_url}}' );
+	   status_url = getModelURL( '{{status_url}}' );
        console.log(status_url);
        update_progress( status_url, div[0] );
    });
@@ -81,18 +81,12 @@
                    console.log("completed");
 
 	 	  stage = new NGL.Stage("viewport");
-                  console.log(window.location.href);
+  		  console.log(window.location.href);
+
+                  // TODO: move vis stuff to visualize function -> less indentation levels <:
 
                   var lic_selection;
-                  var reader = new FileReader();
-                  reader.addEventListener('load', function(e) {
-                          var lic_selection = e.target.result;
-                  });
-
-                  file = getModelURL("/downloads/{{user}}/{{job}}/selection");
-                  reader.readAsText(file);
-  
-
+		   
                   // Laden der PDB-Datei
 	 	  file = getModelURL( "/downloads/{{user}}/{{job}}/protein.pdb");
 	 	  console.log("file:");
@@ -103,7 +97,7 @@
 	 	          comp.setSelection( "" );
 	 	          /*comp.addRepresentation( "ball+stick", {radius: "bfactor", colorScheme: "bfactor"} );*/
 	 	          comp.addRepresentation( "cartoon", {colorScheme: "bfactor"} );
-                          comp.addRepresentation("licorice", {sele: lic_selection});
+                          comp.addRepresentation("licorice", {lic_selection});
                           comp.centerView();                                                             
 	 	  });
 	 

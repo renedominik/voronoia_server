@@ -117,8 +117,8 @@
         });
         
         $('#submitbtn').on('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();                //Die Eventfunktionen verhindern das zweimalige ausführen von $.ajax()
+            //e.preventDefault();
+            //e.stopPropagation();                //Die Eventfunktionen verhindern das zweimalige ausführen von $.ajax()
             console.log(document.getElementById('tag').value.trim());
             if(!document.getElementById('tag').value.trim()) {
                 $('#tag').css('border-bottom', '1px solid red');
@@ -129,6 +129,7 @@
     console.log(fd);
     console.log($('form'));
 
+		    /*
          $.ajax({
              type: "POST",
              url: "/v4rna/submit",
@@ -137,6 +138,7 @@
              data: fd,
              success: window.setTimeout("window.location.href = 'results/' + document.getElementById('email').value.trim() + '/' + document.getElementById('tag').value.trim()", 3000)
           });
+	  */
         }
       });       
     });
