@@ -57,17 +57,14 @@ def send_email(to, subject, template, **kwargs):
 
 @app.route('/')
 def index():
-    print('index') 
-    #send_email('monodualismus121212@gmail.com', 'hi', 'mail/test')
+    # TODO: add mail notification
     return render_template('home.html')
 
 
 @app.route('/submit', methods=['GET', 'POST'])
 def submit():
-    print('submit a job')
     form = InputForm()
     if request.method == 'GET':
-        # GET:
         return render_template('formular.html', form=form, tag_str="tag")
 
     print('post')
@@ -105,15 +102,11 @@ def submit():
     print(cmd)
     p = subprocess.check_output(cmd) 
     print( p)
-#    cmd = [ app.config['APP_PATH'] + "get_holes.py", output_dir,"protein.vol.extended.vol"]
-#    print(cmd)
-#    p = subprocess.check_output(cmd) 
-#    print( p)
     print( "command terminated")
-    #return "" 
+
     status_url = "/status/" + email + "/" + tag
-    print("status_url: " + status_url)
-    return render_template("results.html", user=email, job=tag, status_url=status_url)
+
+    return render_template("results.html", user=email, job=tag, lic_selection="ABBA")
 
 
 @app.route('/status/<user>/<job>')

@@ -23,19 +23,16 @@
             <form method="POST" enctype="multipart/form-data">
                 {{ form.hidden_tag() }}    
                 <div id="fileUploadInterface">
-                    <!-- browse pdb -->
                     <label id="uploadPdb" for="inputPdb">
                         <div>
                             Upload a PDB
                         </div>
                     </label>
-                    <!-- flask-wtf input, display none -->
                     <div class="inputField hide">
                         {{ form.pdb.label(class='input') }}
                         <br>
                         {{ form.pdb(id='inputPdb', class='input') }}
                     </div>
-                    <!-- drag & drop -->
                     <div id="dragDropField">
                         <i>cloud_upload</i>
                         <span>Drag and drop a PDB file here</span>
@@ -43,12 +40,10 @@
                 </div>
                 
                 <div id="submitInterface" class="hide">
-                    <!-- pdb file: xxxx.pdb -->
                     <div class="inputField">
                         <p>pdb file</p>
                         <div id="fileField"></div>
                     </div>
-                    <!-- atom radii: ProtOr -->
                     <div class="inputField">
                         <p>atom radii</p>
                         <select class="input" id="inputOptions" name="options">
@@ -56,17 +51,14 @@
                             <option value="stouten">Stouten</option>
                         </select>
                     </div>                             
-                    <!-- tag: xx -->
                     <div class="inputField">
                         <p>tag</p>
                         <input class="input" id="tag" name="tag" type="text">
                     </div>
-                    <!-- email *: x@x.com -->
                     <div class="inputField">
                         <p>email *</p>
                         <input class="input" id="email" name="email" type="text" value="anonymous">
                     </div>
-                    <!-- Analyse -->
                     <input id="submitbtn" name="submit" type="submit" value="Analyse">
                 </div>
             </form>
@@ -80,15 +72,12 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 <script type="text/javascript">
-    
+
     var file;
     
     function interfaceChange(file) {
-        console.log('interfaceChangeSubmissionServices');
-        console.log(file);
         $('#fileUploadInterface').addClass('hide');
         $('#submitInterface').removeClass('hide');
-        /*$('#fileField').html('<p>' + file.name + '</p><i>close</i>');*/
         $('#fileField').html('<p>' + file.name + '</p>');
     }
     
@@ -117,30 +106,10 @@
         });
         
         $('#submitbtn').on('click', function(e) {
-            //e.preventDefault();
-            //e.stopPropagation();                //Die Eventfunktionen verhindern das zweimalige ausführen von $.ajax()
-            console.log(document.getElementById('tag').value.trim());
             if(!document.getElementById('tag').value.trim()) {
                 $('#tag').css('border-bottom', '1px solid red');
-            } else {
-                var fd = new FormData($('form')[0]);
-                fd.append("dnd", file);
-
-    console.log(fd);
-    console.log($('form'));
-
-		    /*
-         $.ajax({
-             type: "POST",
-             url: "/v4rna/submit",
-             processData: false,
-             contentType: false,
-             data: fd,
-             success: window.setTimeout("window.location.href = 'results/' + document.getElementById('email').value.trim() + '/' + document.getElementById('tag').value.trim()", 3000)
-          });
-	  */
-        }
-      });       
+            }
+        });       
     });
 </script>
 {% endblock %}
