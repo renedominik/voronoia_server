@@ -41,7 +41,6 @@
     NGL.mainScriptPathFile = "{{url_for('static', filename='ngl.js')}}";
 
     $().ready( function() {
-	console.log("vor dem fehler?")
         div = $('<div class="btn"><div></div><div></div><div></div><div></div></div>');
 	$('#progress').append(div);
 	status_url = getModelURL('/status/{{user}}/{{job}}');
@@ -56,13 +55,17 @@
     }
 
 
-    function loadPDB(stage, filename, name, representation, representation_dict, center) {
+    function loadPDB(stage, filename, name, representations, representation_dicts, center) {
 	file = getModelURL("/downloads/{{user}}/{{job}}/" + filename);
          
 	stage.loadFile(file, { defaultRepresentation: true }).then( function(comp) {
             comp.setName(name);
 	    comp.setSelection("");
-	    comp.addRepresentation(representation, representation_dict);
+
+            for(var i = 0; i < representations.length; i++) {
+	        comp.addRepresentation(representations[i], representation_dicts[i]);
+            }
+
 	    if (center) {
 	        comp.centerView();
 	    }
@@ -74,13 +77,12 @@
 	stage = new NGL.Stage("viewport");
         stage.setParameters( { backgroundColor: "black" } );
 
-	var lic_selection = "{{lic_selection}}";
-
         // Laden der Molekuelstruktur
-        loadPDB(stage, "protein.pdb", "structure", "cartoon",  {colorScheme: 'bfactor'}, true);
+	var lic_selection = "{{lic_selection}}"
+	loadPDB(stage, "protein.pdb", "structure", ["cartoon", "licorice"],  [{colorScheme: 'bfactor'}, {sele: lic_selection}], true);
 
         // Laden der Hohlraeume
-        loadPDB(stage, "onlyHoles.pdb", "holes", "ball+stick", {radius: 'bfactor', colorscheme: 'bfactor'});
+	loadPDB(stage, "onlyHoles.pdb", "holes", ["ball+stick"], [{radius: 'bfactor', colorscheme: 'bfactor'}]);
     }
 
 

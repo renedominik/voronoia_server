@@ -67,8 +67,6 @@ def submit():
     if request.method == 'GET':
         return render_template('formular.html', form=form, tag_str="tag")
 
-    print('post')
-
     f = request.files['pdb']
     if f.filename == '':
         f = request.files.get('dnd')
@@ -86,7 +84,6 @@ def submit():
         os.mkdir(output_dir)
                 
     output_dir += tag + '/'
-    print( output_dir)
     os.mkdir( output_dir)
         
     #Speichern der Datei 
@@ -95,18 +92,15 @@ def submit():
         
     #call voronoia.py
     cmd = ["voronoia.py",filename , "-o", output_dir,"-vd"]
-    print(cmd)
     p = subprocess.check_output(cmd) 
-    print( p)
+
+    #call get_holes.py
     cmd = [ app.config['APP_PATH'] + "get_holes.py", output_dir,"protein.vol.extended.vol"]
-    print(cmd)
-    p = subprocess.check_output(cmd) 
-    print( p)
+    lic_selection = subprocess.check_output(cmd).replace("\n", "").replace("\r", "")
+
     print( "command terminated")
 
-    status_url = "/status/" + email + "/" + tag
-
-    return render_template("results.html", user=email, job=tag, lic_selection="ABBA")
+    return render_template("results.html", user=email, job=tag, lic_selection=lic_selection)
 
 
 @app.route('/status/<user>/<job>')
@@ -121,19 +115,11 @@ def status( user, job):
     return jsonify( {'status':status,'error':'0'} )  # returns dict 
 
 
-
 @app.route('/downloads/<user>/<job>/<filename>')
 def download( user, job, filename):
     path = app.config['USER_DATA_DIR'] + '/' + user + '/' + job 
     print( "download:", path)
     return send_from_directory( path,filename)
-
-
-
-#@app.route('/textdownloads/<user>/<job>/<filename>')
-#def text_download(user, job, filename):
-    #path = app.config['USER_DATA_DIR'] + '/' + user + '/' + job
-    #return jsonify({'selection':
 
 
 @app.route('/results/<user>/<tag>')
