@@ -33731,9 +33731,6 @@ type: 'network',
 __srcName: 'url',
 _read: function (e) {
 var t = this.src;
-    console.log("THIS:SRC:::::")
-    console.log(t);
-    console.log("HALLO")
 'function' == typeof importScripts && '../' === t.substr(0, 3) && (t = '../' + t);
 var i = new XMLHttpRequest;
 i.open('GET', t, !0),

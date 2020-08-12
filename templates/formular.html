@@ -80,6 +80,27 @@
         $('#submitInterface').removeClass('hide');
         $('#fileField').html('<p>' + file.name + '</p>');
     }
+
+    //unused right now; cant get status_url before user has submitted the form
+    function update_progress(status_url, status_div) {
+        $.getJSON(status_url, function(data) {
+           $(status_div.childNodes[0]).text('Job status:  ' + data['status']);
+           if ("Error" ==  data['status'].substring(0,5)) {
+               $(status_div.childNodes[2]).addClass("warning").text('JOB SUBMISSION FAILED!' );
+               $(status_div.childNodes[3]).text('try again and if problems still persists drop us an email.' );
+           } else if( data['status'] == 'finished') {
+              if( data['error'] != '0'){
+                  $(status_div.childNodes[2]).addClass("warning").text('CALCULATION FAILED!!!' );
+                  $(status_div.childNodes[3]).text('try again and if problems still persists drop us an email.' );
+              } 
+           } else {
+               // rerun in 10 seconds
+               setTimeout(function() {
+                    update_progress(status_url, status_div);
+               }, 10000);
+           }
+        });
+    }
     
     $(document).ready(function() {
         $('#dragDropField').on('drag dragstart dragend dragover dragenter dragleave drop', function(e) {

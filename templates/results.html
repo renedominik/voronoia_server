@@ -22,11 +22,6 @@
           <h2>V I E W</h2>
 	  <p> {{ tag }} </p>
           <div id="viewport"></div>
-	  <br>
-	  <h2>S T A T U S</h2>
-	  <p><div id="progress"></div></p>
-	  <p>Results will be displayed above as soon as calculations are finished. This may take up to ten minutes.</p>
-	  <p>If you store the URL you can access your results for the next 4 weeks.</p>
         </div>
     </center>
 </section>
@@ -41,10 +36,11 @@
     NGL.mainScriptPathFile = "{{url_for('static', filename='ngl.js')}}";
 
     $().ready( function() {
-        div = $('<div class="btn"><div></div><div></div><div></div><div></div></div>');
-	$('#progress').append(div);
-	status_url = getModelURL('/status/{{user}}/{{job}}');
-   	update_progress( status_url, div[0] );
+        //div = $('<div class="btn"><div></div><div></div><div></div><div></div></div>');
+	//$('#progress').append(div);
+	//status_url = getModelURL('/status/{{user}}/{{job}}');
+   	//update_progress( status_url, div[0] );
+	visualize();
     });
 
     
@@ -73,7 +69,7 @@
     }
 
 
-    function visualization() {
+    function visualize() {
 	stage = new NGL.Stage("viewport");
         stage.setParameters( { backgroundColor: "black" } );
 
@@ -102,7 +98,7 @@
                   $(status_div.childNodes[2]).addClass("warning").text('CALCULATION FAILED!!!' );
                   $(status_div.childNodes[3]).text('try again and if problems still persists drop us an email.' );
               } else {
-		  visualization();
+		  visualize();
                   $(status_div.childNodes[2]).text('Click on image to enlarge' );
               }
 

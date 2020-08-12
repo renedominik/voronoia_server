@@ -96,7 +96,16 @@ def submit():
 
     #call get_holes.py
     cmd = [ app.config['APP_PATH'] + "get_holes.py", output_dir,"protein.vol.extended.vol"]
-    lic_selection = subprocess.check_output(cmd).replace("\n", "").replace("\r", "")
+    p = subprocess.check_output(cmd)
+
+    #create zip file
+    # zip not working: when path is given (output_dir), the zip containes the files in the path; when path is not given, no file is in the zip and an error occurs
+    cmd = ["zip", output_dir + "results.zip", output_dir + "get_holes.pdb", output_dir + "protein.vol.extended.vol", output_dir + "selection"]
+    p = subprocess.check_output(cmd)
+
+    #read in licorice selection
+    f = open(output_dir + "/selection", "r")
+    lic_selection = f.read().replace("\n", "").replace("\r", "")
 
     print( "command terminated")
 
