@@ -61,6 +61,11 @@ def index():
     return render_template('home.html')
 
 
+@app.route('/results')
+def res():
+    return render_template('results.html', user="anonymous", job="tenben", lic_selection="")
+
+
 @app.route('/submit', methods=['GET', 'POST'])
 def submit():
     form = InputForm()
@@ -99,8 +104,8 @@ def submit():
     p = subprocess.check_output(cmd)
 
     #create zip file
-    # zip not working: when path is given (output_dir), the zip containes the files in the path; when path is not given, no file is in the zip and an error occurs
-    cmd = ["zip", output_dir + "results.zip", output_dir + "get_holes.pdb", output_dir + "protein.vol.extended.vol", output_dir + "selection"]
+    os.chdir(output_dir)
+    cmd = ["zip", "results.zip", "onlyHoles.pdb", "protein.vol.extended.vol", "selection"]
     p = subprocess.check_output(cmd)
 
     #read in licorice selection
@@ -130,7 +135,7 @@ def download( user, job, filename):
     print( "download:", path)
     return send_from_directory( path,filename)
 
-
+"""
 @app.route('/results/<user>/<tag>')
 def result(user, tag):
     # check first if the tag is in the db:
@@ -147,6 +152,7 @@ def result(user, tag):
     status_url = "/status/" + user + "/" + tag
     
     return render_template('results.html', user=user, job=tag, status_url=status_url)
+"""
 
 
 @app.route('/databank')
