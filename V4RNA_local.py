@@ -61,11 +61,6 @@ def index():
     return render_template('home.html')
 
 
-@app.route('/results')
-def res():
-    return render_template('results.html', user="anonymous", job="tenben", lic_selection="")
-
-
 @app.route('/submit', methods=['GET', 'POST'])
 def submit():
     form = InputForm()
@@ -80,7 +75,8 @@ def submit():
     email = request.form['email']
         
     #Festlegen vom Pfad
-    output_dir = '/disk/user_data/v4rna/sessions/'
+    #output_dir = '/disk/user_data/v4rna/sessions/'
+    output_dir = app.config['USER_DATA_DIR']
 
     if email != '' :
         email = 'anonymous'
@@ -108,6 +104,7 @@ def submit():
     cmd = ["zip", "results.zip", "onlyHoles.pdb", "protein.vol.extended.vol", "selection"]
     p = subprocess.check_output(cmd)
 
+    """
     #read in licorice selection
     f = open(output_dir + "/selection", "r")
     lic_selection = f.read().replace("\n", "").replace("\r", "")
@@ -115,6 +112,19 @@ def submit():
     print( "command terminated")
 
     return render_template("results.html", user=email, job=tag, lic_selection=lic_selection)
+    """
+
+    print('redirecting :D')
+    return redirect(url_for('results', user=email, job=tag))
+
+
+@app.route('/results/<user>/<job>')
+def results(user, job):
+    # read in licorice selection
+    filename = app.config['USER_DATA_DIR'] + user + '/' + job + '/selection'
+    lic_selection = open(filename, 'r').read().replace("\n", "").replace("\r", "")
+
+    return render_template('results.html', user=user, job=job, lic_selection=lic_selection)
 
 
 @app.route('/status/<user>/<job>')
@@ -153,6 +163,11 @@ def result(user, tag):
     
     return render_template('results.html', user=user, job=tag, status_url=status_url)
 """
+
+
+@app.route('/menu/<user>/<tag>')
+def menu(user, tag):
+    return render_template('viewport.html', user=user, job=tag, lic_selection="")
 
 
 @app.route('/databank')
