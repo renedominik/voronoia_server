@@ -22,14 +22,14 @@ app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
 app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
 app.config['FLASKY_MAIL_SENDER'] = 'PROFESSIONAL TESTER <monodualist121212@gmail.com>'
-app.config['USER_DATA_DIR'] = "/disk/user_data/v4rna/sessions/"
-app.config['APP_PATH'] = "/home/hildilab/app/v4rna/"
+app.config['USER_DATA_DIR'] = "/disk/user_data/voronoia/sessions/"
+app.config['APP_PATH'] = "/home/hildilab/app/voronoia/"
 
 bootstrap = Bootstrap(app)
 
 mail = Mail(app)
 
-sql_db = "/disk/data/v4rna/jobs.db"
+sql_db = "/disk/data/voronoia/jobs.db"
 
 
 class InputForm(FlaskForm):
@@ -75,7 +75,7 @@ def submit():
     email = request.form['email']
         
     #Festlegen vom Pfad
-    #output_dir = '/disk/user_data/v4rna/sessions/'
+    #output_dir = '/disk/user_data/voronoia/sessions/'
     output_dir = app.config['USER_DATA_DIR']
 
     if email != '' :
