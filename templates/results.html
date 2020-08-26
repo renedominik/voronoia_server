@@ -23,8 +23,9 @@
         <div id="visualisation" class="contentBody">
           <h2>V I E W</h2>
           <div id="viewport"></div>
-	  <a href="/voronoia/downloads/{{user}}/{{job}}/results.zip"><i>file_download</i></a>
-	  <a href="/voronoia/menu/{{user}}/{{job}}" style="float:right;"><i>fullscreen</i></a>
+      <a href="/voronoia/downloads/{{user}}/{{job}}/results.zip"><i>file_download</i></a>
+      <!-- TODO: statt abs. url_for nutzen-->
+	  <a id="fullscreen_icon" style="float:right;"><i>fullscreen</i></a>
         </div>
     </center>
 </section>
@@ -39,14 +40,20 @@
 <script> 
     NGL.mainScriptPathFile = "{{url_for('static', filename='ngl.js')}}";
 
+    link = "/voronoia/menu?u={{user}}&j={{job}}&lic={{lic_selection}}".split(' ').join('_');
+    $("#fullscreen_icon").attr("href", link);
+
     $().ready( function() {
-        visualize();
-        /*
-        div = $('<div class="btn"><div></div><div></div><div></div><div></div></div>');
-	    $('#progress').append(div);
-	    status_url = getModelURL('/status/{{user}}/{{job}}');
-   	    update_progress( status_url, div[0] );
-        */
+
+        stage = new NGL.Stage("viewport");
+        stage.setParameters( { backgroundColor: "black" } );
+ 			       
+        // load molecule structure
+        var lic_selection = "{{lic_selection}}";
+        loadPDB(stage, "protein.pdb", "structure", ["cartoon", "licorice"],  [{colorScheme: 'bfactor'}, {sele: lic_selection}], true);
+
+        // load cavaties
+	    loadPDB(stage, "onlyHoles.pdb", "holes", ["ball+stick"], [{radius: 'bfactor', colorscheme: 'bfactor'}]);
     });
 
     
@@ -74,57 +81,7 @@
         });
     }
 
-
-    function visualize() {
-        stage = new NGL.Stage("viewport");
-        stage.setParameters( { backgroundColor: "black" } );
- 			       
-        // Laden der Molekuelstruktur
-        var lic_selection = "{{lic_selection}}"
-        loadPDB(stage, "protein.pdb", "structure", ["cartoon", "licorice"],  [{colorScheme: 'bfactor'}, {sele: lic_selection}], true);
-
-        // Laden der Hohlraeume
-	    loadPDB(stage, "onlyHoles.pdb", "holes", ["ball+stick"], [{radius: 'bfactor', colorscheme: 'bfactor'}]);
-    }
-
-    /*
-    function update_progress(status_url, status_div) {
-        // send GET request to status URL
-        $.getJSON(status_url, function(data) {
-           // update UI
-           $(status_div.childNodes[0]).text('Job status:  ' + data['status']);
-           if( "Error" ==  data['status'].substring(0,5) ){
-
-               $(status_div.childNodes[2]).addClass("warning").text('JOB SUBMISSION FAILED!' );
-               $(status_div.childNodes[3]).text('try again and if problems still persists drop us an email.' );
-
-           } else if( data['status'] == 'finished'){
-
-              if( data['error'] != '0'){
-                  $(status_div.childNodes[2]).addClass("warning").text('CALCULATION FAILED!!!' );
-                  $(status_div.childNodes[3]).text('try again and if problems still persists drop us an email.' );
-              } else {
-		  visualize();
-                  $(status_div.childNodes[2]).text('Click on image to enlarge' );
-              }
-
-           } else {
-               // rerun in 10 seconds
-               setTimeout(function() {
-                    update_progress(status_url, status_div);
-               }, 10000);
-           }
-        });
-    }
-    */
-
   </script>
-
-
-
-
 
 {{ super() }}
 {% endblock %}
-
-

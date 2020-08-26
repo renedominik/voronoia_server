@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>viewport</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='nglgui/font-awesome.min.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static', filename='nglgui/main.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static', filename='nglgui/light.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static', filename='nglgui/dark.css')}}" />
+</head>
+
+<body>
+    <!-- NGL -->
+    <script src="{{url_for('static', filename='nglgui/ngl.js')}}"></script>
+
+    <!-- UI -->
+    <script src="{{url_for('static',filename='nglgui/signals.min.js')}}"></script>
+    <script src="{{url_for('static',filename='nglgui/tether.min.js')}}"></script>
+    <script src="{{url_for('static',filename='nglgui/colorpicker.min.js')}}"></script>
+    <script src="{{url_for('static',filename='nglgui/ui.js')}}"></script>
+    <script src="{{url_for('static',filename='nglgui/ui.extra.js')}}"></script>
+    <script src="{{url_for('static',filename='nglgui/ui.ngl.js')}}"></script>
+    <script src="{{url_for('static',filename='nglgui/gui.js')}}"></script>
+
+    <script>
+        NGL.cssDirectory = "css/";
+        NGL.documentationUrl = "api/index.html";
+        NGL.examplesListUrl = "scripts/list.json";
+        NGL.examplesScriptUrl = "scripts/";
+
+        // Datasources
+        NGL.DatasourceRegistry.add("data", new NGL.StaticDatasource("data/"));
+
+        var stage;
+        document.addEventListener("DOMContentLoaded", function (){
+            stage = new NGL.Stage();
+            NGL.StageWidget(stage);
+            var load = NGL.getQuery("load");
+            if(load) stage.loadFile(load, { defaultRepresentation: true });
+            var script = NGL.getQuery("script");
+            if(script) stage.loadScript("scripts/" + script + ".js");
+        } );
+    </script>
+
+</body>
+</html>

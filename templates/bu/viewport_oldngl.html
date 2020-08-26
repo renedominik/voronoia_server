@@ -1,34 +1,34 @@
 {% extends "base.html" %}
 
 {% block head %}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}" media="all">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='resultsStyle.css')}}" media="all">
 <link href="https://fonts.googleapis.com/css?family=Questrial&display=swap" rel="stylesheet"> 
 <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="{{url_for('static',filename='ngl/css/font-awesome.min.css')}}" />
-<link rel="stylesheet" href="{{url_for('static',filename='ngl/css/main.css')}}" />
-<link rel="stylesheet" href="{{url_for('static',filename='ngl/css/dark.css')}}" />
-<style>
-    #sidebar {
-        position: absolute;
-        right: 0px;
-        top: 32px;
-        bottom: 0px;
-        width: 500px;
-        overflow: hidden;
-    }
-</style>
+{% endblock %}
+
+
+
+{% block header %}
+  {{super()}}
 {% endblock %}
 
 
 
 {% block content %}
-    <div id="viewport"></div>
+<section>
+    <center>
+        <h1>Results</h1>
+        <div id="visualisation" class="contentBody">
+          <h2>V I E W</h2>
+          <div id="viewport"></div>
+	  <a href="/voronoia/downloads/{{user}}/{{job}}/results.zip"><i>file_download</i></a>
+        </div>
+    </center>
+</section>
 {% endblock %}
 
-
-{% block header %}
-
-{% endblock %}
 
 
 {% block scripts %}
@@ -92,22 +92,16 @@
 <script src="{{url_for('static',filename='ngl/js/ngl/gui.js')}}"></script>
 
 <script> 
-    NGL.mainScriptPathFile = "{{url_for('static', filename='ngl/js/build.ngl.full.min.js')}}";
+    NGL.mainScriptPathFile = "{{url_for('static', filename='ngl.js')}}";
     NGL.cssDirectory = "{{url_for('static', filename='ngl/css/')}}";
     NGL.assetsDirectory = "{{url_for('static', filename='ngl/')}}";
-	
-    console.log("right template");
-
-    NGL.DatasourceRegistry.add(
-        "data", new NGL.StaticDatasource( "data/" )
-    );
 
     $().ready( function() {
         //div = $('<div class="btn"><div></div><div></div><div></div><div></div></div>');
-	    //$('#progress').append(div);
-	    //status_url = getModelURL('/status/{{user}}/{{job}}');
-   	    //update_progress( status_url, div[0] );
-	    visualize();
+	//$('#progress').append(div);
+	//status_url = getModelURL('/status/{{user}}/{{job}}');
+   	//update_progress( status_url, div[0] );
+	visualize();
     });
 
     
@@ -138,32 +132,8 @@
 
     function visualize() {
 	stage = new NGL.Stage("viewport");
-
-	//Aendern des Menues
-        NGL.MenubarWidget = function( stage ){
-	    var container = new UI.Panel();
-	    container.add( new NGL.MenubarViewWidget( stage ) );
-	    container.add( new NGL.MenubarHelpWidget( stage ) );
-	    container.add(
-	        new UI.Panel().setClass( "menu" ).setFloat( "right" ).add(
-		    new UI.Text( "NGL Viewer " + NGL.REVISION ).setClass( "title" )
-	        )
-	    );
-	    return container;
-        };
-
 	NGL.StageWidget(stage);
-
-	var example = NGL.GET( "example" );
-        if( example ) NGL.ExampleRegistry.load( example, stage );
-
-        var load = NGL.GET( "load" );
-        if( load ) stage.loadFile( load, { defaultRepresentation: true } );
-
-        var plugin = NGL.GET( "plugin" );
-        if( plugin ) NGL.PluginRegistry.load( plugin, stage );
-
-	//TODO: fix loading of files
+        //stage.setParameters( { backgroundColor: "black" } );
  			       
         // Laden der Molekuelstruktur
 	var lic_selection = "{{lic_selection}}"

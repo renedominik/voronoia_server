@@ -12,6 +12,7 @@ import random, string, os
 import getpass
 import time
 import subprocess
+import threading
 
 import sqlite3 as sql
 
@@ -33,7 +34,7 @@ sql_db = "/disk/data/voronoia/jobs.db"
 
 
 class InputForm(FlaskForm):
-    #Definieren der Eingabefelder
+    # creation of input fields
     pdb = FileField('Upload a pdb file:')#, validators=[FileRequired()])
     email = StringField('Email*:', validators=[Email()])
     tag = StringField('Tag:', validators=[DataRequired()])
@@ -61,6 +62,26 @@ def index():
     return render_template('home.html')
 
 
+def execute_cmd(cmd):
+    P = subprocess.check_output(cmd)
+
+
+def calculation(filename, output_dir):
+    # call voronoia.py
+    execute_cmd(["voronoia.py",filename , "-o", output_dir,"-vd"])
+    # call get_holes.py
+    execute_cmd([app.config['APP_PATH'] + "get_holes.py", output_dir,"protein.vol.extended.vol"])
+    # create zip file
+    os.chdir(output_dir)
+    execute_cmd(["zip", "results.zip", "onlyHoles.pdb", "protein.vol.extended.vol", "selection"])
+
+
+def start_thread(function, args, name):
+    t = threading.Thread(target=function, name=name, args=args)
+    t.deamon = True
+    t.start()
+
+
 @app.route('/submit', methods=['GET', 'POST'])
 def submit():
     form = InputForm()
@@ -74,69 +95,60 @@ def submit():
     tag = request.form['tag']
     email = request.form['email']
         
-    #Festlegen vom Pfad
-    #output_dir = '/disk/user_data/voronoia/sessions/'
+    # create path
     output_dir = app.config['USER_DATA_DIR']
-
     if email != '' :
         email = 'anonymous'
     output_dir += email + '/'
     if not os.path.exists( output_dir):
         os.mkdir(output_dir)
-                
     output_dir += tag + '/'
-    os.mkdir( output_dir)
+    os.mkdir(output_dir)
         
-    #Speichern der Datei 
+    # save file
     filename = output_dir + "protein.pdb" 
     f.save(filename) 
-        
-    #call voronoia.py
-    cmd = ["voronoia.py",filename , "-o", output_dir,"-vd"]
-    p = subprocess.check_output(cmd) 
 
-    #call get_holes.py
-    cmd = [ app.config['APP_PATH'] + "get_holes.py", output_dir,"protein.vol.extended.vol"]
-    p = subprocess.check_output(cmd)
+    start_thread(calculation, [filename, output_dir], 'zip')
 
-    #create zip file
-    os.chdir(output_dir)
-    cmd = ["zip", "results.zip", "onlyHoles.pdb", "protein.vol.extended.vol", "selection"]
-    p = subprocess.check_output(cmd)
-
-    """
-    #read in licorice selection
-    f = open(output_dir + "/selection", "r")
-    lic_selection = f.read().replace("\n", "").replace("\r", "")
-
-    print( "command terminated")
-
-    return render_template("results.html", user=email, job=tag, lic_selection=lic_selection)
-    """
-
-    print('redirecting :D')
-    return redirect(url_for('results', user=email, job=tag))
-
-
-@app.route('/results/<user>/<job>')
-def results(user, job):
-    # read in licorice selection
-    filename = app.config['USER_DATA_DIR'] + user + '/' + job + '/selection'
-    lic_selection = open(filename, 'r').read().replace("\n", "").replace("\r", "")
-
-    return render_template('results.html', user=user, job=job, lic_selection=lic_selection)
+    print('command terminated')
+    return redirect(url_for('wait', user=email, job=tag))
 
 
 @app.route('/status/<user>/<job>')
-def status( user, job):
+def status(user, job):
+    # returns info about the status of the calculation
     status = 'running'
-    fname = os.path.join( app.config['USER_DATA_DIR'] , user, job, "onlyHoles.pdb")
+    fname = os.path.join(app.config['USER_DATA_DIR'], user, job, "onlyHoles.pdb")
     print("exists?: ",fname,job)
     if os.path.isfile(fname):
         status = 'finished'
         print('yes')
-     
-    return jsonify( {'status':status,'error':'0'} )  # returns dict 
+
+    return jsonify({'status':status,'error':'0'}) 
+
+
+@app.route('/progress/<user>/<job>')
+def wait(user, job):
+    return render_template('wait.html', user=user, job=job)
+
+
+#@app.route('/lic/<user>/<job>')
+def get_lic_selection(user, job):
+    filename = app.config['USER_DATA_DIR'] + user + '/' + job + '/selection'
+    return open(filename, 'r').read().replace('\n', '').replace('\r', '')
+
+
+@app.route('/results/<user>/<job>')
+def results(user, job):
+    return render_template('results.html', user=user, job=job, lic_selection=get_lic_selection(user, job))
+
+
+@app.route('/menu')
+def menu():
+    user = 'anonymous'
+    job = 'hurray'
+    return render_template('menu.html', user=user, job=job)
 
 
 @app.route('/downloads/<user>/<job>/<filename>')
@@ -165,15 +177,8 @@ def result(user, tag):
 """
 
 
-@app.route('/menu/<user>/<tag>')
-def menu(user, tag):
-    return render_template('viewport.html', user=user, job=tag, lic_selection="")
-
-
 @app.route('/databank')
 def databank():
-    print('i am alive and well')
-    print(sql_db)
     con = sql.connect(sql_db)
     con.row_factory = sql.Row
     cur = con.cursor()
@@ -184,25 +189,17 @@ def databank():
     return render_template('databank.html', rows = rows)
 
 
+@app.route('/db-results/<pdb>')
+def dbresults(pdb):
+    return render_template('references.html')
+
 
 @app.route('/methods')
 def methods():
     return render_template('methods.html')
 
 
-
 @app.route('/references')
 def references():
     return render_template('references.html')
 
-
-def find_job(user, tag):
-    pdb_dir = ""
-    for mdir in os.listdir( os.path.join( app.config['USER_DATA_DIR'] , user )):
-        if os.path.isdir(mdir):
-            if tag in mdir:
-                pdb_dir = mdir
-                break
-        if pdb_dir != "":
-            break
-    return pdb_dir
