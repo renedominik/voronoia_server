@@ -1,0 +1,39 @@
+[
+    { 
+        "filename": "protein.pdb"
+    },
+    { 
+        "name": "vol_atomsele",
+        "filename":  "protein.vol.atmsele"
+    },
+    {
+        "name": "vol_datalist",
+        "datalist": "Provi.Bio.Voronoia.VoronoiaDatalist", 
+        "params": {
+            "holes_ds": "DATASET_vol_atomsele"
+        }
+    },
+    {
+        "widget": "Provi.Widget.Grid.GridWidget2",
+        "params": {
+            "heading": "Cavities",
+            "parent_id": "tab_widgets",
+            "datalist": "DATALIST_vol_datalist"
+        }
+    },
+    {
+        "name": "vol_atomprop",
+        "filename": "protein.vol.atmprop"
+    },
+    {
+        "widget": "Provi.Bio.AtomProperty.AtomPropertyGroupWidget",
+        "params": {
+            "dataset": "DATASET_vol_atomprop",
+            "property_ranges": {
+                "packing_density": [0.0, 1.0]
+            },
+            "heading": "Packing", 
+            "parent_id": "tab_widgets"
+        }
+    }
+]

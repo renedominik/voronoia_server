@@ -23,7 +23,7 @@
         <div id="visualisation" class="contentBody">
             <h2>V I E W</h2>
             <div id="viewport"></div>
-            <a href="{{url_for('download', user=user, job=job, filename='')}}results.zip"><i>file_download</i></a>
+            <a href="{{url_for('db_download', pdb=pdb, filename='')}}results.zip"><i>file_download</i></a>
             <a id="fullscreen_icon" style="float:right;"><i>fullscreen</i></a>
         </div>
     </center>
@@ -39,7 +39,7 @@
 <script> 
     NGL.mainScriptPathFile = "{{url_for('static', filename='ngl.js')}}";
 
-    link = "/voronoia/menu?u={{user}}&j={{job}}&lic={{lic_selection}}".split(' ').join('_');
+    link = "/voronoia/db-menu?p={{pdb}}&lic={{lic_selection}}".split(' ').join('_');
     $("#fullscreen_icon").attr("href", link);
 
     $().ready( function() {
@@ -58,7 +58,7 @@
     
     function getFileURL(filename) {
         var loc = window.location;
-        var command = loc.protocol + "//" + loc.host + "{{url_for('download', user=user, job=job, filename='')}}" + filename;
+        var command = loc.protocol + "//" + loc.host + "{{url_for('db_download', pdb=pdb, filename='')}}" + filename;
         return command;
     }
 

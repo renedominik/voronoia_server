@@ -37,14 +37,10 @@
     })
     
     function update_progress(status_url) {
-        console.log('update progress');
         $.getJSON(status_url, function(data) {
-            $('#loadingBar').removeClass('load');
-            $('#loadingBar').addClass('load');
             if(data['status'] == 'finished') {
                 if(data['error'] == '0') {
                     // success, post
-                    console.log('SUCCESS');
                     window.location.href = '{{url_for("results", user=user, job=job)}}';
                 } else {
                     $('#status_div1').text('Calculation Failed');

@@ -24,6 +24,7 @@ app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
 app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
 app.config['FLASKY_MAIL_SENDER'] = 'PROFESSIONAL TESTER <monodualist121212@gmail.com>'
 app.config['USER_DATA_DIR'] = "/disk/user_data/voronoia/sessions/"
+app.config['DATABASE_DIR'] = "/home/hildilab/app/voronoia/static/archive/"
 app.config['APP_PATH'] = "/home/hildilab/app/voronoia/"
 
 bootstrap = Bootstrap(app)
@@ -63,7 +64,7 @@ def index():
 
 
 def execute_cmd(cmd):
-    P = subprocess.check_output(cmd)
+    p = subprocess.check_output(cmd)
 
 
 def calculation(filename, output_dir):
@@ -91,7 +92,7 @@ def submit():
     f = request.files['pdb']
     if f.filename == '':
         f = request.files.get('dnd')
-    atomRadii = request.form.get('options')
+    # atomRadii = request.form.get('options')
     tag = request.form['tag']
     email = request.form['email']
         
@@ -133,9 +134,13 @@ def wait(user, job):
     return render_template('wait.html', user=user, job=job)
 
 
-#@app.route('/lic/<user>/<job>')
 def get_lic_selection(user, job):
     filename = app.config['USER_DATA_DIR'] + user + '/' + job + '/selection'
+    return open(filename, 'r').read().replace('\n', '').replace('\r', '')
+
+
+def get_db_lic_selection(pdb):
+    filename = app.config['DATABASE_DIR'] + pdb + '/selection'
     return open(filename, 'r').read().replace('\n', '').replace('\r', '')
 
 
@@ -144,40 +149,34 @@ def results(user, job):
     return render_template('results.html', user=user, job=job, lic_selection=get_lic_selection(user, job))
 
 
+@app.route('/db-results/<pdb>')
+def db_results(pdb):
+    return render_template('db_results.html', pdb=pdb, lic_selection=get_db_lic_selection(pdb))
+
+
 @app.route('/menu')
 def menu():
-    user = 'anonymous'
-    job = 'hurray'
-    return render_template('menu.html', user=user, job=job)
+    return render_template('menu.html')
+
+
+@app.route('/db-menu')
+def db_menu():
+    return render_template('db_menu.html')
 
 
 @app.route('/downloads/<user>/<job>/<filename>')
 def download( user, job, filename):
     path = app.config['USER_DATA_DIR'] + '/' + user + '/' + job 
-    print( "download:", path)
     return send_from_directory( path,filename)
 
-"""
-@app.route('/results/<user>/<tag>')
-def result(user, tag):
-    # check first if the tag is in the db:
-    #tag = request.url.split('=')[-1]
-    #con = sql.connect(sql_db)
-    #con.row_factory = sql.Row
-    #cur = con.cursor()
-    #cur.execute("SELECT pdb FROM jobs WHERE tag = '" + tag + "'")
-    #rows = cur.fetchall()
-    #pdb = rows[0]['pdb']
-    #con.close()
-    # if not, check the user data:
 
-    status_url = "/status/" + user + "/" + tag
-    
-    return render_template('results.html', user=user, job=tag, status_url=status_url)
-"""
+@app.route('/db-downloads/<pdb>/<filename>')
+def db_download(pdb, filename):
+    path = app.config['DATABASE_DIR'] + '/' + pdb
+    return send_from_directory(path, filename)
 
 
-@app.route('/databank')
+@app.route('/database')
 def databank():
     con = sql.connect(sql_db)
     con.row_factory = sql.Row
@@ -187,11 +186,6 @@ def databank():
     rows = cur.fetchall()
     con.close()
     return render_template('databank.html', rows = rows)
-
-
-@app.route('/db-results/<pdb>')
-def dbresults(pdb):
-    return render_template('references.html')
 
 
 @app.route('/methods')

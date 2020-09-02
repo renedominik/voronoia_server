@@ -1,2 +1,0 @@
-002f:err:winediag:nodrv_CreateWindow Application tried to create a window, but no driver could be loaded.
-002f:err:winediag:nodrv_CreateWindow Make sure that your X server is running and that $DISPLAY is set correctly.

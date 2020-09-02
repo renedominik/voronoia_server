@@ -1,0 +1,16 @@
+[
+    {
+        "pdb_id": "protein", 
+        "pdb_title": "THE ADIPOCYTE LIPID-BINDING PROTEIN AT 1.6 ANGSTROMS RESOLUTION: CRYSTAL STRUCTURES OF THE APOPROTEIN AND WITH BOUND SATURATED AND UNSATURATED FATTY ACIDS", 
+        "pdb_keywords": "no data", 
+        "pdb_experiment": "X-RAY DIFFRACTION", 
+        "pdb_resolution": 1.7, 
+        "pdb_zscorerms": 7.0151331918891655, 
+        "curated_representative": 0, 
+        "curated_related": 0, 
+        "status": "included", 
+        "tm_packdens_protein_buried": 0, 
+        "tm_water_count": 0, 
+        "tm_residue_count": 0
+    }
+]

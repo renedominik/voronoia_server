@@ -90,8 +90,7 @@
 
     // get search parameters
     var params = new URLSearchParams(document.location.search.substr(1));
-    var user = params.get('u');
-    var job = params.get('j');
+    var pdb = params.get('p');
     var lic_selection = params.get('lic').split('_').join(' ');
 
 
@@ -127,7 +126,7 @@
 
     function getFileURL(filename) {
         var loc = window.location;
-        var command = loc.protocol + "//" + loc.host + "/voronoia/downloads/" + user + "/" + job + "/" + filename;
+        var command = loc.protocol + "//" + loc.host + "/voronoia/db-downloads/" + pdb +  "/" + filename;
         return command;
     }
 

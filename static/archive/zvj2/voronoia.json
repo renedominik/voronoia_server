@@ -1,0 +1,29 @@
+[
+    [
+        "/disk/user_data/voronoia/sessions/anonymous/grefffff/protein.pdb"
+    ], 
+    {
+        "shuffle": false, 
+        "verbose": true, 
+        "backend": "json", 
+        "backend_parallel": "json", 
+        "make_reference": false, 
+        "interval": [
+            0, 
+            null
+        ], 
+        "prefix": "", 
+        "analyze_only": false, 
+        "parallel": false, 
+        "fileargs": false, 
+        "radii": "protor", 
+        "get_nrholes": false, 
+        "output_dir": "/disk/user_data/voronoia/sessions/anonymous/grefffff/", 
+        "timeout": 0, 
+        "filter_id": [], 
+        "debug": true, 
+        "nworkers": 0, 
+        "check": false, 
+        "ex": 0.1
+    }
+]

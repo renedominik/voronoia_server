@@ -1,0 +1,16 @@
+[
+    {
+        "pdb_id": "protein", 
+        "pdb_title": "CRYO-EM STRUCTURE OF SADS-COV SPIKE", 
+        "pdb_keywords": "no data", 
+        "pdb_experiment": "ELECTRON MICROSCOPY", 
+        "pdb_resolution": 3.55, 
+        "pdb_zscorerms": 1159.6887424043784, 
+        "curated_representative": 0, 
+        "curated_related": 0, 
+        "status": "included", 
+        "tm_packdens_protein_buried": 0, 
+        "tm_water_count": 0, 
+        "tm_residue_count": 0
+    }
+]
