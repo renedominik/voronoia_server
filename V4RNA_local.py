@@ -146,7 +146,10 @@ def get_db_lic_selection(pdb):
 
 @app.route('/results/<user>/<job>')
 def results(user, job):
-    return render_template('results.html', user=user, job=job, lic_selection=get_lic_selection(user, job))
+    f = os.path.join(app.config['USER_DATA_DIR'], user, job, "onlyHoles.pdb")
+    if os.path.isfile(f):
+        return render_template('results.html', user=user, job=job, lic_selection=get_lic_selection(user, job))
+    return redirect(url_for('wait', user=user, job=job))
 
 
 @app.route('/db-results/<pdb>')
@@ -195,5 +198,5 @@ def methods():
 
 @app.route('/references')
 def references():
-    return render_template('references.html')
+    return render_template('tutorial.html')
 

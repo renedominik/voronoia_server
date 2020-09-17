@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}" media="all">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='referencesStyle.css')}}" media="all">
+<link href="https://fonts.googleapis.com/css?family=Questrial&display=swap" rel="stylesheet"> 
+<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block header %}
+  {{super()}}
+{% endblock %}
+
+{% block content %}
+<section>
+    <center>
+        <h1>Tutorial</h1>
+        <div id="refs" class="contentBody">
+            <h2>H E L P</h2>
+        </div>
+    </center>
+</section>
+{% endblock %}

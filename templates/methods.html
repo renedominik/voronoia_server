@@ -19,8 +19,8 @@
         <div id="fadeOut"></div>
         <div id="calc" class="contentBody">
             <h2>C A L C U L A T I O N</h2>
-            <p> Voronoia4RNA calculates atomic volumes by applying the Voronoi Cell algorithm
-                described in [2]. The volume calculated for each atom is split into two 
+            <p> Voronoia calculates atomic volumes by applying the Voronoi Cell algorithm
+                . The volume calculated for each atom is split into two 
                 portions, both of which are represented in the .vol files produced by the 
                 server. The first is the vdW volume (the volume inside an atoms' van der Waals
                 sphere), the second is the solvent excluded volume (within a 1.4 Angstrom layer
@@ -32,13 +32,14 @@
                 cutoff length in the resulting graph corresponding to a 1.4 Angstrom probe radius.
                 Their locations are approximated by the center of mass of all neighboring atoms.
             </p>
-            <p> The core algorithm of Voronoia4RNA has been implemented in Delphi and an intermediate
+            <p> The core algorithm of Voronoia has been implemented in Delphi and an intermediate
                 layer in Python. The core algorithm calculates atomic volumes and cavities from PDB
                 structures, prefiltered for modifications. It produces modified PDB files from which
                 packing densities, cavity positions, and tabular reports containing average volumes and
                 densities are calculated.
             </p>
         </div>
+        <!--
         <div id="visuals" class="contentBody">
             <h2>V I S U A L S</h2>
             <p> For the visualization of packing densities and cavities, the Jmol based viewer Provi can be
@@ -50,6 +51,7 @@
                 structures as ribosomes containing hundreds of cavities, or by their exact shape.
             </p>
         </div>
+        -->
     </center>
 </section>
 {% endblock %}

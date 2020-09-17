@@ -120,6 +120,10 @@ i {
     -webkit-appearance: none;
 }
 
+#submitInterface #inputOptions {
+    cursor: pointer;
+}
+
 #submitInterface #submitbtn {
     width: min-content;
     padding: 1.25vh 1.25vw;

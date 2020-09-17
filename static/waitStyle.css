@@ -12,3 +12,8 @@
 .load {
     width: 15vw;
 }
+
+a {
+    text-decoration: none;
+    color: #09AC50;
+}

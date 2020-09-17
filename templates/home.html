@@ -41,7 +41,7 @@
         <h1>Introduction</h1>
         <div id="intro" class="contentBody">
             <h2>P U R P O S E</h2>
-            <p>Voronoia4RNA is a database storing data on atomic packing densities of RNA structures and complexes. Compared to other methods, that solely estimate van der Waals interactions i.e. by gain of solvent excluded surfaces, Voronoia4RNA allocates the free space between neighbouring atoms. <br><br>
+            <p>Voronoia is a database storing data on atomic packing densities of RNA structures and complexes. Compared to other methods, that solely estimate van der Waals interactions i.e. by gain of solvent excluded surfaces, Voronoia4RNA allocates the free space between neighbouring atoms. <br><br>
             It explicitly takes packing defects into consideration and is therefore an appropriate method to calculate van der Waals interactions and to estimate the underlying forces. </p>
         </div>
     </center>
@@ -84,10 +84,11 @@
             ease: Power2.easeOut
         });
         
+        /*
         TweenMax.to("#title #h1_rna", animationSpeed, {
             margin:0.8,
             ease: Power2.easeOut
-        });
+        });*/
         
         TweenMax.to("#title img", animationSpeed, {
             width: '5vh',
@@ -99,12 +100,18 @@
             marginRight:0,
             ease: Power2.easeOut
         });
-        
+
+        TweenMax.to("#lowerTitle", 1, {
+            width: '5vh',
+            ease: Power2.easeOut
+        });
+
+        /*
         var w = getLowerTitleWidth();
         TweenMax.to("#lowerTitle", 1, {
             width:1*w,
             ease: Power2.easeOut
-        });
+        });*/
         
         $("#title").addClass("corner");
     });

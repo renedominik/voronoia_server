@@ -40,12 +40,12 @@ header {
 img {
     width: 12.5vh; /* h1 font-size */
     height: 12.5vh; /* h1 font-site */
-    margin-right: 2.5vh;
+    /* margin-right: 2.5vh; */
 }
 
 #lowerTitle {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     -webkit-transition: transform 0.6s;
     transition: transform 0.6s;
