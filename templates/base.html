@@ -10,13 +10,13 @@
  {% block header %}
 <header>
    <img src="{{ url_for( 'static', filename ='tree.jpg' )}}">
-   <a id="titleLink" href="../voronoia"><h3>Voronoia</h3></a>
+   <a id="titleLink" href="{{ url_for('index') }}"><h3>Voronoia</h3></a>
    <ul>
-     <li><a href="/voronoia/references">references</a></li>
-     <li><a href="/voronoia/methods">methods</a></li>
-     <li><a href="/voronoia/database">database</a></li>
-     <li><a href="/voronoia/submit">submit</a></li>
-     <li><a href="/voronoia">home</a></li>
+     <li><a href="{{ url_for('tutorial') }}">tutorial</a></li>
+     <li><a href="{{ url_for('methods') }}">methods</a></li>
+     <li><a href="{{ url_for('database') }}">database</a></li>
+     <li><a href="{{ url_for('submit') }}">submit</a></li>
+     <li><a href="{{ url_for('index') }}">home</a></li>
    </ul>
  </header>
  {% endblock %}

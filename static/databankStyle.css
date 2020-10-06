@@ -89,6 +89,7 @@
     right: -2vw;
     -webkit-transition: all 0.8s ease;
     transition: all 0.8s ease;
+    z-index: 1;
 }
 
 #archive_filter label:hover:before {

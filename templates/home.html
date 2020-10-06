@@ -1,23 +1,28 @@
 {% extends "base.html" %}
 
-{% block head %}
-<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}" media="all">
+{% block style %}
+<!-- <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}" media="all"> -->
 <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='homeStyle.css')}}" media="all">
 <link href="https://fonts.googleapis.com/css?family=Questrial&display=swap" rel="stylesheet"> 
 <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+{{ super() }}
 {% endblock %}
 
 {% block header %}
+<!--
  <header>
     <ul>
-     <li><a href="/voronoia/references">references</a></li>
+     <li><a href="/voronoia/tutorial">tutorial</a></li>
      <li><a href="/voronoia/methods">methods</a></li>
      <li><a href="/voronoia/database">database</a></li>
      <li><a href="/voronoia/submit">submit</a></li>
      <li><a href="/voronoia">home</a></li>
    </ul>
 </header>
+-->
+{{ super() }}
 {% endblock %}
 
 {% block content %}

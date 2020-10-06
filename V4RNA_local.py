@@ -180,7 +180,7 @@ def db_download(pdb, filename):
 
 
 @app.route('/database')
-def databank():
+def database():
     con = sql.connect(sql_db)
     con.row_factory = sql.Row
     cur = con.cursor()
@@ -196,7 +196,7 @@ def methods():
     return render_template('methods.html')
 
 
-@app.route('/references')
-def references():
+@app.route('/tutorial')
+def tutorial():
     return render_template('tutorial.html')
 

@@ -152,7 +152,9 @@
 
     function visualize(stage) {
         // load molecule structure
-        loadPDB(stage, "protein.pdb", "structure", ["cartoon", "licorice"],  [{colorScheme: 'bfactor'}, {sele: lic_selection}], true);
+        // loadPDB(stage, "protein.pdb", "structure", ["cartoon", "licorice"],  [{colorScheme: 'bfactor'}, {sele: lic_selection}], true);
+        //loadPDB(stage, "protein.pdb", "structure", ["cartoon", "licorice"],  [{color: 'bfactor', colorScale: 'RdWBu'}, {sele: lic_selection}], true);
+        loadPDB(stage, "protein.pdb", "structure", ["cartoon", "licorice"],  [{color: 'bfactor', colorScale: 'rwb'}, {sele: lic_selection}], true);
 
         // load cavaties
 	    loadPDB(stage, "onlyHoles.pdb", "holes", ["ball+stick"], [{radius: 'bfactor', colorscheme: 'bfactor'}]);
