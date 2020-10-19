@@ -12,7 +12,7 @@ header {
     align-items: center;
     width: 100vw;
     height: 6vh;
-    /* hh = 6vh */
+    /* hh (header height) = 6vh */
     background: #03A64A;
     font-family: 'Roboto', sans-serif;
 }
@@ -109,83 +109,25 @@ header h3:hover {
     font-family: 'Roboto', sans-serif;
     text-align: justify;
 }
-/*
-#dragDropField {
-    margin-top: calc(2vw + 1vh);
-    height: 40.5vh;
-    border: 1px solid green;
+
+.contentBody h3 {
+    color: grey;
+}
+
+.contentBody a {
+    text-decoration: none;
+    color: #03A64A;
 }
 
 i {
     font-family: 'Material Icons';
+    color: #09AC05;
+    font-size: 1.7vw;
     font-style: normal;
-    font-size: 5vh;
-    color: #09AC50;
-    cursor: pointer;
 }
 
-#inputPdb {
-    display: none;
-}
-
-label.input {
-    display: none;
-}
-
-#info {
-    width: calc(15.5vw + 4px);
-    float: right;
-}
-
-#info p {
-    color: #404040;
-    font-size: calc(6px + 0.5vh);
-}
-
-#inputOptions {
-    width: calc(15.5vw + 6px);
-}
-
-#inputPdb {
-    width: calc(15.5vw + 6px);
-}
-
-#submitbtn {
-    background: #09AC50;
+.icon_btn {
     border: none;
-    border-radius: 6px;
-    padding: 15px 35px;
-    position: relative;
-    bottom: -7.5vh;
-    left: 17.5vw; /* (100vw - 2* section padding)/2 */
-  /*  transform: translate(-50%, 0%);
-    font-family: 'Questrial', sans-serif;
-    font-size: 2.5vh;
-    color: white;
-}
-
-#submitbtn:hover {
-    background: #03A64A;
+    padding: 0;
     cursor: pointer;
-}
-
-.inputField {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin-top: 1.5vh;
-}
-
-.input {
-    width: 15vw;
-    margin-top: 2vh;
-}
-
-#info p {
-    margin-top: 0.25vh;
-}
-*/
-#viewport {
-    height: 40vh;
-    width: 100%;
 }

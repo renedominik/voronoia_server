@@ -1,12 +1,7 @@
 #viewport {
+    height: 40vh;
+    width: 100%;
     margin-bottom: 4vh;
-}
-
-i {
-    font-family: 'Material Icons';
-    color: #09AC05;
-    font-size: 1.7vw;
-    font-style: normal;
 }
 
 a {

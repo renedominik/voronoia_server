@@ -27,7 +27,7 @@ with open( os.path.join(out, filename), 'r') as fp:
             for num in lines[1:]:
                 holenumbers[int(num)]=1
         #print(holenumbers)
-        if line.startswith('ATOM') or line.startswith('HETATOM'):
+        if line.startswith('ATOM') or line.startswith('HETATM'):
             if holenumbers[int(line[6:11])]==1:
                 atomslist_allpdb[int(line[6:11])] = [float(line[30:38]),float(line[38:46]),float(line[46:54])]
                 involved_residues.setdefault(line[21], []).append(line[23:26].strip())

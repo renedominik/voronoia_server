@@ -6,6 +6,7 @@ from flask_mail import Message
 from wtforms import  StringField, SubmitField, SelectField, FileField
 from wtforms.validators import Email, DataRequired
 from werkzeug import secure_filename
+from werkzeug.datastructures import FileStorage
 
 from datetime import datetime
 import random, string, os
@@ -25,6 +26,9 @@ app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
 app.config['FLASKY_MAIL_SENDER'] = 'PROFESSIONAL TESTER <monodualist121212@gmail.com>'
 app.config['USER_DATA_DIR'] = "/disk/user_data/voronoia/sessions/"
 app.config['DATABASE_DIR'] = "/home/hildilab/app/voronoia/static/archive/"
+app.config['EXAMPLES_DIR'] = "/home/hildilab/app/voronoia/static/examples/"
+# app.config['GARBAGE_DIR'] = "/disk/user_data/voronoia/garbage/"
+app.config['GARBAGE_DIR'] = "/home/hildilab/app/voronoia/garbage/"
 app.config['APP_PATH'] = "/home/hildilab/app/voronoia/"
 
 bootstrap = Bootstrap(app)
@@ -32,6 +36,8 @@ bootstrap = Bootstrap(app)
 mail = Mail(app)
 
 sql_db = "/disk/data/voronoia/jobs.db"
+
+example_pdb = '1lib.pdb'
 
 
 class InputForm(FlaskForm):
@@ -87,11 +93,20 @@ def start_thread(function, args, name):
 def submit():
     form = InputForm()
     if request.method == 'GET':
-        return render_template('formular.html', form=form, tag_str="tag")
+        return render_template('formular.html', form=form, tag_str="tag", example_pdb=example_pdb)
+
+    print(request.files)
 
     f = request.files['pdb']
     if f.filename == '':
         f = request.files.get('dnd')
+    if f is None:
+        # we assume that if neither the button nor the drag and drop box was used, the user must have loaded the example
+        f = FileStorage(open(app.config['EXAMPLES_DIR'] + example_pdb, 'rb'))
+
+    print(f)
+    print(type(f))
+
     # atomRadii = request.form.get('options')
     tag = request.form['tag']
     email = request.form['email']
@@ -104,7 +119,12 @@ def submit():
     if not os.path.exists( output_dir):
         os.mkdir(output_dir)
     output_dir += tag + '/'
-    os.mkdir(output_dir)
+
+    try:
+        os.mkdir(output_dir)
+    except:
+        # tag has already been used
+        return render_template('formular.html', form=form, tag_str="tag", example_pdb=example_pdb)
         
     # save file
     filename = output_dir + "protein.pdb" 
@@ -127,6 +147,11 @@ def status(user, job):
         print('yes')
 
     return jsonify({'status':status,'error':'0'}) 
+
+
+@app.route('/example')
+def load_example():
+    return send_from_directory(app.config['EXAMPLES_DIR'], example_pdb)
 
 
 @app.route('/progress/<user>/<job>')
@@ -170,7 +195,7 @@ def db_menu():
 @app.route('/downloads/<user>/<job>/<filename>')
 def download( user, job, filename):
     path = app.config['USER_DATA_DIR'] + '/' + user + '/' + job 
-    return send_from_directory( path,filename)
+    return send_from_directory(path,filename)
 
 
 @app.route('/db-downloads/<pdb>/<filename>')

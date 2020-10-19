@@ -1,10 +1,8 @@
 {% extends "base.html" %}
 
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}" media="all">
+{{super()}}
 <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='waitStyle.css')}}" media="all">
-<link href="https://fonts.googleapis.com/css?family=Questrial&display=swap" rel="stylesheet"> 
-<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block header %}
@@ -22,7 +20,7 @@
             </br>
                 <a id="res_link" href="{{url_for('results', user=user, job=job)}}">proteinformatics.uni-leipzig.de{{url_for('results', user=user, job=job)}}</a>
             </p>
-            <button onclick="copy_url()">Copy URL to Clipboard</button>
+            <button class="icon_btn" onclick="copy_url()"><i>content_paste</i></button>
             <div id="loadingBar"></div>
             <div id="status_div1"></div>
             <div id="status_div2"></div>
@@ -33,8 +31,6 @@
 
 {% block scripts %}
 {{super()}}
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
 <script type="text/javascript">
 
     $().ready(function() {

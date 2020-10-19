@@ -3,3 +3,6 @@
 data/
 *.log
 misc/
+env/
+static/examples/
+garbage/

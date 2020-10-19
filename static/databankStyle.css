@@ -80,6 +80,7 @@
     color: #09AC50;
     font-size: 1.5vw;
     content: 'search';
+    cursor: pointer;
     display: inline-block;
     vertical-align: middle;
     transform: translate(-100%, 0) rotate(90deg);
@@ -101,6 +102,7 @@
 #archive_filter label.expanded:before {
     right: 6vw;
     color: grey;
+    cursor: default;
     transform: translate(-100%, 0) rotate(0deg);
     -webkit-transition: all 0.8s ease;
     transition: all 0.8s ease;

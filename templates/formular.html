@@ -1,11 +1,8 @@
 {% extends "base.html" %}
 
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}" media="all">
+{{super()}}
 <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='formularStyle.css')}}" media="all">
-<link href="https://fonts.googleapis.com/css?family=Questrial&display=swap" rel="stylesheet"> 
-<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 {% endblock %}
 
 {% block title %} {{super()}} hallo {% endblock %}
@@ -37,6 +34,7 @@
                         <i>cloud_upload</i>
                         <span>Drag and drop a PDB file here</span>
                     </div>
+                    <button id="load_example" name="load_example" class="icon_btn" form="null"><i>archive</i></button>
                 </div>
                 
                 <div id="submitInterface" class="hide">
@@ -53,7 +51,10 @@
                     </div>                             
                     <div class="inputField">
                         <p>tag (required, alphanumeric) </p>
-                        <input class="input" id="tag" name="tag" type="text" pattern="^[a-z0-9]+$" required>
+                        <div id="tag_wrapper">
+                            <input class="input" id="tag" name="tag" type="text" pattern="^[a-zA-Z0-9 ]+$" required>
+                            <button id="generate_tag" name="generate_tag" class="icon_btn" form="null"><i>casino</i></button>
+                        </div>
                     </div>
                     <div class="inputField">
                         <p>email (optional)</p>
@@ -70,18 +71,31 @@
 
 {% block scripts %}
 {{super()}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/additional-methods.js"></script>
 
 <script type="text/javascript">
-
+    
     var file;
     
-    function interfaceChange(file) {
+
+    function generate_random_tag() {
+        tag = '';
+        var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        for (var i = 0; i < 15; i++ ) {
+            tag += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        document.getElementById('tag').value = tag;
+    }
+
+
+    function interface_change(file, is_example) {
         $('#fileUploadInterface').addClass('hide');
         $('#submitInterface').removeClass('hide');
         $('#fileField').html('<p>' + file.name + '</p>');
+        if (is_example) {
+            generate_random_tag();
+        }
     }
 
     
@@ -90,29 +104,39 @@
             e.preventDefault();
             e.stopPropagation();
         });
+
         
         $('#dragDropField').on('dragover dragenter', function() {
             $('#dragDropField').addClass('dragOver');
         });
+
         
         $('#dragDropField').on('dragleave dragend drop', function() {
             $('#dragDropField').removeClass('dragOver');
         });
+
         
         $('#dragDropField').on('drop', function(e) {
             file = e.originalEvent.dataTransfer.files[0];
-            interfaceChange(file);
+            interface_change(file, false);
         });
+
         
         $('#inputPdb').on('change', function() {
             file = $('#inputPdb').prop('files')[0];
-            interfaceChange(file);  
+            interface_change(file, false);  
         });
-        
-        $('#submitbtn').on('click', function(e) {
-            if( !document.getElementById('tag').value.trim()){
-                $('#tag').css('border-bottom', '3px solid red');
-            }
+
+
+        $('#load_example').on('click', async function() {
+            url = "{{url_for('load_example')}}";
+            file = await fetch(url).then(r => r.blob()).then(blobFile => new File([blobFile], "{{example_pdb}}", { type: "application/x-aportisdoc"}));
+            interface_change(file, true);
+        });
+
+
+        $('#generate_tag').on('click', function() {
+            generate_random_tag();
         });
 
     });

@@ -149,3 +149,16 @@ img {
     font-family: 'Roboto', sans-serif;
     display: none;
 }
+
+
+/* link blocks ('Learn More' and 'Use Voronoia') */
+#link-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 5rem;
+}
+
+#link-wrapper div {
+    float: left;
+    margin: 0 3rem;
+}
