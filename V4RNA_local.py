@@ -1,8 +1,7 @@
 from flask import Flask, render_template, session, url_for, redirect, request, send_from_directory, jsonify
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
-from flask_mail import Mail
-from flask_mail import Message
+from flask_mail import Mail, Message
 from wtforms import  StringField, SubmitField, SelectField, FileField
 from wtforms.validators import Email, DataRequired
 from werkzeug import secure_filename
@@ -20,10 +19,11 @@ import sqlite3 as sql
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'Lhvz7/{{4$34"_.b'
 app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
+app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
-app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
-app.config['FLASKY_MAIL_SENDER'] = 'PROFESSIONAL TESTER <monodualist121212@gmail.com>'
+app.config['MAIL_USERNAME'] = 'monodualismus121212@gmail.com'
+app.config['MAIL_DEFAULT_SENDER'] = 'monodualismus121212@gmail.com'
+app.config['MAIL_PASSWORD'] = 'monoduo12'
 app.config['USER_DATA_DIR'] = "/disk/user_data/voronoia/sessions/"
 app.config['DATABASE_DIR'] = "/home/hildilab/app/voronoia/static/archive/"
 app.config['EXAMPLES_DIR'] = "/home/hildilab/app/voronoia/static/examples/"
@@ -54,18 +54,24 @@ class InputForm(FlaskForm):
         print("validate:",fn)
         return '.' in fn and (fn.rsplit('.', 1)[-1] == 'pdb')
 
-    
-def send_email(to, subject, template, **kwargs):
-    print('hi')
-    msg = Message(subject, sender=app.config['FLASKY_MAIL_SENDER'], recipients=[to])
-    msg.body = render_template(template + '.txt', **kwargs)
-    msg.html = render_template(template + '.html', **kwargs)
+
+def send_email(to, subject, template):
+    print('sending email')
+    print('to: ' + to)
+    print('saying: ' + template)
+    msg = Message(subject, recipients=[to])
+    msg.body = template
     mail.send(msg)
+
+
+@app.route('/test')
+def test():
+    return render_template('test.html')
+
 
 
 @app.route('/')
 def index():
-    # TODO: add mail notification
     return render_template('home.html')
 
 
@@ -73,7 +79,7 @@ def execute_cmd(cmd):
     p = subprocess.check_output(cmd)
 
 
-def calculation(filename, output_dir):
+def calculation(filename, output_dir, email, job):
     # call voronoia.py
     execute_cmd(["voronoia.py",filename , "-o", output_dir,"-vd"])
     # call get_holes.py
@@ -81,6 +87,12 @@ def calculation(filename, output_dir):
     # create zip file
     os.chdir(output_dir)
     execute_cmd(["zip", "results.zip", "onlyHoles.pdb", "protein.vol.extended.vol", "selection"])
+    # optionally send email
+    if email != 'anonymous':
+        #with app.app_context():
+        with app.app_context(), app.test_request_context():
+            results_link = url_for('results', user=email, job=job)
+            send_email(email, 'Voronoia', 'Your calculation is done. You can view your results under: http://www.proteinformatics.de/voronoia' + results_link)
 
 
 def start_thread(function, args, name):
@@ -113,8 +125,8 @@ def submit():
         
     # create path
     output_dir = app.config['USER_DATA_DIR']
-    if email != '' :
-        email = 'anonymous'
+    #if email == '' :
+        #email = 'anonymous'
     output_dir += email + '/'
     if not os.path.exists( output_dir):
         os.mkdir(output_dir)
@@ -130,7 +142,7 @@ def submit():
     filename = output_dir + "protein.pdb" 
     f.save(filename) 
 
-    start_thread(calculation, [filename, output_dir], 'zip')
+    start_thread(calculation, [filename, output_dir, email, tag], 'zip')
 
     print('command terminated')
     return redirect(url_for('wait', user=email, job=tag))

@@ -1,3 +1,7 @@
+html {
+    font-size: 1rem !important;
+}
+
 body {
     height: 100vh;
     margin: 0;
@@ -7,55 +11,46 @@ body {
     overflow-x: hidden;
 }
 
-header {
-    display: flex;
-    align-items: center;
-    width: 100vw;
-    height: 6vh;
-    /* hh (header height) = 6vh */
-    background: #03A64A;
+/* nav bar */
+
+nav {
+    background: #03A64A !important;
     font-family: 'Roboto', sans-serif;
 }
 
-header img {
-    float: left;
-    margin: 0.5vh;
-    margin-left: 4vw;
-    margin-right: 2vw;
-    width: 5vh; /* hh - margin */
-    height: 5vh; /* hh - margin */
+#logo {
+    display: flex;
+    align-items: center;
 }
 
-header ul {
-    position: absolute;
-    right: 4vw;
+nav img {
+    width: 3rem; /* hh - margin */
+    height: 3rem; /* hh - margin */
+    margin-left: 2rem;
+    margin-right: 1rem;
 }
 
-header li {
-    float: right;
-    list-style-type: none;
-    width: 8vw;
-    height: 6vh; /* hh */
+#title {
+    font-family: 'Questrial', sans-serif;
 }
 
-header li a {
-    display: block;
-    text-decoration: none;
-    color: #404040;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    line-height: 6vh; /* hh */
+nav ul {
+    margin-right: 1rem !important;
 }
 
-header li a:hover {
-    background: #13B65A;
+nav li a {
+    padding: 0 2rem !important;
 }
 
-#titleLink {
-    text-decoration: none;
-    color: black;
+nav li a:hover {
+    background: #13B65A !important;
 }
+
+#three-line i {
+    /*color: grey !important;*/
+}
+
+
 
 section {
     height: 80vh;
@@ -64,14 +59,16 @@ section {
 
 h1 {
     font-family: 'Questrial', sans-serif;
-    font-size: 5vh;
-    line-height: 5vh;
+    font-size: 3.2rem !important;
+    line-height: 3.2rem !important;
     font-weight: 500;
     margin: 4vh 0;
     padding: 3vh;
 }
 
 h2 {
+    font-size: 1.6rem !important;
+    font-weight: 700 !important;
     display: inline-block;
     position: relative;
     margin: 3vh 0;
@@ -94,12 +91,18 @@ h3 {
     font-family: 'Questrial', sans-serif;
     font-weight: 300;
     margin: 0;
-    font-size: 2.5vh;
+    font-size: 1.5rem !important;
 }
 
 header h3:hover {
     cursor: pointer;
 }
+
+
+p {
+    line-height: 1.1rem;
+}
+
 
 .InputFields {
     margin: 5vh;

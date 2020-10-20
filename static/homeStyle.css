@@ -4,13 +4,8 @@ body {
     height: 100vh;
 }
 
-h1 {
-    line-height: 1.25;
-}
-
-
-/* hide logo, title in navbar for animation */
-header img, #titleLink {
+/* hide tilte in navbar for animation */
+#logo {
     display: none;
 }
 
@@ -21,11 +16,9 @@ header img, #titleLink {
     height: 100vh;
 }
 
-header {
-    background: transparent;
-    position: fixed;
-    top: 0;
-    left: 0;
+nav {
+    background: transparent !important;
+    box-shadow: none !important;
     -webkit-transition: background 0.9s;
     transition: background 0.9s;
 }
@@ -37,16 +30,17 @@ header {
     height: 100vh;
     width: 100vw;
     z-index: -1;
-    /*display: flex;
-    justify-content: center;
-    align-items: center;*/
     background: radial-gradient(#03A64A 0%, #03A64A 20%, #026F2A 100%);
 }
 
+#voro {
+    font-size: 8rem;
+    font-family: 'Questrial', sans-serif;
+}
+
 img {
-    width: 12.5vh; /* h1 font-size */
-    height: 12.5vh; /* h1 font-site */
-    /* margin-right: 2.5vh; */
+    width: 8rem; /* h1 font-size */
+    height: 8rem; /* h1 font-site */
 }
 
 #lowerTitle {
@@ -57,10 +51,9 @@ img {
     transition: transform 0.6s;
 }
 
-#title {
-    /*margin-top: -3vh; /* header height / 2 */
+#home-title {
     position: fixed;
-    
+    z-index: 998;
     -webkit-transition: transform 0.6s;
     transition: transform 0.6s;
 }
@@ -76,27 +69,16 @@ img {
 }
 
 .corner #lowerTitle {
-    transform: translate(0, -4.25vh);  /* Eingenommene Höhe von 'Voronoia' (1*0.5vh margin-bottom, 1.25vh padding-top, 2.5vh line-height    */
+    transform: translate(0, -3.1rem);  /* der genaue Wert wurde durch Magie ermittelt - aka abgeschätzt */
 }
 
-#title h1 {
-    font-size: 12.5vh;
-    margin: 0.5vh;
-    margin-top: 0vh;
-    padding: 0;
-}
-
-#title #h1_voro {
+#home-title #voro {
     -webkit-transition: margin-left 0.8s;
     transition: margin-left 0.8s;
 }
 
-.corner #h1_voro {
-    margin-left: calc(2vw + 5vh);
-}
-
-#title #h1_4 {
-    margin-right: 1vw;
+.corner #voro {
+    margin-left: 4rem;
 }
 
 #down_btn {
@@ -140,7 +122,7 @@ img {
 }
 
 .active {
-    background: #03A64A;
+    background: #03A64A !important;
 }
 
 #scale {
