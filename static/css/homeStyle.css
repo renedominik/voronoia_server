@@ -18,7 +18,6 @@ body {
 
 nav {
     background: transparent !important;
-    box-shadow: none !important;
     -webkit-transition: background 0.9s;
     transition: background 0.9s;
 }
@@ -69,7 +68,7 @@ img {
 }
 
 .corner #lowerTitle {
-    transform: translate(0, -3.1rem);  /* der genaue Wert wurde durch Magie ermittelt - aka abgeschätzt */
+    transform: translate(0, -2.6rem);  /* der genaue Wert wurde durch Magie ermittelt - aka abgeschätzt */
 }
 
 #home-title #voro {

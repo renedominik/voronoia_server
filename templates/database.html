@@ -2,7 +2,7 @@
 
 {% block head %}
 {{super()}}
-<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='databankStyle.css')}}" media="all">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/databaseStyle.css')}}" media="all">
 {% endblock %}
 
 {% block header %}
@@ -70,7 +70,7 @@
                 initPageInfo($('#paging .next'));
             }
         });
-        
+
         //Search Animation
         $('#archive_filter label input').on('focus', function() {
             $('#archive_filter label').addClass('expanded');

@@ -2,7 +2,7 @@
 
 {% block head %}
 {{super()}}
-<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='waitStyle.css')}}" media="all">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/progressStyle.css')}}" media="all">
 {% endblock %}
 
 {% block header %}
@@ -20,7 +20,7 @@
             </br>
                 <a id="res_link" href="{{url_for('results', user=user, job=job)}}">proteinformatics.uni-leipzig.de{{url_for('results', user=user, job=job)}}</a>
             </p>
-            <button class="icon_btn" onclick="copy_url()"><i>content_paste</i></button>
+            <button class="icon_btn white" onclick="copy_url()"><i>content_paste</i></button>
             <div id="loadingBar"></div>
             <div id="status_div1"></div>
             <div id="status_div2"></div>

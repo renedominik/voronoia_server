@@ -9,6 +9,7 @@ body {
     left: 0;
     top: 0;
     overflow-x: hidden;
+    line-height: 1;
 }
 
 /* nav bar */
@@ -16,6 +17,7 @@ body {
 nav {
     background: #03A64A !important;
     font-family: 'Roboto', sans-serif;
+    box-shadow: none !important;
 }
 
 #logo {
@@ -134,3 +136,10 @@ i {
     padding: 0;
     cursor: pointer;
 }
+
+
+@media screen and (max-width: 900px) {
+    section {
+      padding: 0 5vw;
+    }
+  }

@@ -102,14 +102,18 @@ i {
 
 #submitInterface input {
     width: 7.5vw;
+    height: min-content;
     padding: 1px;
     padding-bottom: 5px;
     border: 0;
     border-bottom: 1px solid grey;
+    margin-bottom: 0;
+    box-shadow: none !important;
 }
 
 #submitInterface select {
     width: 7.5vw;
+    height: min-content;
     padding: 1px;
     padding-bottom: 5px;
     border: 0;
@@ -120,6 +124,9 @@ i {
     font-size: 1em;
     /*margin: 2vh 0;*/
     -webkit-appearance: none;
+    display: block;
+    box-shadow: none !important;
+    outline: none;
 }
 
 #submitInterface #inputOptions {

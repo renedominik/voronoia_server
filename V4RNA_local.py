@@ -64,12 +64,6 @@ def send_email(to, subject, template):
     mail.send(msg)
 
 
-@app.route('/test')
-def test():
-    return render_template('test.html')
-
-
-
 @app.route('/')
 def index():
     return render_template('home.html')
@@ -105,7 +99,7 @@ def start_thread(function, args, name):
 def submit():
     form = InputForm()
     if request.method == 'GET':
-        return render_template('formular.html', form=form, tag_str="tag", example_pdb=example_pdb)
+        return render_template('submit.html', form=form, tag_str="tag", example_pdb=example_pdb)
 
     print(request.files)
 
@@ -136,7 +130,7 @@ def submit():
         os.mkdir(output_dir)
     except:
         # tag has already been used
-        return render_template('formular.html', form=form, tag_str="tag", example_pdb=example_pdb)
+        return render_template('submit.html', form=form, tag_str="tag", example_pdb=example_pdb)
         
     # save file
     filename = output_dir + "protein.pdb" 
@@ -145,7 +139,7 @@ def submit():
     start_thread(calculation, [filename, output_dir, email, tag], 'zip')
 
     print('command terminated')
-    return redirect(url_for('wait', user=email, job=tag))
+    return redirect(url_for('progress', user=email, job=tag))
 
 
 @app.route('/status/<user>/<job>')
@@ -167,8 +161,8 @@ def load_example():
 
 
 @app.route('/progress/<user>/<job>')
-def wait(user, job):
-    return render_template('wait.html', user=user, job=job)
+def progress(user, job):
+    return render_template('progress.html', user=user, job=job)
 
 
 def get_lic_selection(user, job):
@@ -186,7 +180,7 @@ def results(user, job):
     f = os.path.join(app.config['USER_DATA_DIR'], user, job, "onlyHoles.pdb")
     if os.path.isfile(f):
         return render_template('results.html', user=user, job=job, lic_selection=get_lic_selection(user, job))
-    return redirect(url_for('wait', user=user, job=job))
+    return redirect(url_for('progress', user=user, job=job))
 
 
 @app.route('/db-results/<pdb>')
@@ -225,7 +219,7 @@ def database():
     con.commit()
     rows = cur.fetchall()
     con.close()
-    return render_template('databank.html', rows = rows)
+    return render_template('database.html', rows = rows)
 
 
 @app.route('/methods')

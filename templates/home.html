@@ -2,7 +2,7 @@
 
 {% block head %}
 {{super()}}
-<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='homeStyle.css')}}" media="all">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/homeStyle.css')}}" media="all">
 {% endblock %}
 
 {% block header %}
@@ -55,6 +55,7 @@
 
 <script>
     var animationSpeed = 0.8;
+
     
     $("#down_btn").click(function(event){
         // custom scroll
@@ -67,7 +68,7 @@
         
         TweenMax.to("#home-title", 1, {
             left: '2rem',
-            top: '0.6rem',
+            top: '1rem',
             ease: Power2.easeOut
         });
         

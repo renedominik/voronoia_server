@@ -2,7 +2,7 @@
 
 {% block head %}
 {{super()}}
-<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='formularStyle.css')}}" media="all">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/submitStyle.css')}}" media="all">
 {% endblock %}
 
 {% block title %} {{super()}} hallo {% endblock %}
@@ -34,7 +34,7 @@
                         <i>cloud_upload</i>
                         <span>Drag and drop a PDB file here</span>
                     </div>
-                    <button id="load_example" name="load_example" class="icon_btn" form="null"><i>archive</i></button>
+                    <button id="load_example" name="load_example" class="icon_btn white" form="null"><i>archive</i></button>
                 </div>
                 
                 <div id="submitInterface" class="hide">
@@ -53,7 +53,7 @@
                         <p>tag (required, alphanumeric) </p>
                         <div id="tag_wrapper">
                             <input class="input" id="tag" name="tag" type="text" pattern="^[a-zA-Z0-9 ]+$" required>
-                            <button id="generate_tag" name="generate_tag" class="icon_btn" form="null"><i>casino</i></button>
+                            <button id="generate_tag" name="generate_tag" class="icon_btn white" form="null"><i>casino</i></button>
                         </div>
                     </div>
                     <div class="inputField">
