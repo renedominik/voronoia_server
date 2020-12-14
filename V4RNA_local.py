@@ -21,21 +21,20 @@ app.config['SECRET_KEY'] = 'Lhvz7/{{4$34"_.b'
 app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'monodualismus121212@gmail.com'
-app.config['MAIL_DEFAULT_SENDER'] = 'monodualismus121212@gmail.com'
-app.config['MAIL_PASSWORD'] = 'monoduo12'
+#app.config['MAIL_USERNAME'] = 'monodualismus121212@gmail.com'
+app.config['MAIL_DEFAULT_SENDER'] = 'hildilab@proteinformatics.uni-leipzig.de'
+#app.config['MAIL_PASSWORD'] = 'monoduo12'
 app.config['USER_DATA_DIR'] = "/disk/user_data/voronoia/sessions/"
-app.config['DATABASE_DIR'] = "/home/hildilab/app/voronoia/static/archive/"
+# app.config['DATABASE_DIR'] = "/home/hildilab/app/voronoia/static/archive/"
+app.config['DATABASE_DIR'] = "/disk/data/voronoia/data/"
 app.config['EXAMPLES_DIR'] = "/home/hildilab/app/voronoia/static/examples/"
-# app.config['GARBAGE_DIR'] = "/disk/user_data/voronoia/garbage/"
-app.config['GARBAGE_DIR'] = "/home/hildilab/app/voronoia/garbage/"
 app.config['APP_PATH'] = "/home/hildilab/app/voronoia/"
 
 bootstrap = Bootstrap(app)
 
 mail = Mail(app)
 
-sql_db = "/disk/data/voronoia/jobs.db"
+sql_db = "/disk/data/voronoia/db.sql"
 
 example_pdb = '1lib.pdb'
 
@@ -44,8 +43,7 @@ class InputForm(FlaskForm):
     # creation of input fields
     pdb = FileField('Upload a pdb file:')#, validators=[FileRequired()])
     email = StringField('Email*:', validators=[Email()])
-    tag = StringField('Tag:', validators=[DataRequired()])
-    options = SelectField('Atom radii:', choices=[('1', 'ProtOr'), ('2', 'Stouten')])    
+    tag = StringField('Tag:', validators=[DataRequired()]) 
     submit = SubmitField('Analyse')
 
     def validate(self):
@@ -185,7 +183,8 @@ def results(user, job):
 
 @app.route('/db-results/<pdb>')
 def db_results(pdb):
-    return render_template('db_results.html', pdb=pdb, lic_selection=get_db_lic_selection(pdb))
+    #return render_template('db_results.html', pdb=pdb, lic_selection=get_db_lic_selection(pdb))
+    return render_template('db_results.html', pdb=pdb)
 
 
 @app.route('/menu')
@@ -206,20 +205,26 @@ def download( user, job, filename):
 
 @app.route('/db-downloads/<pdb>/<filename>')
 def db_download(pdb, filename):
-    path = app.config['DATABASE_DIR'] + '/' + pdb
-    return send_from_directory(path, filename)
+    path = app.config['DATABASE_DIR'] + '/'
+    return send_from_directory(path, pdb + filename)
 
 
-@app.route('/database')
+@app.route('/database', methods=['GET', 'POST'])
 def database():
+    """
     con = sql.connect(sql_db)
     con.row_factory = sql.Row
     cur = con.cursor()
-    cur.execute("SELECT * FROM jobs")
+    cur.execute("SELECT pdbid, title FROM content")
     con.commit()
     rows = cur.fetchall()
     con.close()
     return render_template('database.html', rows = rows)
+    """
+    if request.method == 'GET':
+        return render_template('database.html')
+    id = request.form['pdb-id'].lower()
+    return redirect(url_for('db_results', pdb=id))
 
 
 @app.route('/methods')
@@ -231,3 +236,10 @@ def methods():
 def tutorial():
     return render_template('tutorial.html')
 
+
+@app.route('/sendmail')
+def m():
+    send_email("monodualismus121212@gmail.com", "hi", "template")
+
+if __name__ == '__main__':
+    app.run(ssl_context= ('/etc/apache2/ssl/cert-11043954791332636805298309362.pem', '/etc/apache2/ssl/key.pem' ))

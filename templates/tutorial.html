@@ -2,7 +2,6 @@
 
 {% block head %}
 {{super()}}
-<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/tutorialStyle.css')}}" media="all">
 {% endblock %}
 
 {% block header %}
@@ -34,6 +33,14 @@
             </p>
 
             <h2>S U B M I T</h2>
+            <h3>Load an Example</h3>
+
+            <p>If you want to test out the submission process on Voronoia with an example, you can visit the <a href="submit">submit</a> page and click on the green icon in 
+                the lower left, under the grey box. This will take you to an already filled out form which you usually need to fill out yourself to submit a structure for 
+                calculation with Voronoia. You can play around with the input if you like or you can directly click on the green Analyse button. You need to wait a few minutes 
+                for the calculation to finish and after that you will be redirected to the results page, where you can analyse the example PDB with Voronoia.
+            </p>
+
             <h3>Upload own Structures</h3>
 
             <p>Since not all known macromolecular structures are deposited in the database and you may wish to analyse unpublished structures, you can submit a new structure for
@@ -43,16 +50,16 @@
             <!-- img: submit site -->
                 
             <p>
-                To submit your structure you first need to upload a pdb file. You can click on the green button 'Upload a PDB' to browse your filesystem for a file to be uploaded,
+                To submit your structure you first need to upload a pdb file. You can click on the green button titled 'Upload a PDB' to browse your filesystem for a file to be uploaded,
                 or you can drag and drop a file into the grey box with the dashed outline.
             </p>
 
             <!-- img: uploading a pbd, open file manager -->
 
             <p>
-                When you have uploaded a file, you will see a new form for submition. You can choose the set of atomic radii to be used in the calculation by clicking on the field 
-                beneath the 'atom radii' label. Next you need to enter an id, a unique string which identifies your job unambiguously. If you want to be notified when your results
-                are ready, you can optionally enter an email adress. 
+                When you have uploaded a file, you will see a new form for submission appear. You can choose the set of atomic radii to be used in the calculation by clicking on the field 
+                beneath the 'atom radii' label. Next you need to enter an id, a unique string which identifies your job unambiguously. Alternativly you can also click on the dice 
+                icon, which will generate a random tag for you. If you want to be notified when your results are ready, you can optionally enter an email adress. 
             </p>
 
             <!-- img: filled out form -->
@@ -71,12 +78,12 @@
 
 
             <h2>R E S U L T S</h2>
-            <h3>Analyse with Voronoia</h3>
+            <h3>Visual Output</h3>
 
             <p>In the results page you can view a structure that has been analysed with Voronoia. You can see a view box in the middle of the page, where the structure is shown
-                as well as an array of balls with different sizes. These balls represent cavaties in the structure, which could potentially hold water molecules. Red balls indicate
-                polar cavaties, which have a higher probability of containing water molecules, blue balls on the other hand represent cavaties which are mostly hydrophobic and 
-                therefor less likely to hold water molecules. The atoms surrounding cavaties are highlighted, allowing you to investigate the cavaties on your own.
+                as well as an array of balls with different sizes. These balls represent cavities in the structure, which could potentially hold water molecules. Red balls indicate
+                polar cavities, which have a higher probability of containing water molecules, blue balls on the other hand represent cavities which are mostly hydrophobic and 
+                therefor less likely to hold water molecules. The atoms surrounding cavities are highlighted, allowing you to investigate the cavities on your own.
             </p>
 
             <p>
@@ -93,10 +100,29 @@
             <!-- img: menu -->
 
             <p>You can also download the results as a zip file on the results subpage by clicking on the download icon under the view box. The zip file contains a vol file, an 
-                extended vol file, a pdb file containing the cavaties as well as a 'selection' file which contains all atoms neighbouring cavaties.
+                extended vol file, a pdb file containing the cavities as well as a 'selection' file which contains all atoms neighbouring cavities.
             </p>
 
             <!-- img: zip file -->
+
+            <h3>Result Files</h3>
+            <p>When you download the results for the structure you wish to analyse, you will find four different files: protein.vol, protein.vol.extended.vol, onlyHoles.pdb and 
+                selection. protein.vol is a PDB file with some additional information generated by Voronoia: every ATOM-line in the original PDB is extended by the 
+                van der Waals-volume of the atom, the solvent excluded volume of the atom and a bit (a zero or a one), which shows whether the atom is solvent accesible (1) or
+                burried in other atoms with no surface which the solvent can reach (0).
+            </p>
+
+            <p>The protein.vol.extended.vol contains all the information that the protein.vol file contains, in addition to the packing density and the z-Score of every atom, which 
+                are given at the end of every ATOM-line. 
+            </p>
+
+            <p>onlyHoles.pdb is a pdb file that stores the position as well as approximate radius of every cavity that Voronoia calculated. The cavities are stored as hydrogen atoms
+                in the PDB, with the B-Factor storing the radius in Angstrom. Storing the information in a PDB-file allows for the visualisation of the cavities in programs that are 
+                designed for the visualisation of PDB structures. 
+            </p>
+
+            <p>The selection file contains the atom IDs of all atoms that neighbour cavities. By examining these atoms one can better determine the probability of a water molecule 
+                residing in a particular cavity. </p>
 
             <p>Thank you for using Voronoia!</p>
         </div>

@@ -14,25 +14,12 @@
     <center>
         <h1>Database</h1>
         <div id="databank" class="contentBody">
-            <h2>A R C H I V E</h2>
-            <table id="archive">
-                <thead>
-                <tr>
-                  <th> Tag  </th>
-                  <th> Original PDB </th>
-                  <th> Results </th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for row in rows %}
-                <tr>
-                  <td class="tag"> {{ row['tag'] }}    </td>
-                  <td class="pdb"> {{ row['pdb'] }}  </td>
-                  <td> {{ row['vol'] }}   </td>
-                </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+            <h2>S E A R C H</h2>
+            <form method="POST" enctype="multipart/form-data">
+            <center>
+                <input id="search-bar" name="pdb-id" type="search" placeholder="enter a PDB ID">
+            </center>
+            </form>
         </div>
     </center>
 </section>
@@ -41,80 +28,4 @@
 
 {% block scripts %}
 {{super()}}
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-
-<script type="text/javascript">
-    
-    var table;
-    
-    function initPageInfo(btn) {
-        btn.before('<div id="pageInfo">x/x</div>');
-    }
-    
-    $(document).ready(function() {
-        //Setup for DataTables
-        table = $('#archive').DataTable( { 
-            "dom": '<"#filter"f>t<"#paging"p>',
-            "order": [[ 1, "desc" ]],
-            "info": false,
-            "pagingType": "simple",
-            "iDisplayLength": 8,
-            "bLengthChange": false,
-            "language": {
-                "paginate": {
-                    "previous": "chevron_left",
-                    "next": "chevron_right"
-                }
-            },
-            "drawCallback": function() {
-                initPageInfo($('#paging .next'));
-            }
-        });
-
-        //Search Animation
-        $('#archive_filter label input').on('focus', function() {
-            $('#archive_filter label').addClass('expanded');
-            $('#archive_filter input').addClass('expanded');
-        });
-        
-        $('#archive_filter label input').on('focusout', function() {
-            if(!$('#archive_filter input').val()) {
-                $('#archive_filter label').removeClass('expanded');
-                $('#archive_filter input').removeClass('expanded');   
-            }
-        });
-        
-        //Pagination Animation 
-        $('#archive_paginate').on('mouseover', function() {
-            var currentPage = table.page() + 1;
-            var lastPage = table.page.info().pages;
-            if(lastPage == 0) {
-                lastPage = 1;
-            }
-            var content = currentPage + " / " + lastPage;
-            $('#pageInfo').text(content);
-            $('#pageInfo').addClass('expanded');
-            $('#archive_paginate').addClass('expanded');
-        });
-
-        $('#archive_paginate').on('mouseleave', function() {
-            $('#databank').removeClass('preload');
-            $('#pageInfo').removeClass('expanded');
-            $('#archive_paginate').removeClass('expanded');
-        });
-        
-        $('#archive_paginate').on('transitionend', 'div', function() {
-            if($('#pageInfo').css('width') !== '0px') {
-                $('#databank').addClass('preload');
-            }    
-        });
-        
-        //Select an entry
-        $('tbody').on('click', 'tr', function() {
-            pdb = $(this).children('.pdb').text().trim();
-            pdb = pdb.split('.')[0];
-            window.location = "{{url_for('db_results', pdb='')}}" + pdb;
-        });
-    } );
-</script>
 {% endblock %}

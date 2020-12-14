@@ -23,6 +23,7 @@
 
 
 {% block scripts %}
+{{ super() }}
 
 <!-- THREE -->
 <script src="{{url_for('static',filename='ngl/js/three/three.js')}}"></script>
@@ -148,14 +149,34 @@
     }
 
 
-    function visualize(stage) {
-        // load molecule structure
-        loadPDB(stage, "protein.pdb", "structure", ["cartoon", "licorice"],  [{colorScheme: 'bfactor'}, {sele: lic_selection}], true);
 
-        // load cavaties
-	    loadPDB(stage, "onlyHoles.pdb", "holes", ["ball+stick"], [{radius: 'bfactor', colorscheme: 'bfactor'}]);
+var schemeId = NGL.ColormakerRegistry.addScheme(function (params) {
+  this.atomColor = function (atom) {
+    if (atom.serial < 50) {
+      return 0x0000FF;  // blue
+    } else if (atom.serial > 100) {
+      return 0xFF0000;  // red
+    } else {
+      return 0x00FF00;  // green
+    }
+  };
+});
+
+
+function visualize(stage) {
+
+			       
+        // load molecule structure
+        loadPDB(stage, ".vor.pdb", "structure", ["cartoon"],  [{colorScheme: 'bfactor'}], true);
+
+        // load cavities
+//	    loadPDB(stage, "_holes_pol.pdb", "holes", ["ball+stick"], [{radius: 'bfactor', colorScheme: 'bfactor'}]);
+	    loadPDB(stage, "_holes_pol.pdb", "holes", ["ball+stick"], [{radius: 'bfactor', color: schemeID }]);
     }
 
+
+
+			       
 </script>
 
 {% endblock %}

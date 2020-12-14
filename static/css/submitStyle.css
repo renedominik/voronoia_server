@@ -17,7 +17,7 @@ i {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.8vh;
+    font-size: 1.1rem;
     color: white;
     background: #09AC50;
     cursor: pointer;
@@ -32,7 +32,7 @@ i {
     justify-content: center;
     align-items: center;
     border: 3px dashed grey;
-    font-size: 2.5vh;
+    font-size: 1.5rem;
     color: grey;
 }
 
@@ -101,7 +101,8 @@ i {
 }
 
 #submitInterface input {
-    width: 7.5vw;
+    /*width: 7.5vw;*/
+    width: 8rem;
     height: min-content;
     padding: 1px;
     padding-bottom: 5px;
@@ -112,7 +113,7 @@ i {
 }
 
 #submitInterface select {
-    width: 7.5vw;
+    width: 8rem;
     height: min-content;
     padding: 1px;
     padding-bottom: 5px;
@@ -127,6 +128,7 @@ i {
     display: block;
     box-shadow: none !important;
     outline: none;
+    text-align: center;
 }
 
 #submitInterface #inputOptions {
@@ -169,3 +171,38 @@ i {
     padding: 2px;
     padding-bottom: 6px;
 }*/
+
+
+@media screen and (max-width: 993px) {
+    
+    #submitInterface {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .inputField p {
+        text-align: center;
+    }
+
+    #submitInterface input {
+        width: 45vw;
+        text-align: center;
+    }
+
+    #submitInterface select {
+        width: 45vw;
+        text-align: center;
+    }
+
+    #submitbtn {
+        position: inherit !important;
+        transform: translate(0%, 0%) !important;
+        margin-top: 2rem;
+        margin-bottom: 4rem !important;
+    }
+
+    #tag_wrapper {
+        flex-direction: column;
+    }
+}

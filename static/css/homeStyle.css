@@ -1,7 +1,11 @@
 body {
-    overflow: hidden;
+    /*overflow: hidden;*/
     width: 100vw;
-    height: 100vh;
+    /*height: 100vh;*/
+}
+
+.noscroll {
+    overflow: hidden;
 }
 
 /* hide tilte in navbar for animation */
@@ -143,3 +147,24 @@ img {
     float: left;
     margin: 0 3rem;
 }
+
+
+@media screen and (max-width: 993px) {
+    
+    #logo {
+        display: block;
+    }
+    
+    #voro {
+      font-size: 4.5rem;
+    }
+
+    #lowerTitle img {
+        width: 6rem;
+        height: 6rem;
+    }
+
+    #home-title {
+        z-index: inherit;
+    }
+  }

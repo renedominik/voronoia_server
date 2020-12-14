@@ -14,7 +14,7 @@
 <div id="home-title" class="middle">
     <div id="voro">Voronoia</div>
     <div id="lowerTitle">
-        <img src="{{ url_for( 'static', filename ='tree.jpg' )}}">
+        <img src="{{ url_for( 'static', filename ='logo.svg' )}}">
 	<!-- <h1 id="h1_rna"><span id="h1_4">4</span>RNA</h1> -->
     </div>
 </div>
@@ -29,9 +29,15 @@
     <center>
         <h1>Introduction</h1>
         <div id="intro" class="contentBody">
-            <h2>P U R P O S E</h2>
-            <p class="long-text">Voronoia is a database storing data on atomic packing densities of RNA structures and complexes. Compared to other methods, that solely estimate van der Waals interactions i.e. by gain of solvent excluded surfaces, Voronoia4RNA allocates the free space between neighbouring atoms. <br><br>
+            <h2>M O T I V E</h2>
+            <p class="long-text">
+                Voronoia is a web tool which identifies cavities in a molecular structure and calculates the packing density of all atoms. 
+This allows users to check for packing defects, which may be a sign of a wrongly resolved structure. The tool also helps in creating reliable simulations by finding cavities possibly missing internal water molecules in the structure, thereby enabling a more realistic modeling of proteins and nucleic acids.  The results are visualized directly on the website with NGL.
+Voronoia also includes a database of precalculated structures from the Protein Data Bank which can be explored.
+                <!--
+                Voronoia is a database storing data on atomic packing densities of RNA structures and complexes. Compared to other methods, that solely estimate van der Waals interactions i.e. by gain of solvent excluded surfaces, Voronoia4RNA allocates the free space between neighbouring atoms. <br><br>
             It explicitly takes packing defects into consideration and is therefore an appropriate method to calculate van der Waals interactions and to estimate the underlying forces. </p>
+            -->
             <center id="link-wrapper">
                 <div>
                     <h3>Learn More</h3>
@@ -56,16 +62,22 @@
 <script>
     var animationSpeed = 0.8;
 
+    $(document).ready(function() {
+        $("body").addClass('noscroll');
+    });
+
     
     $("#down_btn").click(function(event){
-        // custom scroll
-        event.preventDefault();
-        var hash = this.hash;
-        $("html, body").animate({
-            scrollTop: $(hash).offset().top
-        }, 1000);
-        $("nav").addClass("active");
-        
+
+    // custom scroll
+    event.preventDefault();
+    var hash = this.hash;
+    $("html, body").animate({
+        scrollTop: $(hash).offset().top
+    }, 1000);
+    $("nav").addClass("active");
+
+    if (window.matchMedia("(min-width: 950px)").matches) {
         TweenMax.to("#home-title", 1, {
             left: '2rem',
             top: '1rem',
@@ -90,6 +102,20 @@
         });
         
         $("#home-title").addClass("corner");
+    } else {
+        TweenMax.to("#home-title", 1, {
+            top: '-11rem'
+        });
+    }
+    //setTimeout(allowScroll, 1000);
     });   
+
+    /*
+    function allowScroll() {
+        console.log('hide');
+        $("#part1").css('display', 'none');
+        $("body").removeClass('noscroll');
+    }
+    */
 </script>
 {% endblock %}

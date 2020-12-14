@@ -4,7 +4,9 @@
 <title>Voronoia</title>
 <!-- universal css -->
 <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css')}}" media="all">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='materialize/css/materialize.min.css')}}" media="all">
+
+
 <!-- fonts -->
 <link href="https://fonts.googleapis.com/css?family=Questrial&display=swap" rel="stylesheet"> 
 <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
@@ -12,6 +14,9 @@
 
 <!-- needed for media queries -->
 <meta content="width=device-width, initial-scale=1" name="viewport" />
+
+<!-- favicon -->
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 {% endblock %}
 
 
@@ -22,7 +27,7 @@
   <nav>
       <div class="nav-wrapper">
           <a id="logo" class="brand-logo black-text" href="{{ url_for('index') }}">
-              <img src="{{ url_for( 'static', filename ='tree.jpg' )}}">
+              <img src="{{ url_for( 'static', filename ='logo.svg' )}}">
               <div id="title">Voronoia</div>
           </a>
           <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons grey-text text-darken-3">menu</i></a>
@@ -39,6 +44,11 @@
 </div>
 
 <ul class="sidenav" id="mobile-demo">
+  <li>
+    <a class="brand-logo" href="{{ url_for('index') }}">
+      <img src="{{ url_for( 'static', filename ='logo.svg' )}}">
+    </a>
+  </li>
   <li><a href="{{ url_for('index') }}" class="grey-text text-darken-3">home</a></li>
   <li><a href="{{ url_for('submit') }}" class="grey-text text-darken-3">submit</a></li>
   <li><a href="{{ url_for('database') }}" class="grey-text text-darken-3">database</a></li>
@@ -55,8 +65,8 @@
 
  {% block scripts %}
  {{ super() }}
- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+ <script src="{{url_for('static', filename='jquery/jquery-3.5.1.min.js')}}"></script>
+ <script src="{{url_for('static', filename='materialize/js/materialize.min.js')}}"></script>
 
  <script>
     $(document).ready(function(){

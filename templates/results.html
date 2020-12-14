@@ -33,7 +33,7 @@
 {{super()}}
 <script src="{{url_for('static', filename='ngl.js')}}"></script>
 
-<script> 
+<script>
     NGL.mainScriptPathFile = "{{url_for('static', filename='ngl.js')}}";
 
     link = "/voronoia/menu?u={{user}}&j={{job}}&lic={{lic_selection}}".split(' ').join('_');

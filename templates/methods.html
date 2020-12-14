@@ -2,7 +2,6 @@
 
 {% block head %}
 {{super()}}
-<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/methodsStyle.css')}}" media="all">
 {% endblock %}
 
 {% block header %}
@@ -35,19 +34,21 @@
                 densities are calculated.
             </p>
         </div>
-        <!--
+        
         <div id="visuals" class="contentBody">
             <h2>V I S U A L S</h2>
-            <p> For the visualization of packing densities and cavities, the Jmol based viewer Provi can be
-                used directly on the website (Oracle Java is needed)<span style="color:red">AENDERN</span>. The atomic packing density is represented
-                by a colour scale which is given by the range of the minimal and maximal packing density
-                values or a user defined range.
+            <p> 
+                To visualize the results of Voronoia and create an intuitive understanding of cavities and packing in a biological molecule, NGL is used. 
+                The viewer is embedded directly in the website and does not require any downloads by the user.
             </p>
-            <p> Cavities can be visualized schematically as balls, which is the appropriate way for large
-                structures as ribosomes containing hundreds of cavities, or by their exact shape.
+            <p>
+                The molecule itself is shown in a cartoon representation, colored by the packing density of its atoms with a color scale ranging from red for very tightly 
+                packed atoms to blue for atoms with relatively low packing densities. Cavities are depicted as balls and colored either red or blue, where red indicates 
+                a more hydrophobic environment and blue a hydrophilic environment with a higher probability of internal water. The atoms neighboring cavities are 
+                additionally shown in licorice, highlighting them so that users can more easily evaluate the chances for buried water molecules in particular cavities.
             </p>
         </div>
-        -->
+        
     </center>
 </section>
 {% endblock %}
