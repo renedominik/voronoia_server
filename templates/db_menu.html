@@ -118,7 +118,7 @@
         var example = NGL.GET( "example" );
         if( example ) NGL.ExampleRegistry.load( example, stage );
         var load = NGL.GET( "load" );
-        if( load ) stage.loadFile( load, { defaultRepresentation: true } );
+        //15.12. if( load ) stage.loadFile( load, { defaultRepresentation: true } );
 
         visualize(stage);
     }
@@ -126,7 +126,7 @@
 
     function getFileURL(filename) {
         var loc = window.location;
-        var command = loc.protocol + "//" + loc.host + "/voronoia/db-downloads/" + pdb +  "/" + filename;
+        var command = loc.protocol + "//" + loc.host + "/voronoia/db-downloads/" + pdb  + filename;
         return command;
     }
 
@@ -134,7 +134,7 @@
     function loadPDB(stage, filename, name, representations, representation_dicts, center) {
         file = getFileURL(filename);
 
-	    stage.loadFile(file, { defaultRepresentation: true }).then( function(comp) {
+	    stage.loadFile(file, { defaultRepresentation: false }).then( function(comp) {
             comp.setName(name);
 	        comp.setSelection("");
 
@@ -148,32 +148,32 @@
         });
     }
 
+    // for color scheme, not working currently
+    var schemeId = NGL.ColormakerRegistry.addScheme(function (params) {
+        this.atomColor = function (atom) {
+            if (atom.occupancy < 6) {
+                return 0x0000FF;  // blue
+            } else if (atom.occupancy > 10) {
+                return 0xFF0000;  // red
+            } else {
+                return 0xFFFFFF;  // white
+                //return 0x00FF00;  // green
+            }
+        };
+    });
 
 
-var schemeId = NGL.ColormakerRegistry.addScheme(function (params) {
-  this.atomColor = function (atom) {
-    if (atom.serial < 50) {
-      return 0x0000FF;  // blue
-    } else if (atom.serial > 100) {
-      return 0xFF0000;  // red
-    } else {
-      return 0x00FF00;  // green
-    }
-  };
-});
+    function visualize(stage) {
 
-
-function visualize(stage) {
-
-			       
         // load molecule structure
-        loadPDB(stage, ".vor.pdb", "structure", ["cartoon"],  [{colorScheme: 'bfactor'}], true);
+        loadPDB(stage, ".vor.pdb", "molecules", ["cartoon"],  [{colorScheme: 'bfactor'}], true);
+
+        // load cavity neighboring residues
+        loadPDB(stage, "_neighbors.pdb", "neighboring residues", ["licorice"],  [{color: schemeId}], true);
 
         // load cavities
-//	    loadPDB(stage, "_holes_pol.pdb", "holes", ["ball+stick"], [{radius: 'bfactor', colorScheme: 'bfactor'}]);
-	    loadPDB(stage, "_holes_pol.pdb", "holes", ["ball+stick"], [{radius: 'bfactor', color: schemeID }]);
+        loadPDB(stage, "_holes.pdb", "cavities", ["ball+stick"], [{radius: 'bfactor', color: schemeId }]);
     }
-
 
 
 			       
