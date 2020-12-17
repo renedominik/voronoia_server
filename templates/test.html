@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Ein kleiner Test</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="subresource" href="css/light.css" />
+    <link rel="subresource" href="css/dark.css" />
+</head>
+
+<body>
+    <!-- NGL -->
+    <script src="js/ngl.js"></script>
+
+    <!-- UI -->
+    <script src="js/lib/signals.min.js"></script>
+    <script src="js/lib/tether.min.js"></script>
+    <script src="js/lib/colorpicker.min.js"></script>
+    <script src="js/ui/ui.js"></script>
+    <script src="js/ui/ui.extra.js"></script>
+    <script src="js/ui/ui.ngl.js"></script>
+    <script src="js/gui.js"></script>
+
+    <script>
+        NGL.cssDirectory = "css/";
+        NGL.documentationUrl = "api/index.html";
+        NGL.examplesListUrl = "scripts/list.json";
+        NGL.examplesScriptUrl = "scripts/";
+
+        // Datasources
+        NGL.DatasourceRegistry.add("data", new NGL.StaticDatasource("data/"));
+
+        var stage;
+        document.addEventListener("DOMContentLoaded", function (){
+            stage = new NGL.Stage();
+            NGL.StageWidget(stage);
+            var load = NGL.getQuery("load");
+            if(load) stage.loadFile(load, { defaultRepresentation: false}).then( function (c) { c.addRepresentation( "licorice",{ colorScheme: schemeId }) } );
+            var script = NGL.getQuery("script");
+            if(script) stage.loadScript("scripts/" + script + ".js");
+        } );
+
+
+    // for color scheme, not working currently
+    var schemeId = NGL.ColormakerRegistry.addScheme(function (params) {
+        this.atomColor = function (atom) {
+            if (atom.occupancy < 6) {
+                return 0x0000FF;  // blue
+            } else if (atom.occupancy > 10) {
+                return 0xFF0000;  // red
+            } else {
+                return 0xFFFFFF;  // white
+                //return 0x00FF00;  // green
+            }
+        };
+    });
+
+
+	
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block head %}
+{{super()}}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/databaseStyle.css')}}" media="all">
+{% endblock %}
+
+{% block header %}
+  {{super()}}
+{% endblock %}
+
+{% block content %}
+<section>
+    <center>
+        <h1>Database</h1>
+        <div id="databank" class="contentBody">
+            <h2>A R C H I V E</h2>
+            <table id="archive">
+                <thead>
+                <tr>
+                  <th> PDB  </th>
+                  <th> Title </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for row in rows %}
+                <tr>
+                  <td class="pdbid"> {{ row['pdbid'] }}    </td>
+                  <td class="title"> {{ row['title'].lower() }}  </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </center>
+</section>
+{% endblock %}
+
+
+{% block scripts %}
+{{super()}}
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+<script type="text/javascript">
+    
+    var table;
+    
+    function initPageInfo(btn) {
+        btn.before('<div id="pageInfo">x/x</div>');
+    }
+
+    function updatePageInfo() {
+        console.log("update");
+        var currentPage = table.page() + 1;
+        var lastPage = table.page.info().pages;
+        if(lastPage == 0) {
+            lastPage = 1;
+        }
+        var content = currentPage + " / " + lastPage;
+        $('#pageInfo').text(content);
+    }
+    
+    $(document).ready(function() {
+        //Setup for DataTables
+        table = $('#archive').DataTable( { 
+            "dom": '<"#filter"f>t<"#paging"p>',
+            "order": [[ 1, "desc" ]],
+            "info": false,
+            "pagingType": "simple",
+            "iDisplayLength": 8,
+            "bLengthChange": false,
+            "language": {
+                "paginate": {
+                    "previous": "chevron_left",
+                    "next": "chevron_right"
+                }
+            },
+            "drawCallback": function() {
+                initPageInfo($('#paging .next'));
+            }
+        });
+
+        updatePageInfo();
+
+        //Search Animation
+        $('#archive_filter label input').on('focus', function() {
+            $('#archive_filter label').addClass('expanded');
+            $('#archive_filter input').addClass('expanded');
+        });
+        
+        $('#archive_filter label input').on('focusout', function() {
+            if(!$('#archive_filter input').val()) {
+                $('#archive_filter label').removeClass('expanded');
+                $('#archive_filter input').removeClass('expanded');   
+            }
+        });
+        
+        //Pagination Animation 
+        $('#archive_paginate').on('mouseover', function() {
+            updatePageInfo();
+            $('#pageInfo').addClass('expanded');
+            $('#archive_paginate').addClass('expanded');
+        });
+
+        $('#archive_paginate').on('click', function() {
+            updatePageInfo();
+        });
+
+        $('#archive_paginate').on('mouseleave', function() {
+            $('#databank').removeClass('preload');
+            $('#pageInfo').removeClass('expanded');
+            $('#archive_paginate').removeClass('expanded');
+        });
+        
+        $('#archive_paginate').on('transitionend', 'div', function() {
+            if($('#pageInfo').css('width') !== '0px') {
+                $('#databank').addClass('preload');
+            }    
+        });
+        
+        //Select an entry
+        $('tbody').on('click', 'tr', function() {
+            pdb = $(this).children('.pdbid').text().trim();
+            pdb = pdb.split('.')[0];
+            window.location = "{{url_for('db_results', pdb='')}}" + pdb;
+        });
+    } );
+</script>
+{% endblock %}

@@ -19,11 +19,11 @@ from zipfile import ZipFile
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'Lhvz7/{{4$34"_.b'
-app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
+#app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
+#app.config['MAIL_PORT'] = 587
+#app.config['MAIL_USE_TLS'] = True
 #app.config['MAIL_USERNAME'] = 'monodualismus121212@gmail.com'
-app.config['MAIL_DEFAULT_SENDER'] = 'hildilab@proteinformatics.uni-leipzig.de'
+#app.config['MAIL_DEFAULT_SENDER'] = 'hildilab@proteinformatics.uni-leipzig.de'
 #app.config['MAIL_PASSWORD'] = 'monoduo12'
 app.config['USER_DATA_DIR'] = "/disk/user_data/voronoia/sessions/"
 # app.config['DATABASE_DIR'] = "/home/hildilab/app/voronoia/static/archive/"
@@ -33,7 +33,7 @@ app.config['APP_PATH'] = "/home/hildilab/app/voronoia/"
 
 bootstrap = Bootstrap(app)
 
-mail = Mail(app)
+#mail = Mail(app)
 
 #sql_db = "/disk/data/voronoia/db.sql"
 
@@ -55,28 +55,18 @@ class InputForm(FlaskForm):
 
 
 def send_email(to, link, user):
-    """
-    print('sending email')
-    print('to: ' + to)
-    print('saying: ' + template)
-    msg = Message(subject, recipients=[to])
-    msg.body = template
-    mail.send(msg)
-    """
     log = open( 'calc.log', 'w' )
     log.write( 'send mail\n')
     log.write( os.getcwd() + '\n')
     with open( 'mail.txt', 'w') as out:
-        out.write('From: some@bloke.ox\n')
-        out.write('Subject: voronoia madness :-) \n')
+        out.write('From: voronoia@proteinformatics.de\n')
+        out.write('Subject: Voronoia \n')
         out.write('To: ' + user + '\n\n')
-        out.write('Congrats ' + user + ' !\n\n')
-        out.write('go, get your stuff: ' + link + '\n\n')
+        out.write('hi ' + user + '!\n')
+        out.write('your calculation is done. \n')
+        out.write('you can view the results here: ' + link + '\n\n')
         out.write('enjoy!\n\n')
-    #p = subprocess.check_output( ['sendmail', 'rene.staritzbichler@medizin.uni-leipzig.de','<', 'mail.txt'] )
     os.system( 'sendmail -t < mail.txt' )
-    #p = subprocess.check_output('sendmail monodualismus121212@gmail.com < m.txt', shell=True)
-    #log.write( 'returned: ' + p + '\n')
     log.close()
 
 @app.route('/')
@@ -102,7 +92,6 @@ def calculation(filename, output_dir, email, job):
         with app.app_context(), app.test_request_context():
             results_link = url_for('results', user=email, job=job)
             send_email(email, 'http://www.proteinformatics.de/voronoia' + results_link, email)
-            #send_email(email)
 
 
 def start_thread(function, args, name):
@@ -262,10 +251,6 @@ def tutorial():
     return render_template('tutorial.html')
 
 
-@app.route('/sendmail')
-def m():
-    send_email("monodualismus121212@gmail.com")
-    return "<h1>mailing time</h1>"
 
 if __name__ == '__main__':
     app.run(ssl_context= ('/etc/apache2/ssl/cert-11043954791332636805298309362.pem', '/etc/apache2/ssl/key.pem' ))

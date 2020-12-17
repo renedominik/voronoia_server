@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{url_for('static',filename='ngl/css/font-awesome.min.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static',filename='ngl/css/main.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static',filename='ngl/css/dark.css')}}" />
+
+    <style>
+        #sidebar {
+            position: absolute;
+            right: 0px;
+            top: 32px;
+            bottom: 0px;
+            width: 500px;
+            overflow: hidden;
+        }
+    </style>
+{% endblock %}
+
+
+{% block header %}
+{% endblock %}
+
+
+{% block scripts %}
+{{ super() }}
+
+<script src="{{url_for('static', filename='ngl.js')}}"></script>
+
+<!--
+<script src="{{url_for('static',filename='ngl/js/three/three.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/three/Detector.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/three/TypedArrayUtils.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/three/controls/TrackballControls.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/three/loaders/OBJLoader.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/three/loaders/PLYLoader.js')}}"></script>
+
+<script src="{{url_for('static',filename='ngl/js/lib/async.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/lib/promise.min.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/lib/sprintf.min.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/lib/jszip.min.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/lib/pako.min.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/lib/lzma.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/lib/bzip2.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/lib/chroma.min.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/lib/svd.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/lib/signals.min.js')}}"></script>
+
+<script src="{{url_for('static',filename='ngl/js/ngl/shims.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/ngl/core.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/ngl/worker.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/ngl/utils.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/ngl/symmetry.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/ngl/alignment.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/ngl/geometry.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/ngl/selection.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/ngl/superposition.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/ngl/structure.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/ngl/trajectory.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/ngl/surface.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/ngl/script.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/ngl/streamer.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/ngl/parser.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/ngl/writer.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/ngl/loader.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/ngl/viewer.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/ngl/buffer.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/ngl/representation.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/ngl/stage.js')}}"></script>
+
+<script src="{{url_for('static',filename='ngl/js/lib/tether.min.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/lib/colorpicker.min.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/lib/ui/ui.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/lib/ui/ui.extra.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/lib/ui/ui.ngl.js')}}"></script>
+<script src="{{url_for('static',filename='ngl/js/ngl/gui.js')}}"></script>
+-->
+
+<script>
+
+//    if( !Detector.webgl ) Detector.addGetWebGLMessage();
+
+    NGL.mainScriptPathFile = "{{url_for('static', filename='ngl.js')}}";
+
+    //NGL.mainScriptFilePath = "../ngl/js/build/ngl.full.min.js";
+    //NGL.cssDirectory = "../ngl/css/";
+    //NGL.assetsDirectory = "../ngl/";
+
+    NGL.DatasourceRegistry.add(
+        "data", new NGL.StaticDatasource("data/")
+    );
+
+    // get search parameters
+    var params = new URLSearchParams(document.location.search.substr(1));
+    var pdb = params.get('p');
+    var lic_selection = params.get('lic').split('_').join(' ');
+
+
+    $().ready(function() {
+        NGL.init(onInit);
+    });
+
+
+    function onInit(){
+        var stage = new NGL.Stage();
+        
+        NGL.MenubarWidget = function( stage ){
+            var container = new UI.Panel();
+            container.add( new NGL.MenubarViewWidget( stage ) );
+            container.add( new NGL.MenubarHelpWidget( stage ) );
+            container.add(
+                new UI.Panel().setClass( "menu" ).setFloat( "right" ).add(
+                    new UI.Text( "NGL Viewer " + NGL.REVISION ).setClass( "title" )
+                )
+            ); 
+            return container;
+        };      
+        NGL.StageWidget( stage );
+        
+        var example = NGL.GET( "example" );
+        if( example ) NGL.ExampleRegistry.load( example, stage );
+        var load = NGL.GET( "load" );
+        //15.12. if( load ) stage.loadFile( load, { defaultRepresentation: true } );
+
+        visualize(stage);
+    }
+
+
+    function getFileURL(filename) {
+        var loc = window.location;
+        var command = loc.protocol + "//" + loc.host + "/voronoia/db-downloads/" + pdb +  "/" + filename;
+        return command;
+    }
+
+
+    function loadPDB(stage, filename, name, representations, representation_dicts, center) {
+        file = getFileURL(filename);
+
+	    stage.loadFile(file, { defaultRepresentation: false }).then( function(comp) {
+            comp.setName(name);
+	        comp.setSelection("");
+
+            for(var i = 0; i < representations.length; i++) {
+	            comp.addRepresentation(representations[i], representation_dicts[i]);
+            }
+
+	        if(center) {
+	            comp.centerView();
+	        }
+        });
+    }
+
+
+    // for color scheme, not working currently
+    var schemeId = NGL.ColormakerRegistry.addScheme(function (params) {
+        this.atomColor = function (atom) {
+            if (atom.occupancy < 50) {
+                return 0x0000FF;  // blue
+            } else if (atom.occupancy > 100) {
+                return 0xFF0000;  // red
+            } else {
+                return 0x00FF00;  // green
+            }
+        };
+    });
+
+
+    function visualize(stage) {
+
+        // load molecule structure
+        loadPDB(stage, ".vor.pdb", "molecules", ["cartoon"],  [{colorScheme: 'bfactor'}], true);
+
+        // load cavities
+        loadPDB(stage, "_holes.pdb", "cavities", ["ball+stick"], [{radius: 'bfactor', colorScheme: 'occupancy'}]);
+        // loadPDB(stage, "_holes.pdb", "cavities", ["ball+stick"], [{radius: 'bfactor', color: schemeID }]);
+    }
+
+			       
+</script>
+
+{% endblock %}

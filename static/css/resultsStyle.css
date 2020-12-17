@@ -1,6 +1,11 @@
+section {
+    padding: 0 25vw;
+}
+
+
 #viewport {
-    height: 40vh;
-    width: 100%;
+    height:  55vh;
+    width:  100%; 
     margin-bottom: 4vh;
 }
 
