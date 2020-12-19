@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block head %}
+{{super()}}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/resultsStyle.css')}}" media="all">
+{% endblock %}
+
+
+
+{% block header %}
+{{super()}}
+{% endblock %}
+
+
+
+{% block content %}
+<section>
+    <center>
+        <h1>Results</h1>
+        <div id="visualisation" class="contentBody">
+            <h2>V I E W</h2>
+            <div id="viewport"></div>
+            <a href="{{url_for('db_download', filename=pdb+'.zip')}}"><i>file_download</i></a>
+            <!-- menu <a id="fullscreen_icon" style="float:right;"><i>fullscreen</i></a> -->
+            <a href="{{url_for('db_fs_results', pdb=pdb)}}" style="float:right;"><i>fullscreen</i></a>
+        </div>
+    </center>
+</section>
+{% endblock %}
+
+
+
+{% block scripts %}
+{{super()}}
+<script src="{{url_for('static', filename='ngl.js')}}"></script>
+
+<script> 
+    NGL.mainScriptPathFile = "{{url_for('static', filename='ngl.js')}}";
+ 
+    /* menu
+    link = "/voronoia/db-menu?p={{pdb}}&lic={{lic_selection}}".split(' ').join('_');
+//    link = "/voronoia/db-menu?p={{pdb}}";
+    $("#fullscreen_icon").attr("href", link);
+    */
+
+    $().ready( function() {
+
+        stage = new NGL.Stage("viewport");
+        stage.setParameters( { backgroundColor: "black" } );
+ 			       
+        //// var lic_selection = "{lic_selection}";
+        //// loadPDB(stage, ".pdb", "structure", ["cartoon", "licorice"],  [{colorScheme: 'bfactor'}, {sele: lic_selection}], true);
+        //// loadPDB(stage, ".vor.pdb", "structure", ["cartoon"], [{}], true);
+
+        // load molecule structure
+        loadPDB(stage, ".vor.pdb", "molecules", ["cartoon"],  [{colorScheme: 'bfactor'}], true);
+
+        // load cavity neighboring residues
+        loadPDB(stage, "_neighbors.pdb", "neighbors", ["licorice"],  [{color: schemeId}], true);
+
+        // load cavities
+        loadPDB(stage, "_holes.pdb", "cavities", ["ball+stick"], [{radius: 'bfactor', colorScheme: schemeId}]);
+    });
+
+    
+    function getFileURL(ending) {
+        var loc = window.location;
+        var command = loc.protocol + "//" + loc.host + "{{url_for('db_download', filename=pdb)}}" + ending;
+        return command;
+    }
+
+
+    function loadPDB(stage, ending, name, representations, representation_dicts, center) {
+        file = getFileURL(ending);
+
+        stage.loadFile(file, { defaultRepresentation: false }).then( function(comp) {
+            comp.setName(name);
+	    comp.setSelection("");
+
+            for( var i = 0; i < representations.length; i++ ) {
+	            comp.addRepresentation(representations[i], representation_dicts[i]);
+            }
+
+	    if(center) {
+	        comp.autoView();
+//	        comp.centerView();
+	    }
+        });
+    }
+
+    // for color scheme, not working currently
+    var schemeId = NGL.ColormakerRegistry.addScheme(function (params) {
+        this.atomColor = function (atom) {
+            if (atom.occupancy < 6) {
+                return 0x0000FF;  // blue
+            } else if (atom.occupancy > 10) {
+		return 0xFF0000;  // red
+            } else {
+                 return 0xFFFFFF;  // white
+                 //return 0x00FF00;  // green
+            }
+        };
+    });
+
+
+
+
+				
+  </script>
+
+{{ super() }}
+{% endblock %}

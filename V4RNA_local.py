@@ -30,6 +30,7 @@ app.config['USER_DATA_DIR'] = "/disk/user_data/voronoia/sessions/"
 app.config['DATABASE_DIR'] = "/disk/data/voronoia/data/"
 app.config['EXAMPLES_DIR'] = "/home/hildilab/app/voronoia/static/examples/"
 app.config['APP_PATH'] = "/home/hildilab/app/voronoia/"
+app.config['SCRIPTS_PATH'] = "/home/hildilab/app/voronoia/material/"
 
 bootstrap = Bootstrap(app)
 
@@ -54,18 +55,19 @@ class InputForm(FlaskForm):
         return '.' in fn and (fn.rsplit('.', 1)[-1] == 'pdb')
 
 
-def send_email(to, link, user):
+def send_email(user, link):
     log = open( 'calc.log', 'w' )
     log.write( 'send mail\n')
     log.write( os.getcwd() + '\n')
     with open( 'mail.txt', 'w') as out:
         out.write('From: voronoia@proteinformatics.de\n')
-        out.write('Subject: Voronoia \n')
+        out.write('Subject: Voronoia results \n')
         out.write('To: ' + user + '\n\n')
-        out.write('hi ' + user + '!\n')
-        out.write('your calculation is done. \n')
-        out.write('you can view the results here: ' + link + '\n\n')
-        out.write('enjoy!\n\n')
+        out.write('hello  ' + user + '!\n\n')
+        out.write('your voronoia calculation is done. \n')
+        out.write('you can view the results here: \n\n' + link + '\n\n')
+        out.write('thanks for using voronoia.\n\n')
+        out.write('have a nice day!\n\n')
     os.system( 'sendmail -t < mail.txt' )
     log.close()
 
@@ -80,18 +82,24 @@ def execute_cmd(cmd):
 
 def calculation(filename, output_dir, email, job):
     # call voronoia.py
-    execute_cmd(["voronoia.py",filename , "-o", output_dir,"-vd"])
+    #execute_cmd(["voronoia.py",filename , "-o", output_dir,"-vd"])
     # call get_holes.py
-    execute_cmd([app.config['APP_PATH'] + "get_holes.py", output_dir,"protein.vol.extended.vol"])
+    #execute_cmd([app.config['APP_PATH'] + "get_holes.py", output_dir,"protein.vol.extended.vol"])
+
+    # call main script
+    #print([app.config['SCRIPTS_PATH'] + "run.sh", filename, output_dir])
+    execute_cmd([app.config['SCRIPTS_PATH'] + "run.sh", filename, output_dir])
+
+
     # create zip file
     os.chdir(output_dir)
-    execute_cmd(["zip", "results.zip", "onlyHoles.pdb", "protein.vol.extended.vol", "selection"]) 
+    execute_cmd(["zip", "protein.zip", "protein.vor.pdb", "protein_holes.pdb", "protein_neighbors.pdb"]) 
     # optionally send email
     if email != 'anonymous':
         #with app.app_context():
         with app.app_context(), app.test_request_context():
             results_link = url_for('results', user=email, job=job)
-            send_email(email, 'http://www.proteinformatics.de/voronoia' + results_link, email)
+            send_email(email, 'http://www.proteinformatics.de/voronoia' + results_link)
 
 
 def start_thread(function, args, name):
@@ -104,16 +112,22 @@ def start_thread(function, args, name):
 def submit():
     form = InputForm()
     if request.method == 'GET':
-        return render_template('submit.html', form=form, tag_str="tag", example_pdb=example_pdb)
+        return render_template('submit.html', form=form, example_pdb=example_pdb)
 
     print(request.files)
 
     f = request.files['pdb']
+    print('first request')
+    print(f)
     if f.filename == '':
         f = request.files.get('dnd')
+        print('second try')
+        print(f)
+    """
     if f is None:
         # we assume that if neither the button nor the drag and drop box was used, the user must have loaded the example
         f = FileStorage(open(app.config['EXAMPLES_DIR'] + example_pdb, 'rb'))
+    """
 
     print(f)
     print(type(f))
@@ -143,7 +157,7 @@ def submit():
 
     start_thread(calculation, [filename, output_dir, email, tag], 'zip')
 
-    print('command terminated')
+    print('submited')
     return redirect(url_for('progress', user=email, job=tag))
 
 
@@ -151,7 +165,7 @@ def submit():
 def status(user, job):
     # returns info about the status of the calculation
     status = 'running'
-    fname = os.path.join(app.config['USER_DATA_DIR'], user, job, "onlyHoles.pdb")
+    fname = os.path.join(app.config['USER_DATA_DIR'], user, job, "protein_holes.pdb")
     print("exists?: ",fname,job)
     if os.path.isfile(fname):
         status = 'finished'
@@ -182,9 +196,10 @@ def get_db_lic_selection(pdb):
 
 @app.route('/results/<user>/<job>')
 def results(user, job):
-    f = os.path.join(app.config['USER_DATA_DIR'], user, job, "onlyHoles.pdb")
+    f = os.path.join(app.config['USER_DATA_DIR'], user, job, "protein_holes.pdb")
+    print( "results:", f)
     if os.path.isfile(f):
-        return render_template('results.html', user=user, job=job, lic_selection=get_lic_selection(user, job))
+        return render_template('results.html', user=user, job=job ) #, lic_selection=get_lic_selection(user, job))
     return redirect(url_for('progress', user=user, job=job))
 
 
@@ -192,6 +207,16 @@ def results(user, job):
 def db_results(pdb):
     #return render_template('db_results.html', pdb=pdb, lic_selection=get_db_lic_selection(pdb))
     return render_template('db_results.html', pdb=pdb)
+
+
+@app.route('/fs-results/<user>/<job>')
+def fs_results(user, job):
+    return render_template('fullscreen_results.html', user=user, job=job)
+
+
+@app.route('/db-fs-results/<pdb>')
+def db_fs_results(pdb):
+    return render_template('db_fullscreen_results.html', pdb=pdb)
 
 
 @app.route('/menu')

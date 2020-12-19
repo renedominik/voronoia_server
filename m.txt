@@ -1,3 +1,0 @@
-subject: Voronoia
-
-your structure has been successfully calculated. You can view the results at: https://www.proteinformatics.de/voronoia/results/hi/tag

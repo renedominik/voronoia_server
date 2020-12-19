@@ -1,0 +1,26 @@
+i {
+    color: grey;
+    margin: 0 0.5rem;
+    cursor: pointer;
+}
+
+i.active {
+    color: #09AC05;
+}
+
+.contentBody {
+    display: none;
+}
+
+.contentBody.active {
+    display: block;
+}
+
+#modeSelect {
+    float: right;
+}
+
+
+iframe {
+    margin-top: 1.95rem;
+}

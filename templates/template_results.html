@@ -1,0 +1,24 @@
+{% extends "visualisation.html" %}
+
+
+
+{% block header %}
+{{super()}}
+{% endblock %}
+
+
+
+{% block content %}
+<section>
+    <center>
+        <h1>Results</h1>
+        <div id="visualisation" class="contentBody">
+            <h2>V I E W</h2>
+            <div id="viewport"></div>
+            <a {% block download_link %}{% endblock %}><i>file_download</i></a>
+            <!-- menu <a id="fullscreen_icon" style="float:right;"><i>fullscreen</i></a> -->
+            <a {% block fullscreen_link %}{% endblock %} style="float:right;"><i>fullscreen</i></a>
+        </div>
+    </center>
+</section>
+{% endblock %}

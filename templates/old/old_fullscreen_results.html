@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block head %}
+{{super()}}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/resultsStyle.css')}}" media="all">
+{% endblock %}
+
+
+
+{% block header %}
+{% endblock %}
+
+
+
+
+{% block content %}
+<div id="viewport" style="width: 100%; height: 100%;"></div>
+
+<style>
+body {
+    overflow: hidden;
+}
+</style>
+{% endblock %}
+
+
+
+{% block scripts %}
+{{super()}}
+<script src="{{url_for('static', filename='ngl.js')}}"></script>
+
+<script>
+    NGL.mainScriptPathFile = "{{url_for('static', filename='ngl.js')}}";
+
+    $().ready( function() {
+
+        stage = new NGL.Stage("viewport");
+        stage.setParameters( { backgroundColor: "black" } );
+ 			       
+        // load molecule structure
+        var lic_selection = "{{lic_selection}}";
+        loadPDB(stage, "protein.pdb", "structure", ["cartoon", "licorice"],  [{colorScheme: 'bfactor'}, {sele: lic_selection}], true);
+        
+        // load cavaties
+	    loadPDB(stage, "onlyHoles.pdb", "holes", ["ball+stick"], [{radius: 'bfactor', colorscheme: 'bfactor'}]);
+    });
+
+    
+    function getFileURL(filename) {
+        var loc = window.location;
+        var command = loc.protocol + "//" + loc.host + "{{url_for('download', user=user, job=job, filename='')}}" + filename;
+        return command;
+    }
+
+
+    function loadPDB(stage, filename, name, representations, representation_dicts, center) {
+        file = getFileURL(filename);
+
+	    stage.loadFile(file, { defaultRepresentation: true }).then( function(comp) {
+            comp.setName(name);
+	        comp.setSelection("");
+
+            for(var i = 0; i < representations.length; i++) {
+	            comp.addRepresentation(representations[i], representation_dicts[i]);
+            }
+
+	        if(center) {
+	            comp.centerView();
+	        }
+        });
+    }
+
+  </script>
+
+{{ super() }}
+{% endblock %}

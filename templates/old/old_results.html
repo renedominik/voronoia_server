@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block head %}
+{{super()}}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/resultsStyle.css')}}" media="all">
+{% endblock %}
+
+
+
+{% block header %}
+  {{super()}}
+{% endblock %}
+
+
+
+{% block content %}
+<section>
+    <center>
+        <h1>Results</h1>
+        <div id="visualisation" class="contentBody">
+            <h2>V I E W</h2>
+            <div id="viewport"></div>
+            <a href="{{url_for('download', user=user, job=job, filename='')}}results.zip"><i>file_download</i></a>
+            <!-- menu <a id="fullscreen_icon" style="float:right;"><i>fullscreen</i></a> -->
+            <a href="{{url_for('fs_results', user=user, job=job)}}" style="float:right;"><i>fullscreen</i></a>
+        </div>
+    </center>
+</section>
+{% endblock %}
+
+
+
+{% block scripts %}
+{{super()}}
+<script src="{{url_for('static', filename='ngl.js')}}"></script>
+
+<script>
+    NGL.mainScriptPathFile = "{{url_for('static', filename='ngl.js')}}";
+
+    /* menu
+    link = "/voronoia/menu?u={{user}}&j={{job}}&lic={{lic_selection}}".split(' ').join('_');
+    $("#fullscreen_icon").attr("href", link);
+    */
+
+    $().ready( function() {
+
+        stage = new NGL.Stage("viewport");
+        stage.setParameters( { backgroundColor: "black" } );
+ 			       
+        // load molecule structure
+        var lic_selection = "{{lic_selection}}";
+        loadPDB(stage, "protein.pdb", "structure", ["cartoon", "licorice"],  [{colorScheme: 'bfactor'}, {sele: lic_selection}], true);
+        
+        // load cavaties
+	    loadPDB(stage, "onlyHoles.pdb", "holes", ["ball+stick"], [{radius: 'bfactor', colorscheme: 'bfactor'}]);
+    });
+
+    
+    function getFileURL(filename) {
+        var loc = window.location;
+        var command = loc.protocol + "//" + loc.host + "{{url_for('download', user=user, job=job, filename='')}}" + filename;
+        return command;
+    }
+
+
+    function loadPDB(stage, filename, name, representations, representation_dicts, center) {
+        file = getFileURL(filename);
+
+	    stage.loadFile(file, { defaultRepresentation: true }).then( function(comp) {
+            comp.setName(name);
+	        comp.setSelection("");
+
+            for(var i = 0; i < representations.length; i++) {
+	            comp.addRepresentation(representations[i], representation_dicts[i]);
+            }
+
+	        if(center) {
+	            comp.centerView();
+	        }
+        });
+    }
+
+  </script>
+
+{{ super() }}
+{% endblock %}

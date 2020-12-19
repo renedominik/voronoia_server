@@ -1,0 +1,5 @@
+{% extends "template_fullscreen_results.html" %}
+
+{% block file_download %}
+    "{{url_for('download', user=user, job=job, filename='protein')}}"
+{% endblock %}

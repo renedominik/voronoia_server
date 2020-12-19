@@ -2,6 +2,7 @@
 
 {% block head %}
 {{super()}}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/tutorialStyle.css')}}" media="all">
 {% endblock %}
 
 {% block header %}
@@ -12,7 +13,16 @@
 <section>
     <center>
         <h1>Tutorial</h1>
-        <div id="refs" class="contentBody">
+        <div id="modeSelect">
+            <i id="icon_vid" class="active">play_arrow</i>
+            <i id="icon_txt">format_align_left</i>
+        </div>
+        <div id="vid" class="contentBody active">
+            <h2>V I D E O</h2>
+            <!-- <iframe width="100%" height="400rem" src="https://www.youtube.com/embed/dQw4w9WgXcQ?showinfo=0"></iframe> -->
+            <iframe width="100%" height="400rem" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div id="txt" class="contentBody">
             <h2>D A T A B A S E</h2>
             <h3>Explore the Database</h3>
 
@@ -128,4 +138,32 @@
         </div>
     </center>
 </section>
+{% endblock %}
+
+
+{% block scripts %}
+{{super()}}
+<script>
+
+    $('#icon_txt').on('click', function() {
+        // remove active class from vid, icon_vid 
+        $('#vid').removeClass('active');
+        $('#icon_vid').removeClass('active');
+
+        // add active class to txt, icon_txt
+        $('#txt').addClass('active');
+        $('#icon_txt').addClass('active');
+    });
+
+    $('#icon_vid').on('click', function() {
+        // remove active class from txt, icon_txt 
+        $('#txt').removeClass('active');
+        $('#icon_txt').removeClass('active');
+        
+        // add active class to vid, icon_vid
+        $('#vid').addClass('active');
+        $('#icon_vid').addClass('active');
+    });
+
+</script>
 {% endblock %}

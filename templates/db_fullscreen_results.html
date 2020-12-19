@@ -1,0 +1,5 @@
+{% extends "template_fullscreen_results.html" %}
+
+{% block file_download %}
+    "{{url_for('db_download', filename=pdb)}}"
+{% endblock %}
