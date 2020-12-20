@@ -114,23 +114,11 @@ def submit():
     if request.method == 'GET':
         return render_template('submit.html', form=form, example_pdb=example_pdb)
 
-    print(request.files)
-
+    # get pdb file
     f = request.files['pdb']
-    print('first request')
-    print(f)
-    if f.filename == '':
-        f = request.files.get('dnd')
-        print('second try')
-        print(f)
-    """
     if f is None:
-        # we assume that if neither the button nor the drag and drop box was used, the user must have loaded the example
+        # if no file was uploaded, the user has loaded the example
         f = FileStorage(open(app.config['EXAMPLES_DIR'] + example_pdb, 'rb'))
-    """
-
-    print(f)
-    print(type(f))
 
     # atomRadii = request.form.get('options')
     tag = request.form['tag']

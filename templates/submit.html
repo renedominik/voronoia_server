@@ -77,7 +77,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/additional-methods.js"></script>
 
 <script type="text/javascript">
-    
+
     var file;
     
 
@@ -120,6 +120,13 @@
         
         $('#dragDropField').on('drop', function(e) {
             file = e.originalEvent.dataTransfer.files[0];
+
+            dt = new DataTransfer();
+            dt.items.add(file);
+
+            inputPdb.files = dt.files;
+
+
             interface_change(file, false);
         });
 
