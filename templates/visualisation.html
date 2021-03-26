@@ -54,12 +54,12 @@
         });
     }
 
-    // for color scheme, not working currently
+    // for color scheme
     var schemeId = NGL.ColormakerRegistry.addScheme(function (params) {
         this.atomColor = function (atom) {
-            if (atom.occupancy < 6) {
+            if (atom.occupancy < 0) {
                 return 0x0000FF;  // blue
-            } else if (atom.occupancy > 10) {
+            } else if (atom.occupancy > 0.84) {
 		return 0xFF0000;  // red
             } else {
                  return 0xFFFFFF;  // white

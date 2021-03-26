@@ -2,6 +2,7 @@
 
 {% block head %}
 <title>Voronoia</title>
+
 <!-- universal css -->
 <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css')}}" media="all">
 <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='materialize/css/materialize.min.css')}}" media="all">
@@ -30,11 +31,11 @@
               <img src="{{ url_for( 'static', filename ='logo.svg' )}}">
               <div id="title">Voronoia</div>
           </a>
-          <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons grey-text text-darken-3">menu</i></a>
+          <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons grey-text text-darken-3">menu</i></a>
           <ul id="nav-mobile" class="right hide-on-med-and-down">
               <li><a href="{{ url_for('index') }}" class="grey-text text-darken-3">home</a></li>
               <li><a href="{{ url_for('submit') }}" class="grey-text text-darken-3">submit</a></li>
-              <li><a href="{{ url_for('database') }}" class="grey-text text-darken-3">database</a></li>
+              <li><a href="{{ url_for('database') }}" class="grey-text text-darken-3">browse PDB</a></li>
               <li><a href="{{ url_for('methods') }}" class="grey-text text-darken-3">methods</a></li>
               <li><a href="{{ url_for('tutorial') }}" class="grey-text text-darken-3">tutorial</a></li>
           </ul>
@@ -42,7 +43,7 @@
 </nav>
 </div>
 
-<ul class="sidenav" id="mobile-demo">
+<ul class="sidenav" id="mobile-nav">
   <li>
     <a class="brand-logo" href="{{ url_for('index') }}">
       <img src="{{ url_for( 'static', filename ='logo.svg' )}}">
@@ -50,7 +51,7 @@
   </li>
   <li><a href="{{ url_for('index') }}" class="grey-text text-darken-3">home</a></li>
   <li><a href="{{ url_for('submit') }}" class="grey-text text-darken-3">submit</a></li>
-  <li><a href="{{ url_for('database') }}" class="grey-text text-darken-3">database</a></li>
+  <li><a href="{{ url_for('database') }}" class="grey-text text-darken-3">browse PDB</a></li>
   <li><a href="{{ url_for('methods') }}" class="grey-text text-darken-3">methods</a></li>
   <li><a href="{{ url_for('tutorial') }}" class="grey-text text-darken-3">tutorial</a></li>
 </ul>

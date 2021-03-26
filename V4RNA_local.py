@@ -19,12 +19,6 @@ from zipfile import ZipFile
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'Lhvz7/{{4$34"_.b'
-#app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
-#app.config['MAIL_PORT'] = 587
-#app.config['MAIL_USE_TLS'] = True
-#app.config['MAIL_USERNAME'] = 'monodualismus121212@gmail.com'
-#app.config['MAIL_DEFAULT_SENDER'] = 'hildilab@proteinformatics.uni-leipzig.de'
-#app.config['MAIL_PASSWORD'] = 'monoduo12'
 app.config['USER_DATA_DIR'] = "/disk/user_data/voronoia/sessions/"
 # app.config['DATABASE_DIR'] = "/home/hildilab/app/voronoia/static/archive/"
 app.config['DATABASE_DIR'] = "/disk/data/voronoia/data/"
@@ -33,8 +27,6 @@ app.config['APP_PATH'] = "/home/hildilab/app/voronoia/"
 app.config['SCRIPTS_PATH'] = "/home/hildilab/app/voronoia/material/"
 
 bootstrap = Bootstrap(app)
-
-#mail = Mail(app)
 
 #sql_db = "/disk/data/voronoia/db.sql"
 
@@ -114,10 +106,13 @@ def submit():
     if request.method == 'GET':
         return render_template('submit.html', form=form, example_pdb=example_pdb)
 
+
+
     # get pdb file
     f = request.files['pdb']
-    if f is None:
+    if f.filename == '':
         # if no file was uploaded, the user has loaded the example
+        print('load example')
         f = FileStorage(open(app.config['EXAMPLES_DIR'] + example_pdb, 'rb'))
 
     # atomRadii = request.form.get('options')

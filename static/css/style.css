@@ -12,6 +12,8 @@ body {
     line-height: 1;
 }
 
+
+
 /* nav bar */
 
 nav {
@@ -48,11 +50,9 @@ nav li a:hover {
     background: #13B65A !important;
 }
 
-#three-line i {
-    /*color: grey !important;*/
-}
 
 
+/* content */
 
 section {
     height: 80vh;
@@ -167,7 +167,7 @@ Show the tooltip text when you mouse over the tooltip container
 }
 */
 
-#mobile-demo .brand-logo {
+#mobile-nav .brand-logo {
     height: min-content;
     display: flex;
     justify-content: center;
@@ -175,7 +175,7 @@ Show the tooltip text when you mouse over the tooltip container
     margin-top: 2rem;
 }
 
-#mobile-demo .brand-logo img {
+#mobile-nav .brand-logo img {
     width: 6rem;
     height: 6rem;
 }
