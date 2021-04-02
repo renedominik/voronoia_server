@@ -258,6 +258,10 @@ def methods():
 def tutorial():
     return render_template('tutorial.html')
 
+@app.route('/down')
+def down():
+    return render_template('download.html')
+
 
 
 if __name__ == '__main__':

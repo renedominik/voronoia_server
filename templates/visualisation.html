@@ -1,11 +1,5 @@
 {% extends "base.html" %}
 
-{% block head %}
-{{super()}}
-<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/resultsStyle.css')}}" media="all">
-{% endblock %}
-
-
 {% block scripts %}
 {{super()}}
 <script src="{{url_for('static', filename='ngl.js')}}"></script>
@@ -26,6 +20,73 @@
 
         // load cavities
         loadPDB(stage, "_holes.pdb", "cavities", ["ball+stick"], [{radius: 'bfactor', colorScheme: schemeId}]);
+
+
+        var licButton = createElement("input", {
+            type: "button",
+            value: "toggle side-chains",
+            onclick: function () {
+                // add full menu stuff here:
+                stage.getRepresentationsByName( "licorice" ).list.forEach( function( repre ){
+                    repre.setVisibility( !repre.visible );
+                } );
+            }
+        }, { 
+            top: "24px", 
+            left: "24px",
+            background: "#1c1f26",
+            color: "#b8b8b8",
+            border: "none",
+            padding: "8px"
+        });
+        addElement(licButton,stage);
+
+
+        var gradientButton = createElement("input", {
+            type: "button",
+            value: "toggle color-scale",
+            onclick: function() {
+                $("#gradient").toggleClass("unvisible");
+            }
+        }, {
+            top: "78px",
+            left: "24px",
+            background: "#1c1f26",
+            color: "#b8b8b8",
+            border: "none",
+            padding: "8px"
+        });
+        addElement(gradientButton, stage);
+
+
+        var snapButton = createElement("input", {
+            type: "button",
+            value: "camera_alt",
+            onclick: function () {
+                // add full menu stuff here:
+
+                stage.makeImage({
+                        factor: 1,
+                        antialias: false,
+                        trim: false,
+                        transparent: false
+                    }).then(function (blob) {
+                        NGL.download(blob, "ngl-xray-viewer-snapshot.png");
+                    });
+            }
+        }, { 
+            top: "126px", 
+            left: "24px",
+            fontFamily: "Material Icons",
+            fontSize: "25px",
+            background: "none",
+            border: "none",
+            color: "#b8b8b8", 
+        });
+        addElement(snapButton,stage);
+
+
+    
     });
 
     
@@ -41,16 +102,16 @@
 
         stage.loadFile(file, { defaultRepresentation: false }).then( function(comp) {
             comp.setName(name);
-	    comp.setSelection("");
+            comp.setSelection("");
 
             for( var i = 0; i < representations.length; i++ ) {
 	            comp.addRepresentation(representations[i], representation_dicts[i]);
             }
 
-	    if(center) {
-	        comp.autoView();
-            //comp.centerView();
-	    }
+            if(center) {
+                comp.autoView();
+                //comp.centerView();
+            }
         });
     }
 
@@ -60,13 +121,38 @@
             if (atom.occupancy < 0) {
                 return 0x0000FF;  // blue
             } else if (atom.occupancy > 0.84) {
-		return 0xFF0000;  // red
+                return 0xFF0000;  // red
             } else {
                  return 0xFFFFFF;  // white
                  //return 0x00FF00;  // green
             }
         };
-    });		
+    });
+
+
+
+function addElement (el,stage) {
+    Object.assign(el.style, {
+        position: "absolute",
+        zIndex: 10
+    });
+    el.className += " menu-button";
+    stage.viewer.container.appendChild(el);
+};
+
+
+
+function createElement (name, properties, style) {
+    var el = document.createElement(name);
+    Object.assign(el, properties);
+    Object.assign(el.style, style);
+    return el;
+};
+
+
+
+
+				
 </script>
 
 {% endblock %}

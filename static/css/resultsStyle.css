@@ -22,6 +22,11 @@ section {
     margin-bottom: 2vh;
 }
 
+
+.menu-button {
+    display: none;
+}
+
 a {
     text-decoration: none;
     cursor: pointer;

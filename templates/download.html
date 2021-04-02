@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<section>
+    <center>
+      <h1>Download</h1>
+
+        <div id="down" class="contentBody">
+
+	  <p> The standalone code and the pymol plugin are available both for Linux and Windows. </p>
+      
+            <h2>W I N D O W S</h2>
+            <h3>Installing the standalone version on Windows</h3>
+
+            <p>Unzip the <a href="{{url_for('db_download', filename='voronoia_1.0.zip')}}" >Voronoia_1.0.zip </a>    archive. In the 'standalone' directory, 'Voronoia_GUI.exe' starts the graphical user interface. You can create a link icon on your Desktop for this one. 'Voronoia.exe' provides a command-line-tool, which is best used from a text console (in the Start Menu or by executing the 'cmd'). Just type 'Voronoia.exe' there to get the program options listed. The 'standalone' directory may be moved as a whole to another place. 
+            </p>
+	    
+             <h3>Installing the PyMOL plugin on Windows</h3>
+
+          <p>
+	    Unzip the  <a href="{{url_for('db_download', filename='voronoia_1.0_pymol.zip')}}" > Voronoia_1.0_pymol.zip </a> archive. To use the PyMOL plugin, all contents of the 'plugin\startup' directory must be copied to the 'PYMOL_DIR\modules\pmg_tk\startup' directory. The Voronoia GUI then can be activated from the PyMOL 'Plugin' menu. Substitute 'PYMOL_DIR' by the location where PyMOL is installed on your machine, most probably 'C:\Program Files\DeLano Scientific\PyMOL\'. We recommend using the 0.99 Version of PyMOL or newer.</p>
+
+<p>If you want Voronoia to start each time with PyMOL, change the AUTOMATICALLY_OPEN_PYMOL_PLUGIN variable in the startup/voronoia.py file. 
+            </p>
+           
+
+            <h2>L I N U X</h2>
+            <h3>Installing the standalone version on Linux</h3>
+
+          <p> To calculate packing data, you will need Wine (www.winehq.com). Without Wine, you can still create all kinds of reports from existing .vol packing files. To install, Python 2.4 or higher and the Pmw library (1.2 or higher) must be installed.
+	    Unpack the  <a href="{{url_for('db_download', filename='voronoia_1.0_Linux.zip')}}" > Voronoia_1.0_Linux.zip </a> archive.</p>
+
+ <p>To start the command-line application, type:</p>
+<p>python Voronoia.py</p>
+<p>For the graphical interface:</p>
+<p>python Voronoia_GUI.py</p>
+
+ <p>Wine must be configured to run the 'data/get_volume.exe' program. How this is done probably depends on your distribution and Wine version. After you got it running, the 'EXECUTABLE' variable in the Voronoia.py module must be set to the proper Wine call. Of course, you may also try to run Voronoia_GUI.exe from the Windows distribution directly by Wine, but we never tried this ourselves.
+
+            </p>
+
+            <h3>Installing the PyMOL plugin on Linux</h3>
+
+          <p>
+	    To calculate packing data, you will need Wine (www.winehq.com). Without Wine, you can still create all kinds of reports from existing .vol packing files. Unpack the  <a href="{{url_for('db_download', filename='voronoia_1.0_pymol.zip')}}" > Voronoia_1.0_pymol.zip </a>  archive. Copy all contents of the 'plugin' directory to the '$PYMOL\pmg_tk\startup' directory. This requires root privileges. Substitute '$PYMOL' by the path where PyMOL modules are installed on your machine. This depends on your installation. It is *not* /usr/local/bin. Try looking in places like /usr/local/pymol, /var/lib/python-support/python2.4/ or /usr/lib/python2.4/site-packages/ for the pmg_tk directory. We recommend using the 0.99 Version of PyMOL or newer.</p>
+
+<p>The Voronoia GUI then can be activated from the PyMOL 'Plugin' menu.</p>
+
+<p>If you want Voronoia to start each time with PyMOL, change the AUTOMATICALLY_OPEN_PYMOL_PLUGIN variable in the startup/voronoia.py file. 
+            </p>
+
+
+          
+
+	  <h2> Technical Notes </h2>
+	  <p>Voronoia consists of a core algorithm compiled from Delphi (in get_volume.exe) and a wrapper software written in Python. It uses the Pmw and PIL libraries. All front-ends (Windows/Linux/GUI/PyMOL/commandline) use the same modules. The executables for Windows have been compiled using Py2exe and distutils.</p>
+	  
+	  <p>The source code archive contains the precompiled Delphi executable (data/get_volume.exe) and several Python source files. Voronoia.py and Voronoia_GUI.py are the relevant ones providing the basic functionality. For the algorithm in 'get_volume.exe' you will still require Wine on Linux.</p>
+	  
+	  <p>To see the logo, the PIL library is necessary (therefore we made it optional).</p>
+
+	  <h2>Thank you for using Voronoia! </h2>
+
+	  <br><br><br><br>
+	  
+        </div>
+    </center>
+</section>
+{% endblock %}
+
+
