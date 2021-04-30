@@ -33,9 +33,11 @@
                     <div id="dragDropField">
                         <i>cloud_upload</i>
                         <span>Drag and drop a PDB file here</span>
+			<span style="margin-top: 30px;">Up to 100 PDBs (ZIP, max 100MB) in low resolution</span>
                     </div>
                     <button id="load_example" name="load_example" class="icon_btn white" form="null"><i>archive</i></button> Example input
                 </div>
+		<div id="dragDropError" style="margin-top: 50px; text-align: center; font-size: x-large; color: red;">{{error_str}}</div>
                 
                 <div id="submitInterface" class="hide">
                     <div class="inputField">
@@ -61,8 +63,24 @@
                     <div class="inputField">
                         <p>email (optional)</p>
                         <input class="input" id="email" name="email" type="text" value="anonymous">
-                    </div>
+                    </div> 
 
+		    <div class="inputField">
+		      <label>
+		      <input class="input" id="highres" name="highres" type="checkbox" />
+		      <span> high resolution (not for ZIP upload)</span>
+		      </label>
+		    </div>
+		    
+		    <div class="inputField">
+		      <label>
+		      <input id="hetatm" name="hetatm" type="checkbox" />
+		      <span> do not filter waters / hetero atoms </span>
+		      </label>
+		    </div>
+
+		    <div id="submitError" style="margin-top: 50px; text-align: center; font-size: x-large; color: red;">{{error_str}}</div>
+		    
                     <input id="submitbtn" name="submit" type="submit" value="Analyse">
                 </div>
             </form>
@@ -117,17 +135,22 @@
             $('#dragDropField').removeClass('dragOver');
         });
 
-        
+			    
         $('#dragDropField').on('drop', function(e) {
+
             file = e.originalEvent.dataTransfer.files[0];
+	    if( file.size > 100000000){
+                $('#dragDropError').text( 'Max file size: 100MB');
+            }
+            else{
+   
+                dt = new DataTransfer();
+                dt.items.add(file);
 
-            dt = new DataTransfer();
-            dt.items.add(file);
+                inputPdb.files = dt.files;
 
-            inputPdb.files = dt.files;
-
-
-            interface_change(file, false);
+                interface_change(file, false);
+            }
         });
 
         

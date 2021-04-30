@@ -22,8 +22,8 @@
             </p>
             <button class="icon_btn white" onclick="copy_url()"><i>content_paste</i></button>
             <div id="loadingBar"></div>
-            <div id="status_div1"></div>
-            <div id="status_div2"></div>
+            <div id="status_div1" style="margin-top: 30px; font-size: large; color: red;"></div>
+            <div id="status_div2"style="margin-top: 10px;  font-size: large; color: red;"></div>
         </div>
   </center>
 </section>
@@ -44,12 +44,12 @@
                     // success, post
                     window.location.href = '{{url_for("results", user=user, job=job)}}';
                 } else {
-                    $('#status_div1').text('Calculation Failed');
-                    $('#status_div2').text('Try again and if problems still persist drop us an email.');
+                    $('#status_div1').text('Calculation failed!');
+                    $('#status_div2').text('Try again and if the problem persists please drop us an email.');
                 }
             } else if(data['status'].substring(0, 5) == 'Error') {
-                $('#status_div1').text('Job Submission Failed');
-                $('#status_div2').text('Try again and if problems still persist drop us an email.');
+                $('#status_div1').text('Job failed!');
+                $('#status_div2').text('Try again and if the problem persists please drop us an email.');
             } else {
                 // rerun function every 10 seconds if the calculation is not done
                 setTimeout(function() {

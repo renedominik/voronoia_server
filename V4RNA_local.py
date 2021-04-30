@@ -2,7 +2,7 @@ from flask import Flask, render_template, session, url_for, redirect, request, s
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 from flask_mail import Mail, Message
-from wtforms import  StringField, SubmitField, SelectField, FileField
+from wtforms import  StringField, SubmitField, SelectField, FileField, BooleanField
 from wtforms.validators import Email, DataRequired
 from werkzeug import secure_filename
 from werkzeug.datastructures import FileStorage
@@ -23,8 +23,8 @@ app.config['USER_DATA_DIR'] = "/disk/user_data/voronoia/sessions/"
 # app.config['DATABASE_DIR'] = "/home/hildilab/app/voronoia/static/archive/"
 app.config['DATABASE_DIR'] = "/disk/data/voronoia/data/"
 app.config['EXAMPLES_DIR'] = "/home/hildilab/app/voronoia/static/examples/"
-app.config['APP_PATH'] = "/home/hildilab/app/voronoia/"
-app.config['SCRIPTS_PATH'] = "/home/hildilab/app/voronoia/material/"
+app.config['APP_PATH'] = "/home/hildilab/app/voronoia_beta/"
+app.config['SCRIPTS_PATH'] = "/home/hildilab/app/voronoia_beta/material/"
 
 bootstrap = Bootstrap(app)
 
@@ -32,12 +32,23 @@ bootstrap = Bootstrap(app)
 
 example_pdb = '1lib.pdb'
 
+# wird nicht genutzt, da javascript testet bevor dies aufgerufen wird!
+def check_ending(form,field):
+    if field.data:
+        ext = os.path.splitext( field.data.filename)[1].strip('.').lower()
+        if ext != '.pdb' and ext != '.zip':
+            raise validators.ValidationError( 'Has to be either ".pdb" or ".zip"')
+    else:
+        raise validators.ValidationError( 'Please provide file' )
 
+    
 class InputForm(FlaskForm):
     # creation of input fields
-    pdb = FileField('Upload a pdb file:')#, validators=[FileRequired()])
+    pdb = FileField('Upload a pdb file:' , validators = [check_ending] )
     email = StringField('Email*:', validators=[Email()])
-    tag = StringField('Tag:', validators=[DataRequired()]) 
+    tag = StringField('Tag:', validators=[DataRequired()])
+    hetatm = BooleanField( 'Hetatms?')
+    highres = BooleanField( 'High resolution?')
     submit = SubmitField('Analyse')
 
     def validate(self):
@@ -72,20 +83,40 @@ def execute_cmd(cmd):
     p = subprocess.check_output(cmd)
 
 
-def calculation(filename, output_dir, email, job):
-    # call voronoia.py
+def calculation(filename, output_dir, email, job, res, hetatms):
     #execute_cmd(["voronoia.py",filename , "-o", output_dir,"-vd"])
-    # call get_holes.py
     #execute_cmd([app.config['APP_PATH'] + "get_holes.py", output_dir,"protein.vol.extended.vol"])
-
-    # call main script
     #print([app.config['SCRIPTS_PATH'] + "run.sh", filename, output_dir])
-    execute_cmd([app.config['SCRIPTS_PATH'] + "run.sh", filename, output_dir])
 
+    hetero = " "
+    if hetatms != '':
+        hetero = " " # FLAG
+    
+    if filename[-4:] == ".pdb":
+        if res != '':
+            resolution = "0.1"
+        else:
+            resolution = '0.4'
+        execute_cmd([app.config['SCRIPTS_PATH'] + "run.sh", filename, output_dir, "--ex", resolution])
+    elif filename[-4:] == ".zip":
+        resolution = '0.4'
+        execute_cmd( 'unzip', filename, '-d', output_dir)
+        filelist = os.listdir( output_dir )
+        count = 0
+        for f in filelist:
+            if f[-4:] != '.pdb': continue
+            count += 1
+            if count > 100: break
+            execute_cmd([app.config['SCRIPTS_PATH'] + "run.sh", f, output_dir, "--ex", resolution])
 
     # create zip file
     os.chdir(output_dir)
-    execute_cmd(["zip", "protein.zip", "protein.vor.pdb", "protein_holes.pdb", "protein_neighbors.pdb"]) 
+    cmd = ['zip','voronoia_' + job.replace(' ','') + '.zip']
+    for f in os.listdir( '.'):
+        if ".vor.pdb" in f or '_holes.pdb' in f or '_neighbors.pdb' in f:
+            cmd.append( f)
+    execute_cmd( cmd )
+    
     # optionally send email
     if email != 'anonymous':
         #with app.app_context():
@@ -94,6 +125,7 @@ def calculation(filename, output_dir, email, job):
             send_email(email, 'http://www.proteinformatics.de/voronoia' + results_link)
 
 
+            
 def start_thread(function, args, name):
     t = threading.Thread(target=function, name=name, args=args)
     t.deamon = True
@@ -106,8 +138,6 @@ def submit():
     if request.method == 'GET':
         return render_template('submit.html', form=form, example_pdb=example_pdb)
 
-
-
     # get pdb file
     f = request.files['pdb']
     if f.filename == '':
@@ -118,6 +148,17 @@ def submit():
     # atomRadii = request.form.get('options')
     tag = request.form['tag']
     email = request.form['email']
+ 
+    try:
+        highres = request.form['highres']
+    except:
+        highres = ""
+
+    try:
+        hetatm = request.form['hetatm']
+    except:
+        hetatm = ""
+
         
     # create path
     output_dir = app.config['USER_DATA_DIR']
@@ -132,27 +173,33 @@ def submit():
         os.mkdir(output_dir)
     except:
         # tag has already been used
-        return render_template('submit.html', form=form, tag_str="tag", example_pdb=example_pdb)
+        return render_template('submit.html', form=form, error_str='tag "' + tag + '" already exists for user "' + email + '"', example_pdb=example_pdb)
         
     # save file
-    filename = output_dir + "protein.pdb" 
+    filename = output_dir + os.path.basename( f.filename) #output_dir + "protein.pdb"
+    print( "FILE: ", filename)
     f.save(filename) 
 
-    start_thread(calculation, [filename, output_dir, email, tag], 'zip')
+    start_thread(calculation, [filename, output_dir, email, tag, highres, hetatm], 'zip')
 
-    print('submited')
-    return redirect(url_for('progress', user=email, job=tag))
+#    print('submitted')
+    return redirect(url_for('progress', user=email, job=tag)) 
 
 
 @app.route('/status/<user>/<job>')
 def status(user, job):
     # returns info about the status of the calculation
     status = 'running'
-    fname = os.path.join(app.config['USER_DATA_DIR'], user, job, "protein_holes.pdb")
-    print("exists?: ",fname,job)
+    fname = os.path.join(app.config['USER_DATA_DIR'], user, job, "voronoia_" + job + ".zip") #"protein_holes.pdb")
+    #print("exists?: ",fname,job)
     if os.path.isfile(fname):
         status = 'finished'
         print('yes')
+    if status == 'running':
+        fname = os.path.join(app.config['USER_DATA_DIR'], user, job, "failure.txt")
+        #print("exists?: ",fname,job)
+        if os.path.isfile(fname):
+            status = 'Error'   
 
     return jsonify({'status':status,'error':'0'}) 
 
@@ -179,7 +226,7 @@ def get_db_lic_selection(pdb):
 
 @app.route('/results/<user>/<job>')
 def results(user, job):
-    f = os.path.join(app.config['USER_DATA_DIR'], user, job, "protein_holes.pdb")
+    f = os.path.join(app.config['USER_DATA_DIR'], user, job, "voronoia_" + job + ".zip")
     print( "results:", f)
     if os.path.isfile(f):
         return render_template('results.html', user=user, job=job ) #, lic_selection=get_lic_selection(user, job))
