@@ -1,9 +1,7 @@
 {% extends "template_fullmenu.html" %}
 
-
-    
 {% block download_link %}
-       "{{url_for('download', user=user, job=job, filename=mol)}}"
+       "{{url_for('db_download', filename=mol)}}"
 {% endblock %}
 
 

@@ -7,3 +7,7 @@
 {% block return %}
     "{{url_for('db_results',  pdb=pdb)}}"
 {% endblock %}
+
+{% block fullmenu %}
+    "{{url_for('db_fullmenu', mol=pdb )}}"
+{% endblock %}

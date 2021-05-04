@@ -83,23 +83,23 @@ def execute_cmd(cmd):
     p = subprocess.check_output(cmd)
 
 
-def calculation(filename, output_dir, email, job, res, hetatms):
+def calculation(filename, output_dir, email, job, res, keepwater):
     #execute_cmd(["voronoia.py",filename , "-o", output_dir,"-vd"])
     #execute_cmd([app.config['APP_PATH'] + "get_holes.py", output_dir,"protein.vol.extended.vol"])
     #print([app.config['SCRIPTS_PATH'] + "run.sh", filename, output_dir])
 
     execute_cmd(['cp',app.config['APP_PATH'] + 'file_format.txt', output_dir + '/.'])
     
-    hetero = " "
-    if hetatms != '':
-        hetero = " " # FLAG
+    keepcmd = ""
+    if keepwater != '':
+        keepcmd = "--keep_water" # FLAG
     
     if filename[-4:] == ".pdb":
         if res != '':
             resolution = "0.1"
         else:
             resolution = '0.4'
-        execute_cmd([app.config['SCRIPTS_PATH'] + "run.sh", filename, output_dir, "--ex", resolution])
+        execute_cmd([app.config['SCRIPTS_PATH'] + "run.sh", filename, output_dir, "--ex", resolution, keepcmd ])
     elif filename[-4:] == ".zip":
         resolution = '0.4'
         execute_cmd( ['unzip', filename, '-d', output_dir])
@@ -109,7 +109,7 @@ def calculation(filename, output_dir, email, job, res, hetatms):
             if f[-4:] != '.pdb': continue
             count += 1
             if count > 100: break
-            execute_cmd([app.config['SCRIPTS_PATH'] + "run.sh", f, output_dir, "--ex", resolution])
+            execute_cmd([app.config['SCRIPTS_PATH'] + "run.sh", f, output_dir, "--ex", resolution, keepcmd])
 
     # create zip file
     os.chdir(output_dir)
@@ -157,9 +157,9 @@ def submit():
         highres = ""
 
     try:
-        hetatm = request.form['hetatm']
+        keepwater = request.form['hetatm']
     except:
-        hetatm = ""
+        keepwater = ""
 
         
     # create path
@@ -182,7 +182,7 @@ def submit():
     print( "FILE: ", filename)
     f.save(filename) 
 
-    start_thread(calculation, [filename, output_dir, email, tag, highres, hetatm], 'zip')
+    start_thread(calculation, [filename, output_dir, email, tag, highres, keepwater], 'zip')
 
 #    print('submitted')
     return redirect(url_for('progress', user=email, job=tag)) 
@@ -267,6 +267,10 @@ def fs_results(user, job, prot=""):
 @app.route('/fullmenu/<user>/<job>/<mol>')
 def fullmenu(user, job, mol):
     return render_template('fullmenu.html', user=user, job=job, mol=mol)
+
+@app.route('/db-fullmenu/<mol>')
+def db_fullmenu(  mol):
+    return render_template('db_fullmenu.html', mol=mol)
 
 
 @app.route('/db-fs-results/<pdb>')

@@ -1,4 +1,6 @@
 Beside this file, there are three PDB formatted files contained in the ZIP file.
+Section III of this file lists the PDB format definitions.
+
 
 I. Content of ZIP  ==================================================================
 
@@ -7,6 +9,7 @@ I. Content of ZIP  =============================================================
 2) PDBID_holes.pdb
 3) PDBID_neighbors.pdb
 
+
 II. File formats   ==================================================================
 
 
@@ -14,7 +17,12 @@ II. File formats   =============================================================
 
 This file contains the actual protein.
 
-The B-factor contains the packing density.
+The b-factor entry in the ATOM section contains the packing density,
+the occupancy entry the z-score (if defined).
+The header provides general information, such as the exactness selected.
+A value of 0.4 is the 'low accuracy' mode, a value of 0.8 the 'high accuracy' mode.
+This is followed by the total z-score of the molecule.
+Below there is information about the holes (cavities) , e.g. the atom ids forming the cavity.
 
 
 2) PDBID_holes.pdb
@@ -37,9 +45,9 @@ based on the Hessa scale.
 III. PDB definitions   ==============================================================
 
 Voronoia exploits the ability of most molecular visualization softwares such as NGL
-to color the molecule by B-factor or occupancy.
+to color the molecule by b-factor or occupancy.
 
-Voronoia writes information as described above into the B-factor and occupancy columns.
+Voronoia writes information as described above into the b-factor and occupancy columns.
 
 COLUMNS        DATA TYPE       CONTENTS                            
 --------------------------------------------------------------------------------

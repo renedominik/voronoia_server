@@ -6,3 +6,4 @@ misc/
 env/
 static/examples/
 garbage/
+*.vol
