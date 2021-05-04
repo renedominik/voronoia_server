@@ -20,11 +20,45 @@
     <center>
         <h1>Results</h1>
         <div id="visualisation" class="contentBody">
-            <h2>V I E W</h2>
-            <div id="viewport"></div>
-            <a {% block download_link %}{% endblock %}><i>file_download</i></a>
-            <!-- menu <a id="fullscreen_icon" style="float:right;"><i>fullscreen</i></a> -->
-            <a {% block fullscreen_link %}{% endblock %} style="float:right;"><i>fullscreen</i></a>
+	  <table>
+	    <colgroup>
+	      <col style="width: 15%;">
+	      <col style="width: 65%;">
+	      <col style="width: 20%;">
+	    </colgroup>
+	    <tr>
+	      <th></th>
+	      <th>
+		<h2>V I E W</h2>
+		<div id="next" style="text-align-last: center; margin-bottom: 2ex;">{% block next %}{% endblock %}</div>
+		<div id="viewport"></div>
+		<a {% block download_link %}{% endblock %}><i>file_download</i>download</a>
+		<!-- menu <a id="fullscreen_icon" style="float:right;"><i>fullscreen</i></a> -->
+		<a {% block fullscreen_link %}{% endblock %} style="float:right;"><i>fullscreen</i>fullscreen</a>
+		
+	      </th>
+	      <td>
+		<table style="padding: 3ex;">
+		  <thead>
+		    <tr><th> Coloring scheme</th></tr>
+		  </thead>
+		  <tbody>
+		    <tr><td>
+			<p style="font-weight: bold;">Protein</p>
+			<p>colored by packing density</p>
+			<p>red indicates high density</p>
+		    </td></tr>
+		    <tr><td>
+			<p style="font-weight: bold;">Cavities and neighboring residues</p>
+			<p>colored by hydrophobicity</p>
+			<p>blue indicates hydrophilic</p>
+		    </td></tr>
+		  </tbody>
+		</table>
+
+	      </td>
+	    </tr>
+	    </table>
         </div>
     </center>
 </section>

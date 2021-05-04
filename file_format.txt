@@ -1,0 +1,66 @@
+Beside this file, there are three PDB formatted files contained in the ZIP file.
+
+I. Content of ZIP  ==================================================================
+
+0) file_format.txt (this)
+1) PDBID.vor.pdb
+2) PDBID_holes.pdb
+3) PDBID_neighbors.pdb
+
+II. File formats   ==================================================================
+
+
+1) PDBID.vor.pdb
+
+This file contains the actual protein.
+
+The B-factor contains the packing density.
+
+
+2) PDBID_holes.pdb
+
+This file contains pseudo-atoms, representing the cavities.
+
+The B-factor contains the radius of the sphere. Its coordinates are in the usual xyz columns.
+The occupancy entry contains an average of the hydrophobicity of the constituting residues.
+
+
+3) PDBID_neighbors.pdb
+
+This file contains all residues forming a cavity.
+This is auxilary, for visualization purposes mainly.
+
+The occupancy entry contains the hydrophobicity value of the given residue,
+based on the Hessa scale. 
+
+
+III. PDB definitions   ==============================================================
+
+Voronoia exploits the ability of most molecular visualization softwares such as NGL
+to color the molecule by B-factor or occupancy.
+
+Voronoia writes information as described above into the B-factor and occupancy columns.
+
+COLUMNS        DATA TYPE       CONTENTS                            
+--------------------------------------------------------------------------------
+ 1 -  6        Record name     "ATOM  "                      
+ 7 - 11        Integer         Atom serial number.           
+13 - 16        Atom            Atom name.                    
+17             Character       Alternate location indicator. 
+18 - 20        Residue name    Residue name.     
+22             Character       Chain identifier. 
+23 - 26        Integer         Residue sequence number.
+27             AChar           Code for insertion of residues.
+31 - 38        Real(8.3)       Orthogonal coordinates for X in Angstroms.
+39 - 46        Real(8.3)       Orthogonal coordinates for Y in Angstroms.
+47 - 54        Real(8.3)       Orthogonal coordinates for Z in Angstroms.
+55 - 60        Real(6.2)       Occupancy.              
+61 - 66        Real(6.2)       Temperature factor (Default = 0.0).                   
+73 - 76        LString(4)      Segment identifier, left-justified.   
+77 - 78        LString(2)      Element symbol, right-justified.      
+79 - 80        LString(2)      Charge on the atom.       
+
+
+
+
+

@@ -88,6 +88,8 @@ def calculation(filename, output_dir, email, job, res, hetatms):
     #execute_cmd([app.config['APP_PATH'] + "get_holes.py", output_dir,"protein.vol.extended.vol"])
     #print([app.config['SCRIPTS_PATH'] + "run.sh", filename, output_dir])
 
+    execute_cmd(['cp',app.config['APP_PATH'] + 'file_format.txt', output_dir + '/.'])
+    
     hetero = " "
     if hetatms != '':
         hetero = " " # FLAG
@@ -100,7 +102,7 @@ def calculation(filename, output_dir, email, job, res, hetatms):
         execute_cmd([app.config['SCRIPTS_PATH'] + "run.sh", filename, output_dir, "--ex", resolution])
     elif filename[-4:] == ".zip":
         resolution = '0.4'
-        execute_cmd( 'unzip', filename, '-d', output_dir)
+        execute_cmd( ['unzip', filename, '-d', output_dir])
         filelist = os.listdir( output_dir )
         count = 0
         for f in filelist:
@@ -111,7 +113,7 @@ def calculation(filename, output_dir, email, job, res, hetatms):
 
     # create zip file
     os.chdir(output_dir)
-    cmd = ['zip','voronoia_' + job.replace(' ','') + '.zip']
+    cmd = ['zip','voronoia_' + job.replace(' ','') + '.zip','file_format.txt']
     for f in os.listdir( '.'):
         if ".vor.pdb" in f or '_holes.pdb' in f or '_neighbors.pdb' in f:
             cmd.append( f)
@@ -225,11 +227,29 @@ def get_db_lic_selection(pdb):
 
 
 @app.route('/results/<user>/<job>')
-def results(user, job):
+@app.route('/results/<user>/<job>/<prot>')
+def results(user, job, prot=""):
     f = os.path.join(app.config['USER_DATA_DIR'], user, job, "voronoia_" + job + ".zip")
     print( "results:", f)
     if os.path.isfile(f):
-        return render_template('results.html', user=user, job=job ) #, lic_selection=get_lic_selection(user, job))
+        allmols = []
+        after = ""
+        for ff in os.listdir( os.path.join(app.config['USER_DATA_DIR'], user, job ) ):
+            if ".vor.pdb" in ff:
+                allmols.append( ff[:-8])
+        if len(allmols) == 1:
+            prot = allmols[0]
+        elif len(allmols) > 1:
+            if prot == "":
+                prot = allmols[0]
+                after = allmols[1]
+            else:
+                try:
+                    indx = allmols.index( prot )
+                    after = allmols[ (indx+1) % len(allmols) ]
+                except(ValueError):
+                    print( 'ERROR:', prot, 'not found in', allmols)
+        return render_template('results.html', user=user, job=job , mol=prot, nextmol=after ) #, lic_selection=get_lic_selection(user, job))
     return redirect(url_for('progress', user=user, job=job))
 
 
@@ -240,8 +260,13 @@ def db_results(pdb):
 
 
 @app.route('/fs-results/<user>/<job>')
-def fs_results(user, job):
-    return render_template('fullscreen_results.html', user=user, job=job)
+@app.route('/fs-results/<user>/<job>/<prot>')
+def fs_results(user, job, prot=""):
+    return render_template('fullscreen_results.html', user=user, job=job, mol=prot)
+
+@app.route('/fullmenu/<user>/<job>/<mol>')
+def fullmenu(user, job, mol):
+    return render_template('fullmenu.html', user=user, job=job, mol=mol)
 
 
 @app.route('/db-fs-results/<pdb>')

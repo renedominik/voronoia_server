@@ -7,10 +7,16 @@
 
 
 {% block fullscreen_link %}
-    href="{{url_for('fs_results', user=user, job=job)}}"
+    href="{{url_for('fs_results', user=user, job=job, prot=mol )}}"
 {% endblock %}
 
 
 {% block file_download %}
-    "{{url_for('download', user=user, job=job, filename='protein')}}"
+    "{{url_for('download', user=user, job=job, filename=mol)}}"
+{% endblock %}
+
+{% block next %}
+{% if nextmol %}
+<a href="{{url_for( 'results', user=user, job=job, prot=nextmol)}}" style="margin-left: 1cm;"> Current from batch: {{mol}} next: {{nextmol}}</a>
+{% endif %}
 {% endblock %}

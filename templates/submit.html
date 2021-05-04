@@ -33,7 +33,7 @@
                     <div id="dragDropField">
                         <i>cloud_upload</i>
                         <span>Drag and drop a PDB file here</span>
-			<span style="margin-top: 30px;">Up to 100 PDBs (ZIP, max 100MB) in low resolution</span>
+			<span style="margin-top: 30px;">Or ZIP with max 10MB </span>
                     </div>
                     <button id="load_example" name="load_example" class="icon_btn white" form="null"><i>archive</i></button> Example input
                 </div>
@@ -139,7 +139,7 @@
         $('#dragDropField').on('drop', function(e) {
 
             file = e.originalEvent.dataTransfer.files[0];
-	    if( file.size > 100000000){
+	    if( file.size > 10000000){
                 $('#dragDropError').text( 'Max file size: 100MB');
             }
             else{

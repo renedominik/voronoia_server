@@ -3,3 +3,7 @@
 {% block file_download %}
     "{{url_for('db_download', filename=pdb)}}"
 {% endblock %}
+
+{% block return %}
+    "{{url_for('db_results',  pdb=pdb)}}"
+{% endblock %}
