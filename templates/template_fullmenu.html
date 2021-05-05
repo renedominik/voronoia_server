@@ -41,7 +41,7 @@
                loadPDB(stage, ".vor.pdb", "molecules", ["cartoon"],  [{color: 'bfactor',colorReverse:true}], true);
 
         // load molecule structure
-        loadPDB(stage, ".vor.pdb", "hetatm", ["ball+stick"],  [{opacity: 0.5, sele: "hetero"}], false);
+        loadPDB(stage, ".vor.pdb", "hetatm", ["hyperball"],  [{opacity: 0.6, sele: "hetero"}], false);
                // load cavity neighboring residues
                loadPDB(stage, "_neighbors.pdb", "neighbors", ["licorice"],  [{color: schemeId}], true);
 

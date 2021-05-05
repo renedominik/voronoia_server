@@ -17,13 +17,32 @@
         loadPDB(stage, ".vor.pdb", "molecules", ["cartoon"],  [{colorScheme: 'bfactor',colorReverse: true}], true);
 
         // load molecule structure
-        loadPDB(stage, ".vor.pdb", "hetatm", ["hyperball"],  [{opacity: 0.5, sele: "hetero"}], false);
+        loadPDB(stage, ".vor.pdb", "hetatm", ["hyperball"],  [{opacity: 0.6, sele: "hetero"}], false);
 
         // load cavity neighboring residues
         loadPDB(stage, "_neighbors.pdb", "neighbors", ["licorice"],  [{color: schemeId}], false);
 
         // load cavities
         loadPDB(stage, "_holes.pdb", "cavities", ["ball+stick"], [{radius: 'bfactor', colorScheme: schemeId}]);
+
+
+        var hetButton = createElement("input", {
+            type: "button",
+            value: "toggle cavities",
+            onclick: function () {
+                stage.getRepresentationsByName( "ball+stick" ).list.forEach( function( repre ){
+                   repre.setVisibility( !repre.visible );
+               } );
+            }
+        }, { 
+            top: "60px", 
+            left: "24px",
+            background: "#1c1f26",
+            color: "#b8b8b8",
+            border: "none",
+            padding: "8px"
+        });
+        addElement(hetButton,stage);
 
 
         var licButton = createElement("input", {
@@ -36,7 +55,7 @@
                 } );
             }
         }, { 
-            top: "24px", 
+            top: "20px", 
             left: "24px",
             background: "#1c1f26",
             color: "#b8b8b8",
@@ -53,7 +72,7 @@
                 window.location.replace( {% block return %}{% endblock %} );
             }
         }, {
-            top: "126px",
+            top: "140px",
             left: "24px",
             background: "#1c1f26",
             color: "#b8b8b8",
@@ -70,7 +89,7 @@
                 window.location.replace( {% block fullmenu %}{% endblock %} );
             }
         }, { 
-            top: "78px", 
+            top: "100px", 
             left: "24px",
             //fontFamily: "Material Icons",
             //fontSize: "25px",
@@ -78,6 +97,7 @@
     background: "#1c1f26",
             border: "none",
             color: "#b8b8b8", 
+            padding: "8px"
         });
         addElement(snapButton,stage);
 
