@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+
+{% block content %}
+{{super()}}
+
+<section>
+    <center>
+      <h1> Frequently asked questions</h1>
+      <h1 style="color: red;"> Work in progress</h1>
+
+      <div id="overview" class="contentBody">
+  
+	<h2>O V E R V I E W</h2>
+
+	<h5 style="margin-top: 1em;"> Submit / 'browse PDB'</h5>
+	<table style="padding: 2ex;">
+	  <tr><td> <a href="#highres">What means 'high resolution'?</a></td></tr>
+	  <tr><td> <a href="#water">What do the options for water mean?</a></td></tr>
+	  <tr><td> <a href="#batch">How to upload multiple pdbs?</a></td></tr>
+	  <tr><td> <a href="#db">What is the content of 'browsePDB'?</a></td></tr>
+	  <tr><td> <a href="#missing">What if there is something missing in the DB?</a></td></tr>
+	</table>
+
+	<h5 style="margin-top: 2em;"> Results</h5>
+	<table style="padding: 2ex;">
+	  <tr><td> <a href="#results">What do I see in the result section?</a></td></tr>
+	  <tr><td> <a href="#download">What is the content of the download file?</a></td></tr>
+	  <tr><td> <a href="#fullmenu">How to use the 'full-menu' view?</a></td></tr>
+	  <tr><td> <a href="#batch">How to view results for all PDBs uploaded in a zip?</a></td></tr>
+	  <tr><td> <a href="#navigate">How to navigate through different result views?</a></td></tr>
+	  <tr><td> <a href="#highres_images">How to create high resolution images?</a> </td></tr>
+	  <tr><td> <a href="#surface">How to create a spacefilling representation of the molecules?</a></td></tr>
+	  <tr><td> <a href="#cavities">Are there different kind of cavities?</a></td></tr>
+	  <tr><td><a href="#scale">Which hydrophobicity scale is used?</a></td></tr>
+	</table>
+
+      </div>
+
+      <div id="content" class="contentBody" style="margin-bottom: 5em; margin-top: 5em;">
+	<h2> D E T A I L S</h2>
+	
+	<h5 id="highres">What means high resolution?</h5>
+	<p>
+	  To me a lot.
+	</p>	
+	<a href="#">Go to top</a>
+	
+	<h5 id="water" style="margin-top: 2em;">What do the options for water mean?</h5>
+	<p>
+	  Faces of spirituality.
+	</p>	
+	<a href="#">Go to top</a>
+	
+	<h5 id="results" style="margin-top: 2em;">What do I see in the result section?</h5>
+	<p>
+	  There are three different result views. All of them have four main elements being displayed. First the protein/RNA in a cartoon view. 
+
+
+	  
+	  The first view that opens is an overview. You will see a small window with the molecule and the cavities. At the side there is an explanation of the coloring scheme. Below are a link to download all related files as ZIP archive. Furthermore, there is a link to the second view, the fullscreen mode. If you uploaded a ZIP archive containing PDBs, you will see at the top of the molecule window the name of the current PDB and a link to the next, which will allow you to navigate through the results.<br><br>
+
+	  The second view is the fullscreen view that has a very simplified menu. There is a button to toggle all cavities. Another botton toggles all sidechains. The sidechains are displayed only if they constitute one of the cavities. Then there are two additional buttons for navigation. One leads back to the overview window, the other opens the full-menu view.
+
+	  
+
+	  
+	</p>	
+	<a href="#">Go to top</a>
+	
+	<h5 id="download" style="margin-top: 2em;">What is the content of the download file?</h5>
+	<p>
+	  Depends on your karma.
+	</p>	
+	<a href="#">Go to top</a>
+	
+	<h5 id="fullmenu" style="margin-top: 2em;">How to use the 'full-menu' view?</h5>
+	<p>
+	  The NGL viewer provides a very powerful menu, that allows you a variety of modifications.
+	 
+	  With the left mouse button clicked, the molecules can be <b>rotated</b>. With the right mouse botton clicked, the molecules can be <b>shifted</b>. With the mouse wheel one can <b>zoom</b> in and out. <br>
+	  Hovering over the molecule, information of the atoms is shown. 
+	  
+	  
+	  You can switch any element <b>on/off</b> by clicking on the 'eye'-symbol.
+	<p><img src="{{url_for('static',filename='img/mol_eye.png')}}"></img></p>
+
+	You can <b>add</b> representations by clicking the menu button on the top right of each section.
+	<p><img src="{{url_for('static',filename='img/mol_menu.png')}}"></img></p>
+	Then select under 'add' your preferred representation.
+	<p><img src="{{url_for('static',filename='img/add.png')}}" style="width: 48%;"></img></p>
+	
+	</p>	
+	<a href="#">Go to top</a>
+	
+	<h5 id="batch" style="margin-top: 2em;">How to view results for all PDBs in a zip?</h5>
+	<p>
+	  Broaden your view.
+	</p>	
+	<a href="#">Go to top</a>
+	
+	<h5 id="db" style="margin-top: 2em;">What is the content of 'browsePDB'?</h5>
+	<p>
+	  Data.
+	</p>	
+	<a href="#">Go to top</a>
+	
+	<h5 id="missing" style="margin-top: 2em;">What if there is something missing in the DB?</h5>
+	<p>
+	  Pub.
+	</p>	
+	<a href="#">Go to top</a>
+	
+	<h5 id="navigate" style="margin-top: 2em;">How to navigate through different result views?</h5>
+	<p>
+	  Click.
+	<p><img src="{{url_for('static',filename='img/return.png')}}"></img></p>
+	</p>	
+	<a href="#">Go to top</a>
+	
+	<h5 id="highres_images" style="margin-top: 2em;">How to create high resolution images?</h5>
+	<p>
+	  To take pictures of the current window in the 'full-menu' view, select under 'File' in the top left either a quick snapshot or 'export image' with a few more options. <br>
+	  Generally the quality depends on the resolution of the cartoon representation. To adjust, open the menu in the cartoon section.
+
+	<p><img src="{{url_for('static',filename='img/cartoon_menu.png')}}"></img></p>
+
+	This will open the 'Representation' window. Increase the value of 'subdiv' to get smoother cartoons.
+	<p><img src="{{url_for('static',filename='img/representation.png')}}"></img></p>
+
+	You may want to change the <b>background color</b>. On the top left, select 'View' and then 'Light theme'.<br>
+
+	For further usage check <a href="#fullmenu">full-menu view instructions.</a>
+	
+	</p>
+	<a href="#">Go to top</a>
+	
+	<h5 id="surface" style="margin-top: 2em;">How to create a spacefilling representation?</h5>
+	<p>
+	  Simply do it.
+	</p>	
+	<a href="#">Go to top</a>
+	
+	<h5 id="batch" style="margin-top: 2em;">How to upload multiple pdbs?</h5>
+	<p>
+	  Navigation and the rest.
+	</p>	
+	<a href="#">Go to top</a>
+	
+	<h5 id="cavities" style="margin-top: 2em;">Are there different kind of cavities?</h5>
+	<p>
+	  There are four different kinds of cavities.
+	  The classification depends on both content and constituting neighbors.
+	  <br>
+
+	  One can easily navigate through them in the 'full-menu' view.
+
+	  <p><img src="{{url_for('static',filename='img/cavities.png')}}"></img></p>
+	</p>	
+	<a href="#">Go to top</a>
+
+	<h5 id="scale" style="margin-top: 2em;">Which hydrophocity scale is used?</h5>
+	<p>
+  Amino acid hydrophobicity scale from
+  the supplementary information for "Recognition of transmembrane 
+  helices by the endoplasmic reticulum translocon," Hessa et al., 
+  Nature 433:377 (2005).<br>
+<br>
+  More negative means more hydrophobic.  
+  The met value is also assigned to selenomethionine.
+<br><br>
+<table>
+  <tr><th>Amino acid</th><th>Hydrophobicity</th></tr>
+<tr><td>asp</td><td>	3.49  </td></tr> 
+<tr><td>glu</td><td>	2.68  </td></tr>
+<tr><td>asn</td><td>	2.05  </td></tr>
+<tr><td>gln</td><td>	2.36  </td></tr>
+<tr><td>lys</td><td>	2.71  </td></tr>
+<tr><td>arg</td><td>	2.58  </td></tr>
+<tr><td>his</td><td>	2.06  </td></tr>
+<tr><td>gly</td><td>	0.74  </td></tr>
+<tr><td>pro</td><td>	2.23  </td></tr>
+<tr><td>ser</td><td>	0.84  </td></tr>
+<tr><td>thr</td><td>	0.52  </td></tr>
+<tr><td>cys</td><td>	-0.13 </td></tr>
+<tr><td>met</td><td>	-0.10 </td></tr>
+<tr><td>mse</td><td>	-0.10 </td></tr>
+<tr><td>ala</td><td>	0.11  </td></tr>
+<tr><td>val</td><td>	-0.31 </td></tr>
+<tr><td>ile</td><td>	-0.60 </td></tr>
+<tr><td>leu</td><td>	-0.55 </td></tr>
+<tr><td>phe</td><td>	-0.32 </td></tr>
+<tr><td>trp</td><td>	0.30  </td></tr>
+<tr><td>tyr</td><td>	0.68  </td></tr>   
+</table>
+	</p>	
+	<a href="#">Go to top</a>
+	
+	
+       </div>
+    </center>
+</section>
+
+
+{% endblock %}

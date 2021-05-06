@@ -46,7 +46,27 @@
                loadPDB(stage, "_neighbors.pdb", "neighbors", ["licorice"],  [{color: schemeId}], true);
 
                // load cavities
-               loadPDB(stage, "_holes.pdb", "cavities", ["ball+stick"], [{radius: 'bfactor', colorScheme: schemeId}]);
+           loadPDB(stage, "_holes.pdb", "cavities", ["ball+stick"], [{radius: 'bfactor', colorScheme: schemeId}]);
+
+        var returnButton = createElement("input", {
+            type: "button",
+            value: "return to result page",
+            onclick: function() {
+                window.location.replace( {% block return %}{% endblock %} );
+            }
+        }, {
+            top: "24px",
+            left: "24px",
+            background: "#1c1f26",
+  	    fontSize: "18px",
+            color: "#b8b8b8",
+            border: "none",
+            padding: "8px"
+        });
+        addElement(returnButton, stage);
+
+
+	   
     });
 
 
@@ -91,6 +111,25 @@
 
 
 
+function addElement (el,stage) {
+    Object.assign(el.style, {
+        position: "absolute",
+        zIndex: 10
+    });
+    el.className += " menu-button";
+    stage.viewer.container.appendChild(el);
+};
+
+
+
+function createElement (name, properties, style) {
+    var el = document.createElement(name);
+    Object.assign(el, properties);
+    Object.assign(el.style, style);
+    return el;
+};
+
+ 
  
 
 

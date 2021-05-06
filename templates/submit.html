@@ -33,7 +33,7 @@
                     <div id="dragDropField">
                         <i>cloud_upload</i>
                         <span>Drag and drop a PDB file here</span>
-			<span style="margin-top: 30px;">Or ZIP with max 10MB </span>
+			<span style="margin-top: 30px;">Or a ZIP with max 10 MB </span>
                     </div>
                     <button id="load_example" name="load_example" class="icon_btn white" form="null"><i>archive</i></button> Example input
                 </div>
@@ -41,7 +41,7 @@
                 
                 <div id="submitInterface" class="hide">
                     <div class="inputField">
-                        <p>pdb file</p>
+                        <p>pdb or zip file</p>
                         <div id="fileField"></div>
                     </div>
                     <!--
@@ -54,7 +54,7 @@
                     </div>
                     -->                             
                     <div class="inputField">
-                        <p>tag (alphanumeric) </p>
+                        <p>unique tag (alphanumeric) </p>
                         <div id="tag_wrapper">
                             <input class="input" id="tag" name="tag" type="text" pattern="^[a-zA-Z0-9 ]+$" required>
                             <button id="generate_tag" name="generate_tag" class="icon_btn white" form="null"><i>casino</i></button>
@@ -68,17 +68,29 @@
 		    <div class="inputField">
 		      <label>
 		      <input class="input" id="highres" name="highres" type="checkbox" />
-		      <span> high resolution (not for ZIP upload)</span>
-		      </label>
-		    </div>
-		    
-		    <div class="inputField">
-		      <label>
-		      <input id="hetatm" name="hetatm" type="checkbox" />
-		      <span> keep all waters </span>
+		      <span> high resolution (not for zip upload)</span>
 		      </label>
 		    </div>
 
+		    <div class="inputField">
+		      <label>
+			<input id="keepinternal" type="radio" name="selector" value="keepinternal" checked />
+			<span>keep internal waters (default)</span>
+		      </label>
+		      <br>
+
+		      <label>
+			<input id="keepall" type="radio" name="selector" value="keepall"  />
+			<span>keep all waters</span>
+		      </label>
+		      <br>
+		      
+		      <label>
+			<input id="eraseall" type="radio" name="selector" value="eraseall" />
+			<span>erase all waters</span>
+		      </label>
+		    </div>
+		    
 		    <div id="submitError" style="margin-top: 50px; text-align: center; font-size: x-large; color: red;">{{error_str}}</div>
 		    
                     <input id="submitbtn" name="submit" type="submit" value="Analyse">

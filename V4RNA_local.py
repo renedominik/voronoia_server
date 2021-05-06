@@ -91,8 +91,11 @@ def calculation(filename, output_dir, email, job, res, keepwater):
     execute_cmd(['cp',app.config['APP_PATH'] + 'file_format.txt', output_dir + '/.'])
     
     keepcmd = ""
-    if keepwater != '':
+    if keepwater == 'keepall':
         keepcmd = "--keep_water" # FLAG
+    elif keepwater == 'eraseall':
+        # remove waters
+        keepcmd = "ERASEWATER"
     
     if filename[-4:] == ".pdb":
         if res != '':
@@ -114,10 +117,13 @@ def calculation(filename, output_dir, email, job, res, keepwater):
     # create zip file
     os.chdir(output_dir)
     cmd = ['zip','voronoia_' + job.replace(' ','') + '.zip','file_format.txt']
+    checker=False
     for f in os.listdir( '.'):
         if ".vor.pdb" in f or '_holes.pdb' in f or '_neighbors.pdb' in f:
             cmd.append( f)
-    execute_cmd( cmd )
+            checker=True
+    if checker:
+        execute_cmd( cmd )
     
     # optionally send email
     if email != 'anonymous':
@@ -150,16 +156,18 @@ def submit():
     # atomRadii = request.form.get('options')
     tag = request.form['tag']
     email = request.form['email']
- 
+
+    try:
+        keepwater = request.form['selector']
+        #print( 'keep:', keepwater)
+    except:
+        keepwater=""
+                
+
     try:
         highres = request.form['highres']
     except:
         highres = ""
-
-    try:
-        keepwater = request.form['hetatm']
-    except:
-        keepwater = ""
 
         
     # create path
@@ -179,7 +187,7 @@ def submit():
         
     # save file
     filename = output_dir + os.path.basename( f.filename) #output_dir + "protein.pdb"
-    print( "FILE: ", filename)
+    #print( "FILE: ", filename)
     f.save(filename) 
 
     start_thread(calculation, [filename, output_dir, email, tag, highres, keepwater], 'zip')
@@ -196,7 +204,7 @@ def status(user, job):
     #print("exists?: ",fname,job)
     if os.path.isfile(fname):
         status = 'finished'
-        print('yes')
+        #print('yes')
     if status == 'running':
         fname = os.path.join(app.config['USER_DATA_DIR'], user, job, "failure.txt")
         #print("exists?: ",fname,job)
@@ -230,7 +238,7 @@ def get_db_lic_selection(pdb):
 @app.route('/results/<user>/<job>/<prot>')
 def results(user, job, prot=""):
     f = os.path.join(app.config['USER_DATA_DIR'], user, job, "voronoia_" + job + ".zip")
-    print( "results:", f)
+    #print( "results:", f)
     if os.path.isfile(f):
         allmols = []
         after = ""
@@ -321,8 +329,14 @@ def database():
     """
     if request.method == 'GET':
         return render_template('database.html')
-    id = request.form['pdb-id'].lower()
-    return redirect(url_for('db_results', pdb=id))
+    pdbid = request.form['pdb-id'].lower()
+    pdb =  app.config['DATABASE_DIR'] + pdbid + ".vor.pdb"
+    print( pdb)
+    if not os.path.exists(pdb):
+        print( pdb + 'not found')
+        message = "<" + pdbid + "> does not exist in database, please download directly from PDB and use 'submit'"
+        return render_template( 'database.html', message=message)
+    return redirect(url_for('db_results', pdb=pdbid))
 
 
 @app.route('/methods')
@@ -337,6 +351,10 @@ def tutorial():
 @app.route('/down')
 def down():
     return render_template('download.html')
+
+@app.route('/faq')
+def faq():
+    return render_template('faq.html')
 
 
 

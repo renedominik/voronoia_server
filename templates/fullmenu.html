@@ -9,3 +9,6 @@
 
 
  
+{% block return %}
+    "{{url_for('results', user=user, job=job)}}"
+{% endblock %}

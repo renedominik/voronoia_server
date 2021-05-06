@@ -1,0 +1,15 @@
+#!/bin/bash
+
+export HOME=/disk/user_data/wine/
+export DISPLAY=:1
+
+export BASEKIT_DATA="/disk/data"
+
+# LINK IT
+export LINKIT_DIR="$BASEKIT_DATA/linkerdb/"
+export LINKIT_DIR2="$BASEKIT_DATA/linkerdb/MemLinker/mlinker_ext/"
+export LINKIT_DIR3="$BASEKIT_DATA/GPCR-linkerdb/"
+
+
+exec /usr/bin/tsp -f /usr/bin/wine "$@"
+
