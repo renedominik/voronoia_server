@@ -29,7 +29,7 @@
 	  <tr><td> <a href="#batch">How to view results for all PDBs uploaded in a zip?</a></td></tr>
 	  <tr><td> <a href="#navigate">How to navigate through different result views?</a></td></tr>
 	  <tr><td> <a href="#highres_images">How to create high resolution images?</a> </td></tr>
-	  <tr><td> <a href="#surface">How to create a spacefilling representation of the molecules?</a></td></tr>
+	  <tr><td> <a href="#surface">How to create a spacefilling representation of e.g. only hetero atoms?</a></td></tr>
 	  <tr><td> <a href="#cavities">Are there different kind of cavities?</a></td></tr>
 	  <tr><td><a href="#scale">Which hydrophobicity scale is used?</a></td></tr>
 	</table>
@@ -134,7 +134,7 @@
 	</p>
 	<a href="#">Go to top</a>
 	
-	<h5 id="surface" style="margin-top: 2em;">How to create a spacefilling representation?</h5>
+	<h5 id="surface" style="margin-top: 2em;">How to create a spacefilling representation of hetero atoms?</h5>
 	<p>
 	  Simply do it.
 	</p>	
@@ -153,6 +153,16 @@
 	  <br>
 
 	  One can easily navigate through them in the 'full-menu' view.
+	  In the 'cavities' section go to filter symbol.
+	  Enter either individual numbers or combinations, e.g. '1 or 2'.
+	  <br><br>
+	  Types of cavities
+	  <ul>
+	 <li> class '1': cavities with hetatm/water as direct neighbor </li>
+	 <li> class '2': empty cavities </li>
+	 <li> class '3': cavities with hetatm/waters as direct neighbor, but these are ignored </li>
+	 <li> class '4': cavities containing hetero atoms (no space for further waters) </li>
+	 </ul>
 
 	  <p><img src="{{url_for('static',filename='img/cavities.png')}}"></img></p>
 	</p>	

@@ -311,6 +311,7 @@ def db_download(filename):
         with ZipFile( str(filename) , 'w' ) as w:
             for f in [ str(basename + "_holes.pdb"), str(basename + '_neighbors.pdb'), str(basename + '.vor.pdb') ]:
                 w.write( f )
+            w.write('file_format.txt')
                 
     return send_from_directory(path, filename)
 
