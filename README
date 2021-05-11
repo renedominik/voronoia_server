@@ -1,3 +1,8 @@
+the get_volume.exe needs a writable to all get_volume.lg log file in the same folder.
+otherwise it does not work.
+
+
+
 /home/hildilab/app/basekit/basekit/voronoia.py
 
 ~/app/voronoia_dead/app/templates/voronoia/faq.mako

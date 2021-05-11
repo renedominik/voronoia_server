@@ -23,8 +23,8 @@ app.config['USER_DATA_DIR'] = "/disk/user_data/voronoia/sessions/"
 # app.config['DATABASE_DIR'] = "/home/hildilab/app/voronoia/static/archive/"
 app.config['DATABASE_DIR'] = "/disk/data/voronoia/data/"
 app.config['EXAMPLES_DIR'] = "/home/hildilab/app/voronoia/static/examples/"
-app.config['APP_PATH'] = "/home/hildilab/app/voronoia_beta/"
-app.config['SCRIPTS_PATH'] = "/home/hildilab/app/voronoia_beta/material/"
+app.config['APP_PATH'] = "/home/hildilab/app/voronoia/"
+app.config['SCRIPTS_PATH'] = "/home/hildilab/app/voronoia/material/"
 
 bootstrap = Bootstrap(app)
 
