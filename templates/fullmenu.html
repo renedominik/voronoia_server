@@ -1,0 +1,14 @@
+{% extends "template_fullmenu.html" %}
+
+
+    
+{% block download_link %}
+       "{{url_for('download', user=user, job=job, filename=mol)}}"
+{% endblock %}
+
+
+
+ 
+{% block return %}
+    "{{url_for('results', user=user, job=job)}}"
+{% endblock %}

@@ -33,13 +33,15 @@
                     <div id="dragDropField">
                         <i>cloud_upload</i>
                         <span>Drag and drop a PDB file here</span>
+			<span style="margin-top: 30px;">Or a ZIP with max 10 MB </span>
                     </div>
                     <button id="load_example" name="load_example" class="icon_btn white" form="null"><i>archive</i></button> Example input
                 </div>
+		<div id="dragDropError" style="margin-top: 50px; text-align: center; font-size: x-large; color: red;">{{error_str}}</div>
                 
                 <div id="submitInterface" class="hide">
                     <div class="inputField">
-                        <p>pdb file</p>
+                        <p>pdb or zip file</p>
                         <div id="fileField"></div>
                     </div>
                     <!--
@@ -52,7 +54,7 @@
                     </div>
                     -->                             
                     <div class="inputField">
-                        <p>tag (alphanumeric) </p>
+                        <p>unique tag (alphanumeric) </p>
                         <div id="tag_wrapper">
                             <input class="input" id="tag" name="tag" type="text" pattern="^[a-zA-Z0-9 ]+$" required>
                             <button id="generate_tag" name="generate_tag" class="icon_btn white" form="null"><i>casino</i></button>
@@ -60,9 +62,37 @@
                     </div>
                     <div class="inputField">
                         <p>email (optional)</p>
-                        <input class="input" id="email" name="email" type="text" value="anonymous">
-                    </div>
+                        <input class="input" id="email" name="email" type="text" value="anonymous" style="color: grey;">
+                    </div> 
 
+		    <div class="inputField">
+		      <label>
+		      <input class="input" id="highres" name="highres" type="checkbox" />
+		      <span> high resolution (not for zip upload)</span>
+		      </label>
+		    </div>
+
+		    <div class="inputField">
+		      <label>
+			<input id="keepinternal" type="radio" name="selector" value="keepinternal" checked />
+			<span>keep internal waters (default)</span>
+		      </label>
+		      <br>
+
+		      <label>
+			<input id="keepall" type="radio" name="selector" value="keepall"  />
+			<span>keep all waters</span>
+		      </label>
+		      <br>
+		      
+		      <label>
+			<input id="eraseall" type="radio" name="selector" value="eraseall" />
+			<span>erase all waters</span>
+		      </label>
+		    </div>
+		    
+		    <div id="submitError" style="margin-top: 50px; text-align: center; font-size: x-large; color: red;">{{error_str}}</div>
+		    
                     <input id="submitbtn" name="submit" type="submit" value="Analyse">
                 </div>
             </form>
@@ -117,17 +147,22 @@
             $('#dragDropField').removeClass('dragOver');
         });
 
-        
+			    
         $('#dragDropField').on('drop', function(e) {
+
             file = e.originalEvent.dataTransfer.files[0];
+	    if( file.size > 10000000){
+                $('#dragDropError').text( 'Max file size: 100MB');
+            }
+            else{
+   
+                dt = new DataTransfer();
+                dt.items.add(file);
 
-            dt = new DataTransfer();
-            dt.items.add(file);
+                inputPdb.files = dt.files;
 
-            inputPdb.files = dt.files;
-
-
-            interface_change(file, false);
+                interface_change(file, false);
+            }
         });
 
         

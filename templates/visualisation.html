@@ -4,6 +4,7 @@
 {{super()}}
 <script src="{{url_for('static', filename='ngl.js')}}"></script>
 
+
 <script> 
     NGL.mainScriptPathFile = "{{url_for('static', filename='ngl.js')}}";
 
@@ -13,13 +14,35 @@
         stage.setParameters( { backgroundColor: "black" } );
 
         // load molecule structure
-        loadPDB(stage, ".vor.pdb", "molecules", ["cartoon"],  [{colorScheme: 'bfactor'}], true);
+        loadPDB(stage, ".vor.pdb", "molecules", ["cartoon"],  [{colorScheme: 'bfactor',colorReverse: true}], true);
+
+        // load molecule structure
+        loadPDB(stage, ".vor.pdb", "hetatm", ["hyperball"],  [{opacity: 0.6, sele: "hetero"}], false);
 
         // load cavity neighboring residues
-        loadPDB(stage, "_neighbors.pdb", "neighbors", ["licorice"],  [{color: schemeId}], true);
+        loadPDB(stage, "_neighbors.pdb", "neighbors", ["licorice"],  [{color: schemeId}], false);
 
         // load cavities
         loadPDB(stage, "_holes.pdb", "cavities", ["ball+stick"], [{radius: 'bfactor', colorScheme: schemeId}]);
+
+
+        var hetButton = createElement("input", {
+            type: "button",
+            value: "toggle cavities",
+            onclick: function () {
+                stage.getRepresentationsByName( "ball+stick" ).list.forEach( function( repre ){
+                   repre.setVisibility( !repre.visible );
+               } );
+            }
+        }, { 
+            top: "60px", 
+            left: "24px",
+            background: "#1c1f26",
+            color: "#b8b8b8",
+            border: "none",
+            padding: "8px"
+        });
+        addElement(hetButton,stage);
 
 
         var licButton = createElement("input", {
@@ -32,7 +55,7 @@
                 } );
             }
         }, { 
-            top: "24px", 
+            top: "20px", 
             left: "24px",
             background: "#1c1f26",
             color: "#b8b8b8",
@@ -42,46 +65,39 @@
         addElement(licButton,stage);
 
 
-        var gradientButton = createElement("input", {
+        var returnButton = createElement("input", {
             type: "button",
-            value: "toggle color-scale",
+            value: "return",
             onclick: function() {
-                $("#gradient").toggleClass("unvisible");
+                window.location.replace( {% block return %}{% endblock %} );
             }
         }, {
-            top: "78px",
+            top: "140px",
             left: "24px",
             background: "#1c1f26",
             color: "#b8b8b8",
             border: "none",
             padding: "8px"
         });
-        addElement(gradientButton, stage);
+        addElement(returnButton, stage);
 
 
         var snapButton = createElement("input", {
             type: "button",
-            value: "camera_alt",
+            value: "full menu",
             onclick: function () {
-                // add full menu stuff here:
-
-                stage.makeImage({
-                        factor: 1,
-                        antialias: false,
-                        trim: false,
-                        transparent: false
-                    }).then(function (blob) {
-                        NGL.download(blob, "ngl-xray-viewer-snapshot.png");
-                    });
+                window.location.replace( {% block fullmenu %}{% endblock %} );
             }
         }, { 
-            top: "126px", 
+            top: "100px", 
             left: "24px",
-            fontFamily: "Material Icons",
-            fontSize: "25px",
-            background: "none",
+            //fontFamily: "Material Icons",
+            //fontSize: "25px",
+    //background: "none",
+    background: "#1c1f26",
             border: "none",
             color: "#b8b8b8", 
+            padding: "8px"
         });
         addElement(snapButton,stage);
 
@@ -102,7 +118,7 @@
 
         stage.loadFile(file, { defaultRepresentation: false }).then( function(comp) {
             comp.setName(name);
-            comp.setSelection("");
+            //comp.setSelection(selection);
 
             for( var i = 0; i < representations.length; i++ ) {
 	            comp.addRepresentation(representations[i], representation_dicts[i]);
@@ -119,11 +135,11 @@
     var schemeId = NGL.ColormakerRegistry.addScheme(function (params) {
         this.atomColor = function (atom) {
             if (atom.occupancy < 0) {
-                return 0x0000FF;  // blue
-            } else if (atom.occupancy > 0.84) {
-                return 0xFF0000;  // red
+                return 0xeee8aa;  // white
+            } else if (atom.occupancy > 1.45) {
+                return 0x0000cd;  // blue
             } else {
-                 return 0xFFFFFF;  // white
+                 return 0x87cefa;  // light blue
                  //return 0x00FF00;  // green
             }
         };
@@ -149,7 +165,7 @@ function createElement (name, properties, style) {
     return el;
 };
 
-
+ 
 
 
 				

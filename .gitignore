@@ -6,3 +6,6 @@ misc/
 env/
 static/examples/
 garbage/
+*.vol
+*.zip
+exec/versions/

@@ -64,7 +64,7 @@ i {
     display: flex;
     justify-content: space-between;*/
     /*width: 7.5vw;*/
-    margin: 4vh 0;
+    margin: 4vh 1em;
     margin-right: 2vw;
 }
 
@@ -102,10 +102,10 @@ i {
 
 #submitInterface input {
     /*width: 7.5vw;*/
-    width: 8rem;
-    height: min-content;
+    width: 10rem;
+    /*height: min-content;*/
     padding: 1px;
-    padding-bottom: 5px;
+    padding-bottom: 0px;
     border: 0;
     border-bottom: 1px solid grey;
     margin-bottom: 0;
@@ -188,6 +188,7 @@ i {
     #submitInterface input {
         width: 45vw;
         text-align: center;
+	margin-top: 2em;
     }
 
     #submitInterface select {

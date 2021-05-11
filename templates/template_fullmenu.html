@@ -1,0 +1,139 @@
+{% extends "bootstrap/base.html" %}
+
+{% block head %}
+       <title>Voronoia</title>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+        <link rel="stylesheet"  href="{{url_for('static', filename='webapp/css/font-awesome.min.css')}}" />
+        <link rel="stylesheet"  href="{{url_for('static', filename='webapp/css/main.css')}}" />
+        <link rel="subresource" href="{{url_for('static', filename='webapp/css/light.css')}}" />
+        <link rel="subresource" href="{{url_for('static', filename='webapp/css/dark.css')}}" />
+
+{% endblock %}
+
+
+{% block scripts %}
+
+<script src="{{url_for('static', filename='webapp/js/ngl.js')}}"></script>
+<script src="{{url_for('static', filename='webapp/js/lib/signals.min.js')}}"></script>
+<script src="{{url_for('static', filename='webapp/js/lib/tether.min.js')}}"></script>
+<script src="{{url_for('static', filename='webapp/js/lib/colorpicker.min.js')}}"></script>
+<script src="{{url_for('static', filename='webapp/js/ui/ui.js')}}"></script>
+<script src="{{url_for('static', filename='webapp/js/ui/ui.extra.js')}}"></script>
+<script src="{{url_for('static', filename='webapp/js/ui/ui.ngl.js')}}"></script>
+<script src="{{url_for('static', filename='webapp/js/ui/ui.helper.js')}}"></script>
+<script src="{{url_for('static', filename='webapp/js/gui.js')}}"></script>
+
+<script> 
+    
+           NGL.cssDirectory = "{{url_for('static', filename='webapp/css/')}}";
+           
+	   document.addEventListener( "DOMContentLoaded", function(){
+
+               stage = new NGL.Stage();
+               NGL.StageWidget( stage );
+
+               stage.setParameters( { backgroundColor: "black" } );
+
+               // load molecule structure
+               loadPDB(stage, ".vor.pdb", "molecules", ["cartoon"],  [{color: 'bfactor',colorReverse:true}], true);
+
+        // load molecule structure
+        loadPDB(stage, ".vor.pdb", "hetatm", ["hyperball"],  [{opacity: 0.6, sele: "hetero"}], false);
+               // load cavity neighboring residues
+               loadPDB(stage, "_neighbors.pdb", "neighbors", ["licorice"],  [{color: schemeId}], true);
+
+               // load cavities
+           loadPDB(stage, "_holes.pdb", "cavities", ["ball+stick"], [{radius: 'bfactor', colorScheme: schemeId}]);
+
+        var returnButton = createElement("input", {
+            type: "button",
+            value: "return to result page",
+            onclick: function() {
+                window.location.replace( {% block return %}{% endblock %} );
+            }
+        }, {
+            top: "24px",
+            left: "24px",
+            background: "#1c1f26",
+  	    fontSize: "18px",
+            color: "#b8b8b8",
+            border: "none",
+            padding: "8px"
+        });
+        addElement(returnButton, stage);
+
+
+	   
+    });
+
+
+
+	   function loadPDB(stage, ending, name, representations, representation_dicts, center) {
+	   var loc = window.location;
+	   
+           file =  loc.protocol + "//" + loc.host + {% block download_link %}{% endblock %} + ending;
+	   console.log(file);
+
+	   
+
+        stage.loadFile(file, { defaultRepresentation: false }).then( function(comp) {
+            comp.setName(name);
+            comp.setSelection("");
+
+            for( var i = 0; i < representations.length; i++ ) {
+	            comp.addRepresentation(representations[i], representation_dicts[i]);
+            }
+
+            if(center) {
+                comp.autoView();
+                //comp.centerView();
+            }
+        });
+    }
+
+    // for color scheme
+    var schemeId = NGL.ColormakerRegistry.addScheme(function (params) {
+        this.atomColor = function (atom) {
+            if (atom.occupancy < 0) {
+                return 0xeee8aa;  // white
+            } else if (atom.occupancy > 1.45) {
+                return 0x0000cd;  // blue
+            } else {
+                 return 0x87cefa;  // light blue
+                 //return 0x00FF00;  // green
+            }
+        };
+    });
+
+
+
+
+function addElement (el,stage) {
+    Object.assign(el.style, {
+        position: "absolute",
+        zIndex: 10
+    });
+    el.className += " menu-button";
+    stage.viewer.container.appendChild(el);
+};
+
+
+
+function createElement (name, properties, style) {
+    var el = document.createElement(name);
+    Object.assign(el, properties);
+    Object.assign(el.style, style);
+    return el;
+};
+
+ 
+ 
+
+
+				
+</script>
+
+{% endblock %}

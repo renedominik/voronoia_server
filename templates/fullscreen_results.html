@@ -1,5 +1,13 @@
 {% extends "template_fullscreen_results.html" %}
 
 {% block file_download %}
-    "{{url_for('download', user=user, job=job, filename='protein')}}"
+    "{{url_for('download', user=user, job=job, filename=mol)}}"
+{% endblock %}
+
+{% block return %}
+    "{{url_for('results', user=user, job=job)}}"
+{% endblock %}
+
+{% block fullmenu %}
+    "{{url_for('fullmenu', user=user, job=job, mol=mol )}}"
 {% endblock %}

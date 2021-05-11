@@ -1,0 +1,12 @@
+{% extends "template_fullmenu.html" %}
+
+{% block download_link %}
+       "{{url_for('db_download', filename=mol)}}"
+{% endblock %}
+
+
+
+ 
+{% block return %}
+    "{{url_for('db_results', pdb=mol)}}"
+{% endblock %}
