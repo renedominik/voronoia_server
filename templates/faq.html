@@ -14,24 +14,24 @@
 
 	<h5 style="margin-top: 1em;"> Submit / 'browse PDB'</h5>
 	<table style="padding: 2ex;">
-	  <tr><td> <a href="#highres">What means 'high resolution'?</a></td></tr>
-	  <tr><td> <a href="#water">What do the options for water mean?</a></td></tr>
-	  <tr><td> <a href="#batch">How to upload multiple pdbs?</a></td></tr>
-	  <tr><td> <a href="#db">What is the content of 'browsePDB'?</a></td></tr>
-	  <tr><td> <a href="#missing">What if there is something missing in the DB?</a></td></tr>
+	  <tr><td> <a href="#FAQhighres">What means 'high resolution'?</a></td></tr>
+	  <tr><td> <a href="#FAQwater">What do the options for water mean?</a></td></tr>
+	  <tr><td> <a href="#FAQbatch">How to upload multiple pdbs?</a></td></tr>
+	  <tr><td> <a href="#FAQdb">What is the content of 'browsePDB'?</a></td></tr>
+	  <tr><td> <a href="#FAQmissing">What if there is something missing in the DB?</a></td></tr>
 	</table>
 
 	<h5 style="margin-top: 2em;"> Results</h5>
 	<table style="padding: 2ex;">
-	  <tr><td> <a href="#results">What do I see in the result section?</a></td></tr>
-	  <tr><td> <a href="#download">What is the content of the download file?</a></td></tr>
-	  <tr><td> <a href="#fullmenu">How to use the 'full-menu' view?</a></td></tr>
-	  <tr><td> <a href="#batch">How to view results for all PDBs uploaded in a zip?</a></td></tr>
-	  <tr><td> <a href="#navigate">How to navigate through different result views?</a></td></tr>
-	  <tr><td> <a href="#highres_images">How to create high resolution images?</a> </td></tr>
-	  <tr><td> <a href="#surface">How to create a specific representation for a selection of atoms?</a></td></tr>
-	  <tr><td> <a href="#cavities">Are there different kind of cavities?</a></td></tr>
-	  <tr><td><a href="#scale">Which hydrophobicity scale is used?</a></td></tr>
+	  <tr><td> <a href="#FAQresults">What do I see in the result section?</a></td></tr>
+	  <tr><td> <a href="#FAQdownload">What is the content of the download file?</a></td></tr>
+	  <tr><td> <a href="#FAQfullmenu">How to use the full NGL menu?</a></td></tr>
+	  <tr><td> <a href="#FAQbatch">How to view results for all PDBs uploaded in a zip?</a></td></tr>
+	  <tr><td> <a href="#FAQnavigate">How to navigate through different result views?</a></td></tr>
+	  <tr><td> <a href="#FAQhighres_images">How to create high resolution images?</a> </td></tr>
+	  <tr><td> <a href="#FAQsurface">How to create a specific representation for a selection of atoms?</a></td></tr>
+	  <tr><td> <a href="#FAQcavities">Are there different kind of cavities?</a></td></tr>
+	  <tr><td><a href="#FAQscale">Which hydrophobicity scale is used?</a></td></tr>
 	</table>
       </div>
 
@@ -39,79 +39,94 @@
       <div id="content" class="contentBody" style="margin-bottom: 5em; margin-top: 5em;">
 	<h2> D E T A I L S</h2>
 	
-	<h5 id="highres">What means high resolution?</h5>
+	<h5 id="FAQhighres">What means high resolution?</h5>
 	<p>
 	  The algorithm calculating volumes and packing densities is based on a grid.
-	  There is a range of useful values for the grid or voxel size.
-	  The default accuracy is corresponding to a grid size of 0.8 A.
-	  High accuracy denotes a grid size of 0.4.
+	  The default accuracy is corresponding to a grid size of 0.8 Å.
+	  High accuracy denotes a grid size of 0.4 Å.
 	  A further reduction of the grid size has only little benefit for the final results while dramatically increasing the calculation time. 
 	</p>	
 	<a href="#">Go to top</a>
 
 	
-	<h5 id="water" style="margin-top: 2em;">What do the options for water mean?</h5>
+	<h5 id="FAQwater" style="margin-top: 2em;">What do the options for water mean?</h5>
 	<p>
-	  Depending on the question, the user may want to answer, water molecules present in the uploaded PDB file can be handled differently.
+	  Water molecules present in the uploaded PDB file can be handled in three different ways.
 	  Having waters present obviously will reduce number and/or size of cavities.
 	  Two of the options are obvious, keeping or erasing all water molecules in the PDB.
-	  For the third option, to keep only inner waters, one needs to understand that only holes which are not accessible for bulk water from the surrounding solution are considered a cavity in Voronoia. 
+	  The third option is to keep only inner waters. Waters are considered to be 'inner waters' if they are in holes that are not accessible for bulk water from the surrounding solution.
 	</p>	
 	<a href="#">Go to top</a>
 
 	
-	<h5 id="results" style="margin-top: 2em;">What do I see in the result section?</h5>
-	<p>
-	  There are three different result views. All of them have four main elements being displayed:
+	<h5 id="FAQresults" style="margin-top: 2em;">What do I see in the result section?</h5>
+	<div>
+	  <p> There are three different result views. All of them have four main elements displayed:</p>
 	  <ul>
-	    <li> Protein/RNA in a cartoon view. They are colored by their packing density.</li>
-	    <li> Hetero atoms are shown in a ball+stick representation</li>
-	    <li> Neighboring residues, i.e. the ones forming cavities. Colored by hydrophobicity.</li>
+	    <li> Protein/RNA in a cartoon view, colored by packing density.</li>
+	    <li> Hetero atoms are shown as balls+sticks</li>
+	    <li> Side-chains forming cavities, colored by hydrophobicity.</li>
 	    <li> Cavities as spheres, colored by the averaged hydrophobicity of their constituing neighbors.</li>
 	  </ul>
-	  The first view that opens is an overview. You will see a small window with the molecule and the cavities. At the side there is an explanation of the coloring scheme. Below are a link to download all related files as ZIP archive. Furthermore, there is a link to the second view, the fullscreen mode. If you uploaded a ZIP archive containing PDBs, you will see at the top of the molecule window the name of the current PDB and a link to the next, which will allow you to navigate through the results.<br><br>
 
-	  The second view is the fullscreen view that has a very simplified menu. There is a button to toggle all cavities. Another botton toggles all sidechains. The sidechains are displayed only if they constitute one of the cavities. Then there are two additional buttons for navigation. One leads back to the overview window, the other opens the full-menu view.
+	  <p> The first view that opens is an overview. You will see a small window with the molecule and the cavities. At the side there is an explanation of the coloring scheme. Below is a link to download all related files as ZIP archive. Furthermore, there is a link to the fullscreen view. </p>
+	  <p> If you uploaded a ZIP archive containing multiple PDBs, you will see at the top of the molecule window the name of the current PDB and a link to the next, which will allow you to navigate through the results.</p>
+	  <br><br>
 
-	  The full-menu view enables a lot of advanced selections and visualizations. Some of these are explained in these FAQs.
-	</p>	
+	  <p>The fullscreen view opens first with a very simplified menu. There is a button to toggle all cavities. Another botton toggles all sidechains. The sidechains are displayed only if they constitute one of the cavities. Then there are two additional buttons for navigation. One leads back to the overview window, the other opens the full menu.</p>
+
+	  <p> The full menu enables a lot of advanced selections and visualizations. Some of these are explained in these FAQs. More information can be found on <a href="https://nglviewer.org/ngl/api/manual/index.html"> NGL viewer manual</a>.</p>
+	</div>	
 	<a href="#">Go to top</a>
 
 	
-	<h5 id="download" style="margin-top: 2em;">What is the content of the download file?</h5>
-	<p>
-	  There are three PDB formatted files, corresponding to the three main elements visualized by Voronoia.
-	  NAME.vor.pdb contains the uploaded PDB with the packing densities in the b-factor column.
-	  NAME_neighbors.pdb contains only those residues from the previous file, that form a cavity.
-	  The occupancy column contains the hydrophobicity of the residues. 
-	  NAME_holes.pdb contains the cavities as pseudo-atoms. The radius of the cavities is written into the b-factor and the averaged hydrophobicity of the neighboring residues into the occupancy.
+	<h5 id="FAQdownload" style="margin-top: 2em;">What is the content of the download file?</h5>
+	<p>There are three PDB formatted files, corresponding to the three main elements visualized by Voronoia.
+	  NAME.vor.pdb contains the uploaded PDB with the packing densities in the b-factor column.</p>
+	
+	<p> NAME_neighbors.pdb contains only those residues from the previous file that form a cavity.
+	  The occupancy column contains the hydrophobicity of the residues. </p>
 
+	<p>
+	  NAME_holes.pdb contains the cavities as pseudo-atoms. The radius of the cavities is written into the b-factor and the averaged hydrophobicity of the neighboring residues into the occupancy.</p>
+
+	<p>
 	  Additionally, the file 'file_format.txt' explains the content of the PDB files in more detail.
-	  These four files are wrapped into a zip archive and provided for download. 
-	</p>	
+	  These four files are wrapped into a zip archive and provided for download. </p>
+	
 	<a href="#">Go to top</a>
 
 	
-	<h5 id="fullmenu" style="margin-top: 2em;">How to use the 'full-menu' view?</h5>
+	
+	<h5 id="FAQfullmenu" style="margin-top: 2em;">How to use the full NGL menu?</h5>
 	<p>
-	  The NGL viewer provides a very powerful menu, that allows you a variety of modifications.
-	 
-	  With the left mouse button clicked, the molecules can be <b>rotated</b>. With the right mouse botton clicked, the molecules can be <b>shifted</b>. With the mouse wheel one can <b>zoom</b> in and out. <br>
+	  The NGL viewer provides a very powerful menu, that allows you a variety of modifications.<p>
+	 <p>
+	  With the left mouse button clicked, the molecules can be <b>rotated</b>. With the right mouse botton clicked, the molecules can be <b>shifted</b>. With the mouse wheel one can <b>zoom</b> in and out. </p>
+	  <p>
 	  Hovering over the molecule, information of the atoms is shown. 
-	  
-	  
-	  You can switch any element <b>on/off</b> by clicking on the 'eye'-symbol.
+	  </p>
+
+	  <p>
+	  You can switch any element <b>on/off</b> by clicking on the 'eye'-symbol.</p>
 	<p><img src="{{url_for('static',filename='img/mol_eye.png')}}"></img></p>
 
-	You can <b>add</b> representations by clicking the menu button on the top right of each section.
+	<p>You can <b>add</b> representations by clicking the menu button on the top right of each section.</p>
 	<p><img src="{{url_for('static',filename='img/mol_menu.png')}}"></img></p>
-	Then select under 'add' your preferred representation.
+	<p>Then select under 'add' your preferred representation.</p>
 	<p><img src="{{url_for('static',filename='img/add.png')}}" style="width: 48%;"></img></p>
+
+	<p> The filter symbol below a representation allows to select any group of atoms. More info in the <a href="https://nglviewer.org/ngl/api/manual/selection-language.html">manual</a>.</p>
+	<p><img src="{{url_for('static',filename='img/filter.png')}}" style="width: 48%;"></img></p>
 	
+	<p>
+	More information can be found on <a href="https://nglviewer.org/ngl/api/manual/index.html"> NGL viewer manual</a>.
 	</p>	
 	<a href="#">Go to top</a>
+
 	
-	<h5 id="batch" style="margin-top: 2em;">How to view results for all PDBs uploaded in a zip?</h5>
+	
+	<h5 id="FAQbatch" style="margin-top: 2em;">How to view results for all PDBs uploaded in a zip?</h5>
 	<p>
 	  In the browser there are navigation links in the overview view of the result section.
 	  From the fullscreen views, one has to first return to the overview to access results of another PDB.
@@ -119,28 +134,28 @@
 	</p>	
 	<a href="#">Go to top</a>
 	
-	<h5 id="db" style="margin-top: 2em;">What is the content of 'browsePDB'?</h5>
+	<h5 id="FAQdb" style="margin-top: 2em;">What is the content of 'browsePDB'?</h5>
 	<p>
 	  It is a database of precalculated structures from the PDB, using the high-resolution mode and keeping internal waters.
 	  The database is updated on a weekly basis.
 	</p>	
 	<a href="#">Go to top</a>
 	
-	<h5 id="missing" style="margin-top: 2em;">What if there is something missing in the DB?</h5>
+	<h5 id="FAQmissing" style="margin-top: 2em;">What if there is something missing in the DB?</h5>
 	<p>
 	  The most simple solution is to download the PDB from e.g. rcsb.org and to upload it to Voronoia via the 'submit' form.
 	  If that is not a solution to you and you also don't want to wait for the next weekly update, drop us an email. 
 	</p>	
 	<a href="#">Go to top</a>
 	
-	<h5 id="navigate" style="margin-top: 2em;">How to navigate through different result views?</h5>
+	<h5 id="FAQnavigate" style="margin-top: 2em;">How to navigate through different result views?</h5>
 	<p>
 	  First, the overview opens. At its right bottom there is a link to the fullscreen view with the simple menu. From there you can either proceed to the full-menu view or back to the overview. Also from the full-menu view there is an option to return to the overview. In the fullscreen views the navigation buttons are located on the top left of the window.
 	<p><img src="{{url_for('static',filename='img/return.png')}}"></img></p>
 	</p>	
 	<a href="#">Go to top</a>
 	
-	<h5 id="highres_images" style="margin-top: 2em;">How to create high resolution images?</h5>
+	<h5 id="FAQhighres_images" style="margin-top: 2em;">How to create high resolution images?</h5>
 	<p>
 	  To take pictures of the current window in the 'full-menu' view, select under 'File' in the top left either a quick snapshot or 'export image' with a few more options. <br>
 	  Generally the quality depends on the resolution of the cartoon representation. To adjust, open the menu in the cartoon section.
@@ -157,16 +172,17 @@
 	</p>
 	<a href="#">Go to top</a>
 	
-	<h5 id="surface" style="margin-top: 2em;">How to create a specific representation for a selection of atoms?</h5>
+	<h5 id="FAQsurface" style="margin-top: 2em;">How to create a specific representation for a selection of atoms?</h5>
 	<p>
 	  Either create a new representation or modify an existing one.
 
-	  To create a new representation, go the the menu on the top right in the 'molecules' section:
-	<p><img src="{{url_for('static',filename='img/molecule_menu.png')}}"></img></p>
-	Then click 'add' representation:
+	  To create a new representation, go the the menu on the top right in the 'molecules' section:</p>
+	<p><img src="{{url_for('static',filename='img/mol_menu.png')}}"></img></p>
+	<p>
+	Then click 'add' representation:</p>
 	<p><img src="{{url_for('static',filename='img/add.png')}}"></img></p>
-	and select e.g. 'surface'.
-	
+	<p>and select e.g. 'surface'.</p>
+	<p>
 	Once a new representation is created, filter the atoms that you want to highlight.
 	Type e.g. 'hetero' next to the filter symbol. 
 	There is a entire atom selection language available:
@@ -175,23 +191,23 @@
 	</p>	
 	<a href="#">Go to top</a>
 	
-	<h5 id="batch" style="margin-top: 2em;">How to upload multiple pdbs?</h5>
+	<h5 id="FAQbatch" style="margin-top: 2em;">How to upload multiple pdbs?</h5>
 	<p>
-	  There are two ways to upload multiple pdbs. Both require the PDB files to be wrapped into a .zip file. The zipped archive can then be uploaded either by clicking the 'Upload a PDB' banner or to drag & drop it onto the marked field. 
+	  The PDB files need to be wrapped into a .zip file. The zipped archive can then be uploaded either by clicking the 'Upload a PDB' banner or to drag & drop it onto the marked field. 
 	</p>	
 	<a href="#">Go to top</a>
 	
-	<h5 id="cavities" style="margin-top: 2em;">Are there different kind of cavities?</h5>
+	<h5 id="FAQcavities" style="margin-top: 2em;">Are there different kind of cavities?</h5>
 	<p>
 	  There are four different kinds of cavities.
-	  The classification depends on both content and constituting neighbors.
+	  The classification depends on both content and constituting neighbors.</p>
 	  <br>
-
+	  <p>
 	  One can easily navigate through them in the 'full-menu' view.
 	  In the 'cavities' section go to filter symbol.
-	  Enter either individual numbers or combinations, e.g. '1 or 2'.
+	  Enter either individual numbers or combinations, e.g. '1 or 2'. <p>
 	  <br><br>
-	  Types of cavities
+	  <p>Types of cavities:</p>
 	  <ul>
 	 <li> class '1': cavities with hetatm/water as direct neighbor </li>
 	 <li> class '2': empty cavities </li>
@@ -200,10 +216,10 @@
 	 </ul>
 
 	  <p><img src="{{url_for('static',filename='img/cavities.png')}}"></img></p>
-	</p>	
+
 	<a href="#">Go to top</a>
 
-	<h5 id="scale" style="margin-top: 2em;">Which hydrophocity scale is used?</h5>
+	<h5 id="FAQscale" style="margin-top: 2em;">Which hydrophocity scale is used?</h5>
 	<p>
   Amino acid hydrophobicity scale from
   the supplementary information for "Recognition of transmembrane 
