@@ -71,7 +71,6 @@
 
 	  <p> The first view that opens is an overview. You will see a small window with the molecule and the cavities. At the side there is an explanation of the coloring scheme. Below is a link to download all related files as ZIP archive. Furthermore, there is a link to the fullscreen view. </p>
 	  <p> If you uploaded a ZIP archive containing multiple PDBs, you will see at the top of the molecule window the name of the current PDB and a link to the next, which will allow you to navigate through the results.</p>
-	  <br><br>
 
 	  <p>The fullscreen view opens first with a very simplified menu. There is a button to toggle all cavities. Another botton toggles all sidechains. The sidechains are displayed only if they constitute one of the cavities. Then there are two additional buttons for navigation. One leads back to the overview window, the other opens the full menu.</p>
 
@@ -109,15 +108,15 @@
 
 	  <p>
 	  You can switch any element <b>on/off</b> by clicking on the 'eye'-symbol.</p>
-	<p><img src="{{url_for('static',filename='img/mol_eye.png')}}"></img></p>
+	<p><img src="{{url_for('static',filename='img/mol_eye.png')}}" style="width: 66%;"></img></p>
 
 	<p>You can <b>add</b> representations by clicking the menu button on the top right of each section.</p>
-	<p><img src="{{url_for('static',filename='img/mol_menu.png')}}"></img></p>
+	<p><img src="{{url_for('static',filename='img/mol_menu.png')}}" style="width: 66%;"></img></p>
 	<p>Then select under 'add' your preferred representation.</p>
-	<p><img src="{{url_for('static',filename='img/add.png')}}" style="width: 48%;"></img></p>
+	<p><img src="{{url_for('static',filename='img/add.png')}}" style="width: 66%;"></img></p>
 
 	<p> The filter symbol below a representation allows to select any group of atoms. More info in the <a href="https://nglviewer.org/ngl/api/manual/selection-language.html">manual</a>.</p>
-	<p><img src="{{url_for('static',filename='img/filter.png')}}" style="width: 48%;"></img></p>
+	<p><img src="{{url_for('static',filename='img/filter.png')}}" style="width: 66%;"></img></p>
 	
 	<p>
 	More information can be found on <a href="https://nglviewer.org/ngl/api/manual/index.html"> NGL viewer manual</a>.
@@ -151,23 +150,23 @@
 	<h5 id="FAQnavigate" style="margin-top: 2em;">How to navigate through different result views?</h5>
 	<p>
 	  First, the overview opens. At its right bottom there is a link to the fullscreen view with the simple menu. From there you can either proceed to the full-menu view or back to the overview. Also from the full-menu view there is an option to return to the overview. In the fullscreen views the navigation buttons are located on the top left of the window.
-	<p><img src="{{url_for('static',filename='img/return.png')}}"></img></p>
+	<p><img src="{{url_for('static',filename='img/return.png')}}" style="width: 66%;"></img></p>
 	</p>	
 	<a href="#">Go to top</a>
 	
 	<h5 id="FAQhighres_images" style="margin-top: 2em;">How to create high resolution images?</h5>
 	<p>
-	  To take pictures of the current window in the 'full-menu' view, select under 'File' in the top left either a quick snapshot or 'export image' with a few more options. <br>
-	  Generally the quality depends on the resolution of the cartoon representation. To adjust, open the menu in the cartoon section.
+	  To take pictures of the current window in the 'full-menu' view, select under 'File' in the top left either a quick snapshot or 'export image' with a few more options. </p>
+	<p>  Generally the quality depends on the resolution of the cartoon representation. To adjust, open the menu in the cartoon section.</p>
 
-	<p><img src="{{url_for('static',filename='img/cartoon_menu.png')}}"></img></p>
+	<p><img src="{{url_for('static',filename='img/cartoon_menu.png')}}" style="width: 66%;"></img></p>
 
-	This will open the 'Representation' window. Increase the value of 'subdiv' to get smoother cartoons.
-	<p><img src="{{url_for('static',filename='img/representation.png')}}"></img></p>
+	<p>This will open the 'Representation' window. Increase the value of 'subdiv' to get smoother cartoons.</p>
+	<p><img src="{{url_for('static',filename='img/representation.png')}}" style="width: 66%;"></img></p>
 
-	You may want to change the <b>background color</b>. On the top left, select 'View' and then 'Light theme'.<br>
+	<p>You may want to change the <b>background color</b>. On the top left, select 'View' and then 'Light theme'.</p>
 
-	For further usage check <a href="#fullmenu">full-menu view instructions.</a>
+	<p>For further usage check <a href="#fullmenu">full-menu view instructions.</a></p>
 	
 	</p>
 	<a href="#">Go to top</a>
@@ -177,10 +176,10 @@
 	  Either create a new representation or modify an existing one.
 
 	  To create a new representation, go the the menu on the top right in the 'molecules' section:</p>
-	<p><img src="{{url_for('static',filename='img/mol_menu.png')}}"></img></p>
+	<p><img src="{{url_for('static',filename='img/mol_menu.png')}}" style="width: 66%;"></img></p>
 	<p>
 	Then click 'add' representation:</p>
-	<p><img src="{{url_for('static',filename='img/add.png')}}"></img></p>
+	<p><img src="{{url_for('static',filename='img/add.png')}}" style="width: 66%;"></img></p>
 	<p>and select e.g. 'surface'.</p>
 	<p>
 	Once a new representation is created, filter the atoms that you want to highlight.
@@ -201,12 +200,12 @@
 	<p>
 	  There are four different kinds of cavities.
 	  The classification depends on both content and constituting neighbors.</p>
-	  <br>
+
 	  <p>
 	  One can easily navigate through them in the 'full-menu' view.
 	  In the 'cavities' section go to filter symbol.
-	  Enter either individual numbers or combinations, e.g. '1 or 2'. <p>
-	  <br><br>
+	  Enter either individual numbers or combinations, e.g. '1 or 2'. </p>
+
 	  <p>Types of cavities:</p>
 	  <ul>
 	 <li> class '1': cavities with hetatm/water as direct neighbor </li>
@@ -215,7 +214,7 @@
 	 <li> class '4': cavities containing hetero atoms (no space for further waters) </li>
 	 </ul>
 
-	  <p><img src="{{url_for('static',filename='img/cavities.png')}}"></img></p>
+	  <p><img src="{{url_for('static',filename='img/cavities.png')}}" style="width: 66%;"></img></p>
 
 	<a href="#">Go to top</a>
 
@@ -224,36 +223,36 @@
   Amino acid hydrophobicity scale from
   the supplementary information for "Recognition of transmembrane 
   helices by the endoplasmic reticulum translocon," Hessa et al., 
-  Nature 433:377 (2005).<br>
-<br>
+  Nature 433:377 (2005).</p>
+<p>
   More negative means more hydrophobic.  
   The met value is also assigned to selenomethionine.
-<br><br>
+</p>
 <table>
   <tr><th>Amino acid</th><th>Hydrophobicity</th></tr>
-<tr><td>asp</td><td>	3.49  </td></tr> 
-<tr><td>glu</td><td>	2.68  </td></tr>
-<tr><td>asn</td><td>	2.05  </td></tr>
-<tr><td>gln</td><td>	2.36  </td></tr>
-<tr><td>lys</td><td>	2.71  </td></tr>
-<tr><td>arg</td><td>	2.58  </td></tr>
-<tr><td>his</td><td>	2.06  </td></tr>
-<tr><td>gly</td><td>	0.74  </td></tr>
-<tr><td>pro</td><td>	2.23  </td></tr>
-<tr><td>ser</td><td>	0.84  </td></tr>
-<tr><td>thr</td><td>	0.52  </td></tr>
-<tr><td>cys</td><td>	-0.13 </td></tr>
-<tr><td>met</td><td>	-0.10 </td></tr>
-<tr><td>mse</td><td>	-0.10 </td></tr>
-<tr><td>ala</td><td>	0.11  </td></tr>
-<tr><td>val</td><td>	-0.31 </td></tr>
-<tr><td>ile</td><td>	-0.60 </td></tr>
-<tr><td>leu</td><td>	-0.55 </td></tr>
-<tr><td>phe</td><td>	-0.32 </td></tr>
-<tr><td>trp</td><td>	0.30  </td></tr>
-<tr><td>tyr</td><td>	0.68  </td></tr>   
+<tr><td style="padding: 3px;">asp</td><td style="padding: 3px;">	3.49  </td></tr> 
+<tr><td style="padding: 3px;">glu</td><td style="padding: 3px;">	2.68  </td></tr>
+<tr><td style="padding: 3px;">asn</td><td style="padding: 3px;">	2.05  </td></tr>
+<tr><td style="padding: 3px;">gln</td><td style="padding: 3px;">	2.36  </td></tr>
+<tr><td style="padding: 3px;">lys</td><td style="padding: 3px;">	2.71  </td></tr>
+<tr><td style="padding: 3px;">arg</td><td style="padding: 3px;">	2.58  </td></tr>
+<tr><td style="padding: 3px;">his</td><td style="padding: 3px;">	2.06  </td></tr>
+<tr><td style="padding: 3px;">gly</td><td style="padding: 3px;">	0.74  </td></tr>
+<tr><td style="padding: 3px;">pro</td><td style="padding: 3px;">	2.23  </td></tr>
+<tr><td style="padding: 3px;">ser</td><td style="padding: 3px;">	0.84  </td></tr>
+<tr><td style="padding: 3px;">thr</td><td style="padding: 3px;">	0.52  </td></tr>
+<tr><td style="padding: 3px;">cys</td><td style="padding: 3px;">	-0.13 </td></tr>
+<tr><td style="padding: 3px;">met</td><td style="padding: 3px;">	-0.10 </td></tr>
+<tr><td style="padding: 3px;">mse</td><td style="padding: 3px;">	-0.10 </td></tr>
+<tr><td style="padding: 3px;">ala</td><td style="padding: 3px;">	0.11  </td></tr>
+<tr><td style="padding: 3px;">val</td><td style="padding: 3px;">	-0.31 </td></tr>
+<tr><td style="padding: 3px;">ile</td><td style="padding: 3px;">	-0.60 </td></tr>
+<tr><td style="padding: 3px;">leu</td><td style="padding: 3px;">	-0.55 </td></tr>
+<tr><td style="padding: 3px;">phe</td><td style="padding: 3px;">	-0.32 </td></tr>
+<tr><td style="padding: 3px;">trp</td><td style="padding: 3px;">	0.30  </td></tr>
+<tr><td style="padding: 3px;">tyr</td><td style="padding: 3px;">	0.68  </td></tr>   
 </table>
-	</p>	
+<br>
 	<a href="#">Go to top</a>
 	
 	

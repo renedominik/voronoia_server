@@ -9,3 +9,5 @@ garbage/
 *.vol
 *.zip
 exec/versions/
+.DS_Store
+._.DS_Store
